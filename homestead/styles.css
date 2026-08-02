@@ -1,0 +1,311 @@
+/* Homestead marketing site — tokens from AppTheme.swift (Phase 9a), layout from the
+   "Homestead Landing" Claude Design handoff. Static HTML/CSS, no framework. */
+
+:root {
+  --bg: #FAF6EF;
+  --surface: #F2EDE3;
+  --raised: #E6DFD1;
+  --ink: #26221D;
+  --ink-2: #8C8175;
+  --ink-3: #B8AE9E;
+  --hairline: #E6DFD1;
+  --accent: #B5563A;
+  --accent-hover: #9A452F;
+  --pro-bg: #26221D;
+  --pro-ink: #F2EDE3;
+  --pro-ink-2: #B8AE9E;
+  --pro-accent: #E0805F;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+h1, h2, h3 {
+  font-family: "Source Serif 4", Georgia, serif;
+  margin: 0;
+}
+
+::selection { background: var(--raised); }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+/* Nav */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.nav-brand img { width: 28px; height: 28px; border-radius: 7px; }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-link { color: var(--ink); font-size: 15px; }
+.badge-disabled {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 13px;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: 64px 0 40px;
+  text-align: center;
+  align-items: center;
+}
+.hero-copy { max-width: 760px; margin: 0 auto; }
+.hero h1 {
+  font-size: 56px;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+.hero-sub {
+  margin: 24px auto 0;
+  max-width: 600px;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.hero-ctas {
+  margin-top: 32px;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cta-disabled {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 22px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 15px;
+  cursor: not-allowed;
+  user-select: none;
+}
+.cta-disabled .pill {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--raised);
+  color: var(--ink-2);
+}
+.hero-link {
+  font-size: 15px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink-3);
+  padding-bottom: 2px;
+}
+.hero-link:hover { text-decoration: none; color: var(--accent); border-color: var(--accent); }
+.hero-image { max-width: 1000px; margin: 12px auto 0; width: 100%; }
+
+/* Real screenshots as of Phase 16 — was a dashed-border placeholder box before.
+   No forced crop ratio: the image is shown in full at every viewport width,
+   scaling by its own natural aspect ratio (width: 100%, height: auto) rather
+   than being fit into a fixed-ratio box via object-fit: cover. Three earlier
+   attempts (a fixed pixel height, aspect-ratio, padding-top) all forced some
+   crop ratio onto the image and fought each other/the viewport instead of just
+   letting the image be the image. */
+.screenshot-slot {
+  width: 100%;
+  box-sizing: border-box;
+}
+.screenshot-slot img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#hero-board {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(38, 34, 29, 0.25);
+}
+#board-showcase {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(38, 34, 29, 0.3);
+}
+
+/* Features */
+.features { padding: 96px 0; }
+.features-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+.features-head h2 { font-size: 36px; letter-spacing: -0.01em; }
+.features-head p { margin-top: 14px; font-size: 17px; color: var(--ink-2); line-height: 1.5; }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 32px;
+}
+.feature-card svg { display: block; }
+.feature-card h3 {
+  font-size: 19px;
+  margin-top: 18px;
+  font-weight: 600;
+  font-family: -apple-system, sans-serif;
+}
+.feature-card p { margin-top: 8px; font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+
+/* Board showcase */
+.showcase { padding: 40px 0 100px; }
+.showcase-head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+.showcase-head h2 { font-size: 34px; letter-spacing: -0.01em; }
+.showcase-head p { margin-top: 14px; font-size: 17px; color: var(--ink-2); line-height: 1.5; }
+
+/* Pricing */
+.pricing { padding: 20px 0 100px; }
+.pricing-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+.pricing-head h2 { font-size: 36px; letter-spacing: -0.01em; }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.price-card {
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+}
+.price-card.free {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+}
+.price-card.pro {
+  background: var(--pro-bg);
+  color: var(--pro-ink);
+}
+.price-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: -apple-system, sans-serif;
+}
+.price-card.pro h3 { color: var(--pro-ink); }
+.price-amount {
+  margin-top: 8px;
+  font-size: 34px;
+  font-family: "Source Serif 4", Georgia, serif;
+}
+.price-amount .suffix { font-size: 16px; color: var(--pro-ink-2); }
+.price-sub { margin-top: 4px; font-size: 14px; color: var(--pro-ink-2); }
+.price-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid #6b6558;
+  color: var(--pro-ink-2);
+}
+.price-list {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.price-list li { font-size: 15px; color: var(--ink); display: flex; gap: 10px; }
+.price-card.pro .price-list li { color: var(--pro-ink); }
+.price-list .check { color: var(--accent); }
+.price-card.pro .price-list .check { color: var(--pro-accent); }
+.pricing-caption { text-align: center; margin-top: 32px; font-size: 14px; color: var(--ink-2); }
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--hairline);
+  padding: 32px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ink-2);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--ink-2); }
+
+/* Privacy page */
+.policy-page { max-width: 760px; margin: 0 auto; padding: 64px 40px 100px; }
+.policy-back { font-size: 15px; }
+.policy-page h1 {
+  font-size: 40px;
+  letter-spacing: -0.01em;
+  margin-top: 28px;
+}
+.policy-updated { color: var(--ink-2); font-size: 14px; margin-top: 8px; }
+.policy-page h2 { font-size: 21px; font-family: -apple-system, sans-serif; font-weight: 600; margin-top: 40px; }
+.policy-page p { font-size: 16px; line-height: 1.6; color: var(--ink); margin-top: 12px; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .wrap { padding: 0 24px; }
+  .nav-links { gap: 18px; }
+  .nav-link { display: none; }
+  /* The disabled "Coming Soon" nav badge doesn't shrink or wrap gracefully — at
+     phone widths it collided with the wordmark. The hero CTA already says
+     "Coming Soon" prominently, so just drop the redundant nav copy here. */
+  .badge-disabled { display: none; }
+  .hero h1 { font-size: 38px; }
+  .hero-sub { font-size: 17px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17150F;
+    --surface: #221F18;
+    --raised: #2E2A21;
+    --ink: #F2EDE3;
+    --ink-2: #8C8175;
+    --ink-3: #6B6154;
+    --hairline: #2E2A21;
+    --accent: #E0805F;
+    --accent-hover: #F2A186;
+    --pro-bg: #0F0D09;
+    --pro-ink: #F2EDE3;
+    --pro-ink-2: #8C8175;
+    --pro-accent: #E0805F;
+  }
+}
