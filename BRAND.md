@@ -30,6 +30,8 @@ Canonical design source: Claude Design project ["CanoSoftware studio logo design
 - **Self-deprecating restraint, not cuteness.** Confident but understated. No exclamation points in body copy.
 - **Privacy is a selling point, stated factually.** No accounts, no analytics SDKs, no ad SDKs — say so explicitly wherever it's true, and name the one or two exceptions (e.g. Roadworthy → NHTSA VIN lookup, Homestead → WeatherKit) rather than glossing over them.
 
+See [WRITING.md](WRITING.md) for the checklist of AI-generated-copy tells to strip out of any new marketing text before it ships.
+
 ---
 
 ## 3. Color
