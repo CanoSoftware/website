@@ -5,7 +5,16 @@
 <title>CanoSoftware — Software that remembers, so you don't have to.</title>
 <meta name="description" content="Apps that keep track of your goals, your house, your car, and your family. Built by one person in Maryland. One-time pricing, no subscription trap." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <style>
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){
+  .mark-light{display:none;}
+  .mark-dark{display:block;}
+}
 :root{
   --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
   --text:#262220;--text-muted:#6B6259;
@@ -33,7 +42,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
 <div style="max-width:1080px;margin:0 auto;padding:0 24px;">
 
   <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
-    <a href="index.html" style="font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">CanoSoftware</a>
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);"><img class="mark mark-light" src="assets/mark.svg" alt="" width="31" height="20" /><img class="mark mark-dark" src="assets/mark-dark.svg" alt="" width="31" height="20" />CanoSoftware</a>
     <div style="display:flex;gap:28px;flex-wrap:wrap;">
       <a href="#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
       <a href="#about" style="font-size:15px;color:var(--text-muted);">About</a>
@@ -50,7 +59,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
 
       <a href="/onward/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/onward-icon.webp" alt="Onward app icon">
+        <img class="app-icon" src="icons/onward-icon.png" alt="Onward app icon">
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <span style="font-size:17px;font-weight:600;">Onward</span>
@@ -61,7 +70,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
       </a>
 
       <a href="/steward/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/steward-icon.webp" alt="Steward app icon">
+        <img class="app-icon" src="icons/steward-icon.png" alt="Steward app icon">
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
             <span style="font-size:17px;font-weight:600;">Steward</span>
@@ -75,7 +84,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
       </a>
 
       <a href="/roadworthy/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/roadworthy-icon.webp" alt="Roadworthy app icon">
+        <img class="app-icon" src="icons/roadworthy-icon.png" alt="Roadworthy app icon">
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
             <span style="font-size:17px;font-weight:600;">Roadworthy</span>
@@ -87,7 +96,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
       </a>
 
       <a href="/homestead/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/homestead-icon.webp" alt="Homestead app icon">
+        <img class="app-icon" src="icons/homestead-icon.png" alt="Homestead app icon">
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
             <span style="font-size:17px;font-weight:600;">Homestead</span>
@@ -188,7 +197,11 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
         <a href="/homestead/privacy.html" style="font-size:14.5px;color:var(--text);">Homestead</a>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Built in Maryland</p>
+    <div style="display:flex;align-items:center;gap:9px;">
+      <img class="mark mark-light" src="assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;" />
+      <img class="mark mark-dark" src="assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;" />
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Built in Maryland</p>
+    </div>
   </footer>
 
 </div>
