@@ -40,4 +40,11 @@ Those projects are still live but now serve nothing but a redirect (`vercel.json
 
 All under the [CanoSoftware](https://github.com/CanoSoftware) org:
 - `Onward`, `Steward`, `Roadworthy`, `Homestead` — app source (Xcode projects)
-- `onward-marketing-site`, `steward-marketing-site`, `roadworthy-marketing-site`, `homestead-marketing-site` — original standalone sources for the content now living under this repo's app folders. Kept as the source of truth for each app's marketing/privacy content going forward; changes should be made there and re-copied into this repo's app folder, or this repo's copy treated as canonical going forward, if that's simpler — not yet decided.
+- `onward-marketing-site`, `steward-marketing-site`, `roadworthy-marketing-site`,
+  `homestead-marketing-site` — the original standalone sources each app folder above was
+  migrated from. **Decided (2026-08-03): this repo is canonical going forward.** All four
+  standalone repos are now **archived** (read-only) to prevent edits landing in a copy that
+  doesn't actually deploy — that already happened once (a support-email fix was made in this
+  repo but not in `onward-marketing-site`, so they briefly disagreed). Make all future
+  marketing/privacy edits in this repo's app folders; the archived repos are kept only for
+  history.
