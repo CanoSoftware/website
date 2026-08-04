@@ -5,44 +5,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Roadworthy — Privacy Policy</title>
 <meta name="description" content="Roadworthy's privacy policy: no accounts, no servers of our own, no analytics or ad SDKs. Your vehicle data stays on your devices and syncs only through your own iCloud.">
-<link rel="icon" href="assets/AppIcon.png">
-<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+:root{
+  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
+  --text:#262220;--text-muted:#6B6259;
+  --accent:#B5563B;--accent-contrast:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
+    --text:#EDE6DA;--text-muted:#A79C8C;
+    --accent:#E08863;--accent-contrast:#17140F;
+    --border:#33291F;--border-strong:#463A2B;
+  }
+}
+html{background:var(--bg);color-scheme:light dark;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{opacity:0.72;}
+::selection{background:var(--accent);color:var(--accent-contrast);}
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){
+  .mark-light{display:none;}
+  .mark-dark{display:block;}
+}
+img{max-width:100%;display:block;}
+</style>
 </head>
 <body>
-  <div class="policy-page">
-    <div class="policy-bar"></div>
-    <a class="policy-back" href="index.html">← Back to Roadworthy</a>
-    <h1>Roadworthy — Privacy Policy</h1>
-    <p class="policy-updated">Last updated: August 2026</p>
 
-    <p>Roadworthy is built around your own garage, on your own device. This policy explains what data the app handles and where it goes.</p>
+<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
 
-    <h2>What's stored, and where</h2>
-    <p>Every vehicle, maintenance record, document, and reading you add is stored locally on your device. If you turn on iCloud sync, that same data syncs across your own devices through your private iCloud account — handled entirely by Apple, under Apple's terms. Roadworthy has no servers of its own and never sees this data.</p>
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
+    <a href="/index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">
+      <img class="mark-light" src="/assets/mark.svg" alt="" width="31" height="20">
+      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="31" height="20">
+      CanoSoftware
+    </a>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+      <a href="/index.html#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
+      <a href="/index.html#about" style="font-size:15px;color:var(--text-muted);">About</a>
+      <a href="/support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
+    </div>
+  </nav>
 
-    <h2>Garage sharing</h2>
-    <p>If you invite someone to share a garage, the shared vehicles, maintenance history, and documents sync between your devices and theirs through Apple's CloudKit sharing — again, within Apple's infrastructure, not ours. Only people you explicitly invite can see a shared garage.</p>
+  <div style="max-width:640px;padding:24px 0 80px;">
+    <a href="index.html" style="font-size:13px;color:var(--accent);">← Back to Roadworthy</a>
+    <h1 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.8rem,4vw + 1rem,2.6rem);line-height:1.16;letter-spacing:-0.01em;margin:20px 0 8px;color:var(--text);">Roadworthy — Privacy Policy</h1>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 32px;">Last updated: August 2026</p>
 
-    <h2>Recalls</h2>
-    <p>To check for open recalls, Roadworthy sends your vehicle's year, make, and model to the National Highway Traffic Safety Administration's public recalls API. No other information, including your VIN, is included in that request.</p>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Roadworthy is built around your own garage, on your own device. This policy covers what data the app handles and where it goes.</p>
 
-    <h2>VIN decode</h2>
-    <p>If you tap "Decode VIN" while adding or editing a vehicle, Roadworthy sends that VIN to the National Highway Traffic Safety Administration's public vPIC decoding API to look up the make, model, year, body type, fuel type, and trim. This only happens when you explicitly tap that button — your VIN is never sent automatically or for any other purpose.</p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">What's stored, and where</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Every vehicle, maintenance record, document, and reading you add is stored locally on your device. Turn on iCloud sync and that same data syncs across your own devices through your private iCloud account, handled entirely by Apple, under Apple's terms. Roadworthy has no servers of its own and never sees this data.</p>
 
-    <h2>Receipt scanning</h2>
-    <p>Receipt scanning (Pro) runs on your device using Apple's on-device text recognition. Scanned images and extracted text are never uploaded anywhere.</p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Garage sharing</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">If you invite someone to share a garage, the shared vehicles, maintenance history, and documents sync between your devices and theirs through Apple's CloudKit sharing, again within Apple's infrastructure, not ours. Only people you explicitly invite can see a shared garage.</p>
 
-    <h2>Notifications</h2>
-    <p>Maintenance reminders are scheduled and delivered entirely on your device as local notifications.</p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Recalls</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">To check for open recalls, Roadworthy sends your vehicle's year, make, and model to the National Highway Traffic Safety Administration's public recalls API. No other information, including your VIN, is included in that request.</p>
 
-    <h2>What we don't do</h2>
-    <p>No accounts, no analytics, no advertising, no third-party tracking SDKs. Nothing you enter is sold or shared.</p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">VIN decode</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Tap "Decode VIN" while adding or editing a vehicle and Roadworthy sends that VIN to the National Highway Traffic Safety Administration's public vPIC decoding API to look up the make, model, year, body type, fuel type, and trim. This only happens when you tap that button. Your VIN is never sent automatically or for any other purpose.</p>
 
-    <h2>Your data</h2>
-    <p>Because Roadworthy has no servers, there's nothing for us to expose, correct, or delete remotely. Deleting the app removes its local data from your device; data synced to iCloud can be managed or deleted from your device's iCloud settings.</p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Receipt scanning</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Receipt scanning (Pro) runs on your device using Apple's on-device text recognition. Scanned images and extracted text are never uploaded anywhere.</p>
 
-    <h2>Contact</h2>
-    <p>Questions about this policy? <a href="mailto:support@canosoftware.net">support@canosoftware.net</a></p>
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Notifications</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Maintenance reminders are scheduled and delivered entirely on your device as local notifications.</p>
+
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">What we don't do</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">No accounts, no analytics, no advertising, no third-party tracking SDKs. Nothing you enter is sold or shared.</p>
+
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Your data</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0 0 32px;">Roadworthy has no servers, so there's nothing for me to expose, correct, or delete remotely. Deleting the app removes its local data from your device; data synced to iCloud can be managed or deleted from your device's iCloud settings.</p>
+
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Contact</h2>
+    <p style="font-size:17px;line-height:1.7;color:var(--text);margin:0;">Questions about this policy? <a href="mailto:support@canosoftware.net">support@canosoftware.net</a></p>
   </div>
+
+  <footer style="padding:24px 0 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:9px;">
+      <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
+      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 Roadworthy · A CanoSoftware app</p>
+    </div>
+    <div style="display:flex;gap:20px;">
+      <a href="index.html" style="font-size:13px;color:var(--text-muted);">Back to Roadworthy</a>
+      <a href="mailto:support@canosoftware.net" style="font-size:13px;color:var(--text-muted);">support@canosoftware.net</a>
+    </div>
+  </footer>
+
+</div>
+
 </body>
 </html>

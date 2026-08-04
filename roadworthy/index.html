@@ -3,143 +3,169 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roadworthy — Never wonder what your car needs next.</title>
-<meta name="description" content="Roadworthy tracks every vehicle in your garage — maintenance, mileage, recalls, and costs — and tells you what's due, by date or by mile, whichever comes first.">
-<link rel="icon" href="assets/AppIcon.png">
-<link rel="stylesheet" href="styles.css">
+<title>Roadworthy — track every car, know what's due</title>
+<meta name="description" content="Roadworthy tracks every vehicle in your garage — maintenance, mileage, recalls, and cost — and tells you what's due, by date or by mile, whichever comes first.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+:root{
+  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
+  --text:#262220;--text-muted:#6B6259;
+  --accent:#B5563B;--accent-contrast:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
+    --text:#EDE6DA;--text-muted:#A79C8C;
+    --accent:#E08863;--accent-contrast:#17140F;
+    --border:#33291F;--border-strong:#463A2B;
+  }
+}
+html{background:var(--bg);color-scheme:light dark;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{opacity:0.72;}
+::selection{background:var(--accent);color:var(--accent-contrast);}
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){
+  .mark-light{display:none;}
+  .mark-dark{display:block;}
+}
+img{max-width:100%;display:block;}
+</style>
 </head>
 <body>
-<div class="wrap">
 
-  <nav class="nav">
-    <div class="nav-brand">
-      <img src="assets/AppIcon.png" alt="Roadworthy icon">
-      <span>Roadworthy</span>
-    </div>
-    <div class="nav-links">
-      <a class="nav-link" href="#features">Features</a>
-      <a class="nav-link" href="#pricing">Pricing</a>
-      <a class="nav-link" href="privacy.html">Privacy</a>
-      <!-- PLACEHOLDER: restyle as a normal enabled link with Apple's official App Store badge once Phase 20 (submission) is live -->
-      <a class="badge-disabled" href="#" aria-disabled="true">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-        <span>Coming Soon</span>
-      </a>
+<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
+    <a href="/index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">
+      <img class="mark-light" src="/assets/mark.svg" alt="" width="31" height="20">
+      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="31" height="20">
+      CanoSoftware
+    </a>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+      <a href="/index.html#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
+      <a href="/index.html#about" style="font-size:15px;color:var(--text-muted);">About</a>
+      <a href="/support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">For iPhone</p>
-      <h1>Never wonder what your car needs next.</h1>
-      <p class="hero-sub">Roadworthy tracks every vehicle in your garage — maintenance, mileage, recalls, and costs — and tells you what's due, by date or by mile, whichever comes first.</p>
-      <!-- PLACEHOLDER: replace with Apple's official App Store badge + real link once Phase 20 (submission) is live -->
-      <a class="cta-disabled" href="#" aria-disabled="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-        <span>Coming soon to the App Store</span>
-      </a>
-      <p class="hero-caption">Free to start · Pro unlocks unlimited vehicles</p>
-    </div>
-    <div class="hero-phones">
-      <div class="phone-main">
-        <img class="screenshot-slot" src="assets/screenshot-due.png" alt="Roadworthy's Due dashboard, showing overdue, due soon, and upcoming maintenance grouped by vehicle">
-      </div>
-      <div class="phone-second">
-        <img class="screenshot-slot" src="assets/screenshot-garage.png" alt="Roadworthy's Garage screen, listing every vehicle in one place">
+  <header style="padding:48px 0 64px;display:flex;align-items:center;gap:48px;flex-wrap:wrap;">
+    <div style="flex:1 1 400px;min-width:280px;">
+      <h1 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.1rem,5vw + 1rem,3.4rem);line-height:1.12;letter-spacing:-0.01em;margin:0 0 20px;color:var(--text);">One garage. Every car. Nothing forgotten.</h1>
+      <p style="font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0 0 24px;max-width:480px;">Roadworthy tracks maintenance, mileage, recalls, and cost for every vehicle in the garage, and tells you what's due by date or by mile, whichever comes first.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;border:1px solid var(--border-strong);color:var(--text-muted);white-space:nowrap;">Coming soon to the App Store</span>
+        <span style="font-size:14px;color:var(--text-muted);">Free to start · Pro unlocks unlimited vehicles</span>
       </div>
     </div>
-  </section>
+    <div style="flex:0 0 300px;border:1px solid var(--border);border-radius:16px;background:var(--card);overflow:hidden;">
+      <img src="assets/screenshot-garage.png" alt="Roadworthy's Garage screen, listing every vehicle in one place" style="display:block;width:100%;height:380px;object-fit:cover;object-position:top;">
+    </div>
+  </header>
 
-  <section id="features" class="features">
-    <h2>Everything one garage needs.</h2>
-    <div class="features-grid">
+  <section style="padding:8px 0 72px;border-top:1px solid var(--border);">
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 12px;">Features</h2>
+    <h3 style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:var(--text);margin:0 0 32px;">Everything one garage needs.</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
-        <h3>Due by date or mileage</h3>
-        <p>Every item tracks both triggers at once, and surfaces whichever arrives first — no more guessing.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">Due by date or mileage</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Every item tracks both triggers at once and shows whichever arrives first.</p>
       </div>
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="7" rx="2"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/><path d="M5 11l2-5h10l2 5"/></svg>
-        <h3>One garage, every car</h3>
-        <p>Add your whole household's vehicles and switch between "all" and "this one" with a tap.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">One garage, every car</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Add your whole household's vehicles and switch between "all" and "this one" with a tap.</p>
       </div>
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21a9 9 0 1 1 9-9"/><path d="M12 12l5-3"/></svg>
-        <h3>Mileage, predicted</h3>
-        <p>Roadworthy estimates where your odometer sits between check-ins, so due dates stay accurate.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">Mileage, predicted</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Roadworthy estimates where your odometer sits between check-ins, so due dates stay accurate.</p>
       </div>
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5 5 0 0 0-5 5c0 4-2 5-2 7h14c0-2-2-3-2-7a5 5 0 0 0-5-5z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
-        <h3>Recalls, automatically</h3>
-        <p>Every vehicle you add is checked against NHTSA's open-recall database — no manual lookups.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">Recalls, automatically</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Every vehicle you add is checked against NHTSA's open-recall database automatically.</p>
       </div>
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="8" cy="9" r="3"/><circle cx="17" cy="10" r="2.6"/><path d="M3 20c0-3.3 2.5-5.5 5.5-5.5S14 16.7 14 20"/><path d="M14.5 20c0-2.4 1.6-4 4-4s3.5 1.4 3.5 4"/></svg>
-        <h3>Share the garage</h3>
-        <p>Invite the household. Everyone sees the same due list for the same cars.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">Share the garage</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Invite the household. Everyone sees the same due list for the same cars.</p>
       </div>
 
-      <div class="feature-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
-        <h3>Know what it costs</h3>
-        <p>Real cost-of-ownership tracking, with a full service history you can export as a PDF.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <span style="font-size:17px;font-weight:600;color:var(--text);">Know what it costs</span>
+        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Real cost-of-ownership tracking, with a full service history you can export as a PDF.</p>
       </div>
 
     </div>
   </section>
 
-  <section class="showcase">
-    <div class="showcase-copy">
-      <h3>See what's due, across every vehicle.</h3>
-      <p>Overdue, due soon, upcoming, and as-needed — grouped and ready to share as a checklist before your next shop visit.</p>
+  <section style="padding:40px 32px;margin-bottom:72px;border:1px solid var(--border);border-radius:16px;background:var(--bg-alt);display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
+    <div style="flex:1 1 260px;">
+      <h3 style="font-size:21px;font-weight:600;margin:0 0 12px;color:var(--text);">See what's due, across every vehicle.</h3>
+      <p style="font-size:15.5px;line-height:1.6;color:var(--text-muted);margin:0;max-width:420px;">Overdue, due soon, upcoming, and as-needed, grouped and ready to share as a checklist before your next shop visit.</p>
     </div>
-    <div class="showcase-phone">
-      <img class="screenshot-slot" src="assets/screenshot-due.png" alt="Roadworthy's Due dashboard, grouped by overdue, due soon, upcoming, and as-needed">
+    <div style="flex:0 0 260px;border:1px solid var(--border);border-radius:16px;background:var(--card);overflow:hidden;">
+      <img src="assets/screenshot-due.png" alt="Roadworthy's Due dashboard, grouped by overdue, due soon, upcoming, and as-needed" style="display:block;width:100%;height:320px;object-fit:cover;object-position:top;">
     </div>
   </section>
 
-  <section id="pricing" class="pricing">
-    <h2>Free to start. Upgrade if you need more.</h2>
-    <div class="pricing-grid">
-      <div class="price-card free">
-        <div class="plan-label">Free</div>
-        <div class="plan-price">$0</div>
-        <ul>
-          <li>✓ Up to 2 vehicles</li>
-          <li>✓ Unlimited maintenance logging &amp; history</li>
-          <li>✓ Due reminders, recalls &amp; warranties</li>
-          <li>✓ Up to 10 documents</li>
+  <section style="padding:8px 0 72px;">
+    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Pricing</h2>
+    <h3 style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:var(--text);margin:0 0 32px;">Free to start. Upgrade if you need more.</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+
+      <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <div>
+          <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Free</div>
+          <div style="font-size:32px;font-weight:600;color:var(--text);">$0</div>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:14.5px;color:var(--text);">Up to 2 vehicles</li>
+          <li style="font-size:14.5px;color:var(--text);">Unlimited maintenance logging and history</li>
+          <li style="font-size:14.5px;color:var(--text);">Due reminders, recalls, and warranties</li>
+          <li style="font-size:14.5px;color:var(--text);">Up to 10 documents</li>
         </ul>
       </div>
-      <div class="price-card pro">
-        <div class="plan-label">Pro</div>
-        <div class="plan-price">$19.99<span class="suffix">/yr</span></div>
-        <div class="plan-sub">or $2.99/mo · $59.99 once, lifetime · 7-day free trial</div>
-        <ul>
-          <li>✓ Unlimited vehicles</li>
-          <li>✓ Garage sharing</li>
-          <li>✓ Receipt scanning</li>
-          <li>✓ Service history PDF export</li>
-          <li>✓ Unlimited documents</li>
-          <li>✓ Family Sharing — one purchase covers your whole household</li>
+
+      <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
+        <div>
+          <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Pro</div>
+          <div style="font-size:32px;font-weight:600;color:var(--text);">$19.99<span style="font-size:15px;font-weight:500;color:var(--text-muted);">/yr</span></div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">or $2.99/mo · $59.99 once, lifetime · 7-day free trial</div>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:14.5px;color:var(--text);">Unlimited vehicles</li>
+          <li style="font-size:14.5px;color:var(--text);">Garage sharing</li>
+          <li style="font-size:14.5px;color:var(--text);">Receipt scanning</li>
+          <li style="font-size:14.5px;color:var(--text);">Service history PDF export</li>
+          <li style="font-size:14.5px;color:var(--text);">Unlimited documents</li>
+          <li style="font-size:14.5px;color:var(--text);">Family Sharing — one purchase covers your whole household</li>
         </ul>
       </div>
+
     </div>
   </section>
 
-  <footer class="footer">
-    <span>© 2026 Roadworthy</span>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="mailto:support@canosoftware.net">support@canosoftware.net</a>
+  <footer style="padding:24px 0 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:9px;">
+      <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
+      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 Roadworthy · A CanoSoftware app</p>
+    </div>
+    <div style="display:flex;gap:20px;">
+      <a href="privacy.html" style="font-size:13px;color:var(--text-muted);">Privacy Policy</a>
+      <a href="mailto:support@canosoftware.net" style="font-size:13px;color:var(--text-muted);">support@canosoftware.net</a>
     </div>
   </footer>
 
 </div>
+
 </body>
 </html>
