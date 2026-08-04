@@ -15,7 +15,7 @@ roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
 ```
 
-Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, `styles.css`, and `assets/`. These were migrated as-is from each app's original standalone marketing site (previously hosted on Vercel) — content and design are untouched, just relocated. Editing one app's folder has no effect on the others or on the hub page.
+Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
