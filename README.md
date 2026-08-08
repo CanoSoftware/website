@@ -15,6 +15,15 @@ roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
 ```
 
+Beacon is linked from the hub page too, but unlike the four apps above it isn't a
+folder in this repo — it's a separate Next.js web app (source: `tjtaurisano1/beacon`,
+not yet transferred to the CanoSoftware org) deployed on its own Vercel project, reachable
+at `beacon.canosoftware.net` via a custom domain (not a `canosoftware.net/beacon/`
+subdirectory). It gets a subdomain instead of a subdirectory because it's a multi-user
+web app with its own auth/backend, not a static marketing + privacy pair like the other
+four. Nothing in this repo needs to change when Beacon's app code changes — only the
+hub page's card/footer link (`index.html`) if its URL or status ever changes.
+
 Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
 URLs:
@@ -38,7 +47,7 @@ Those projects are still live but now serve nothing but a redirect (`vercel.json
 
 ## Related repos
 
-All under the [CanoSoftware](https://github.com/CanoSoftware) org:
+All under the [CanoSoftware](https://github.com/CanoSoftware) org, except Beacon (see below):
 - `Onward`, `Steward`, `Roadworthy`, `Homestead` — app source (Xcode projects)
 - `onward-marketing-site`, `steward-marketing-site`, `roadworthy-marketing-site`,
   `homestead-marketing-site` — the original standalone sources each app folder above was
@@ -48,3 +57,6 @@ All under the [CanoSoftware](https://github.com/CanoSoftware) org:
   repo but not in `onward-marketing-site`, so they briefly disagreed). Make all future
   marketing/privacy edits in this repo's app folders; the archived repos are kept only for
   history.
+- `Beacon` — app source (Next.js), currently at `tjtaurisano1/beacon` on TJ's personal
+  GitHub account, not yet transferred to the CanoSoftware org. Deployed on its own
+  Vercel project at `beacon.canosoftware.net`.
