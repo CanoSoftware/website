@@ -16,10 +16,10 @@ homestead/               Homestead marketing + privacy pages
 ```
 
 Beacon is linked from the hub page too, but unlike the four apps above it isn't a
-folder in this repo — it's a separate Next.js web app (source: `tjtaurisano1/beacon`,
-not yet transferred to the CanoSoftware org) deployed on its own Vercel project, reachable
-at `beacon.canosoftware.net` via a custom domain (not a `canosoftware.net/beacon/`
-subdirectory). It gets a subdomain instead of a subdirectory because it's a multi-user
+folder in this repo — it's a separate Next.js web app (source: `CanoSoftware/beacon`)
+deployed on its own Vercel project, reachable at `beacon.canosoftware.net` via a custom
+domain (not a `canosoftware.net/beacon/` subdirectory). It gets a subdomain instead of
+a subdirectory because it's a multi-user
 web app with its own auth/backend, not a static marketing + privacy pair like the other
 four. Nothing in this repo needs to change when Beacon's app code changes — only the
 hub page's card/footer link (`index.html`) if its URL or status ever changes.
@@ -47,7 +47,7 @@ Those projects are still live but now serve nothing but a redirect (`vercel.json
 
 ## Related repos
 
-All under the [CanoSoftware](https://github.com/CanoSoftware) org, except Beacon (see below):
+All under the [CanoSoftware](https://github.com/CanoSoftware) org:
 - `Onward`, `Steward`, `Roadworthy`, `Homestead` — app source (Xcode projects)
 - `onward-marketing-site`, `steward-marketing-site`, `roadworthy-marketing-site`,
   `homestead-marketing-site` — the original standalone sources each app folder above was
@@ -57,6 +57,5 @@ All under the [CanoSoftware](https://github.com/CanoSoftware) org, except Beacon
   repo but not in `onward-marketing-site`, so they briefly disagreed). Make all future
   marketing/privacy edits in this repo's app folders; the archived repos are kept only for
   history.
-- `Beacon` — app source (Next.js), currently at `tjtaurisano1/beacon` on TJ's personal
-  GitHub account, not yet transferred to the CanoSoftware org. Deployed on its own
-  Vercel project at `beacon.canosoftware.net`.
+- `Beacon` — app source (Next.js), deployed on its own Vercel project at
+  `beacon.canosoftware.net`.
