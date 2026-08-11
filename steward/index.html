@@ -32,6 +32,12 @@
     --border:#33291F;--border-strong:#463A2B;
   }
 }
+.hero-grid{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
+.privacy-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;}
+@media (min-width:760px){
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:48px;}
+  .privacy-grid{grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:32px;}
+}
 html{background:var(--bg);color-scheme:light dark;}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
 a{color:var(--accent);text-decoration:none;}
@@ -58,7 +64,7 @@ img{max-width:100%;height:auto;display:block;}
     </div>
   </nav>
 
-  <header style="padding:48px 0 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:48px;align-items:center;">
+  <header class="hero-grid" style="padding:48px 0 64px;">
     <div style="max-width:520px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
         <img src="/icons/steward-icon.png" alt="Steward app icon" width="44" height="44" style="border-radius:9.6px;display:block;">
@@ -115,17 +121,23 @@ img{max-width:100%;height:auto;display:block;}
       <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card);">
         <img src="assets/final-05-share.png" alt="Household sharing screen" style="width:100%;">
       </div>
+      <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card);">
+        <img src="assets/final-06-vendors.png" alt="Vendors list screen" style="width:100%;">
+      </div>
+      <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card);">
+        <img src="assets/final-07-emergency.png" alt="Emergency shutoffs and utility contacts screen" style="width:100%;">
+      </div>
     </div>
   </section>
 
-  <section id="privacy" style="padding:40px 32px;margin-bottom:72px;border:1px solid var(--border);border-radius:16px;background:var(--bg-alt);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:32px;align-items:center;">
+  <section id="privacy" class="privacy-grid" style="padding:40px 32px;margin-bottom:72px;border:1px solid var(--border);border-radius:16px;background:var(--bg-alt);">
     <div>
       <h2 style="font-size:21px;font-weight:600;margin:0 0 12px;color:var(--text);">Private by design.</h2>
       <p style="font-size:15.5px;line-height:1.6;color:var(--text-muted);margin:0 0 16px;max-width:480px;">Steward runs entirely on your devices and syncs only through your own iCloud. No accounts, no ads, no analytics.</p>
       <a href="privacy.html" style="font-size:14.5px;color:var(--accent);">Read the full privacy policy →</a>
     </div>
     <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;">
-      <img src="assets/final-06-privacy.png" alt="Private by design settings screen" style="width:100%;">
+      <img src="assets/final-08-price.png" alt="Steward is free to use, with a one-time $9.99 Pro unlock. No ads, no tracking, no servers of ours." style="width:100%;">
     </div>
   </section>
 
