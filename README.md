@@ -6,6 +6,7 @@ Source for [canosoftware.net](https://canosoftware.net) — the CanoSoftware stu
 
 ```
 index.html          Studio hub: hero, app list, about, footer
+everything.html      Unlisted page: all five apps, including Beacon
 support.html         Shared support/FAQ page for all four apps
 icons/                App icons used on the hub page
 
@@ -15,14 +16,17 @@ roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
 ```
 
-Beacon is linked from the hub page too, but unlike the four apps above it isn't a
-folder in this repo — it's a separate Next.js web app (source: `CanoSoftware/beacon`)
-deployed on its own Vercel project, reachable at `beacon.canosoftware.net` via a custom
-domain (not a `canosoftware.net/beacon/` subdirectory). It gets a subdomain instead of
-a subdirectory because it's a multi-user
-web app with its own auth/backend, not a static marketing + privacy pair like the other
-four. Nothing in this repo needs to change when Beacon's app code changes — only the
-hub page's card/footer link (`index.html`) if its URL or status ever changes.
+**Beacon is not linked from the public hub page (`index.html`) or footer.** TJ doesn't
+want coworkers who get the canosoftware.net link to see it, since it's a job-search tool
+and its presence would signal he's job hunting. It's still fully live at
+`beacon.canosoftware.net` (a separate Next.js web app, source: `CanoSoftware/beacon`,
+deployed on its own Vercel project via custom domain — not a `canosoftware.net/beacon/`
+subdirectory, since it's a multi-user app with its own auth/backend, not a static
+marketing + privacy pair like the other four) — just not discoverable by browsing the
+main site. `everything.html` is an unlisted page (not in nav, footer, or `sitemap.xml`;
+`<meta name="robots" content="noindex, nofollow">`) with the full five-app list including
+Beacon, meant for TJ to link directly to friends/family who won't misread it. If Beacon's
+URL or status changes, update its card there, not on `index.html`.
 
 Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
