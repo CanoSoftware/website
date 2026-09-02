@@ -6,7 +6,7 @@ Source for [canosoftware.net](https://canosoftware.net) — the CanoSoftware stu
 
 ```
 index.html          Studio hub: hero, app list, about, footer
-everything.html      Unlisted page: all five apps, including Beacon
+everything.html      Unlisted page: all six apps, including Beacon
 support.html         Shared support/FAQ page for all four apps
 icons/                App icons used on the hub page
 
@@ -24,9 +24,23 @@ deployed on its own Vercel project via custom domain — not a `canosoftware.net
 subdirectory, since it's a multi-user app with its own auth/backend, not a static
 marketing + privacy pair like the other four) — just not discoverable by browsing the
 main site. `everything.html` is an unlisted page (not in nav, footer, or `sitemap.xml`;
-`<meta name="robots" content="noindex, nofollow">`) with the full five-app list including
+`<meta name="robots" content="noindex, nofollow">`) with the full six-app list including
 Beacon, meant for TJ to link directly to friends/family who won't misread it. If Beacon's
 URL or status changes, update its card there, not on `index.html`.
+
+**Ledger is also not a subdirectory of this repo — same reasoning as Beacon.** It's linked from
+both `index.html` and `everything.html` (unlike Beacon, it's not hidden — Ledger isn't a
+job-search tool), but its card on both pages links out to `https://ledger.canosoftware.net`
+rather than a `/ledger/` path. Its source (marketing landing page, privacy policy, and the app's
+`apple-app-site-association` file) lives in `CanoSoftware/Ledger`'s own `site/` directory,
+deployed by its own Cloudflare project bound to that custom domain — added 2026-09-01, after
+TJ decided Ledger should get its own subdomain like Beacon rather than a `canosoftware.net/ledger/`
+path, since it's growing a real web-app component in v2. `sitemap.xml` doesn't list it, matching
+Beacon's own omission — that's a different domain's sitemap's job. The one piece this repo still
+provides for it: `functions/api/subscribe.js` (the shared newsletter signup) now answers CORS
+preflight and allows any `https://*.canosoftware.net` origin, so Ledger's landing page can call it
+cross-origin for its launch-email form. Any future `*.canosoftware.net` subdomain can reuse it
+the same way, no further backend change needed.
 
 Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
@@ -63,3 +77,6 @@ All under the [CanoSoftware](https://github.com/CanoSoftware) org:
   history.
 - `Beacon` — app source (Next.js), deployed on its own Vercel project at
   `beacon.canosoftware.net`.
+- `Ledger` — app source (Xcode project). Its own `site/` directory (not this repo) holds the
+  marketing landing page, privacy policy, and AASA file, deployed on its own Cloudflare project at
+  `ledger.canosoftware.net`.
