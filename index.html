@@ -35,6 +35,7 @@
   --text:#262220;--text-muted:#6B6259;
   --accent:#B5563B;--accent-contrast:#FBF3EC;
   --border:#DDD4C4;--border-strong:#C9BEA9;
+  --accent-services:#2E5B4C;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -42,6 +43,7 @@
     --text:#EDE6DA;--text-muted:#A79C8C;
     --accent:#E08863;--accent-contrast:#17140F;
     --border:#33291F;--border-strong:#463A2B;
+    --accent-services:#7FAE9B;
   }
 }
 html{background:var(--bg);color-scheme:light dark;}
@@ -58,10 +60,11 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
 
   <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
     <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);"><img class="mark mark-light" src="assets/mark.svg" alt="" width="31" height="20" /><img class="mark mark-dark" src="assets/mark-dark.svg" alt="" width="31" height="20" />CanoSoftware</a>
-    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+    <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:center;">
       <a href="#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
       <a href="#about" style="font-size:15px;color:var(--text-muted);">About</a>
       <a href="support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
+      <a href="https://web.canosoftware.net" style="font-size:14px;font-weight:600;color:var(--accent-services);border:1px solid var(--accent-services);padding:6px 14px;border-radius:20px;">Web services</a>
     </div>
   </nav>
 
@@ -222,6 +225,12 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
         <a href="/roadworthy/privacy.html" style="font-size:14.5px;color:var(--text);">Roadworthy</a>
         <a href="/homestead/privacy.html" style="font-size:14.5px;color:var(--text);">Homestead</a>
         <a href="https://ledger.canosoftware.net/privacy" style="font-size:14.5px;color:var(--text);">Ledger</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-services);margin-bottom:4px;">Web services</span>
+        <a href="https://web.canosoftware.net#services" style="font-size:14.5px;color:var(--text);">Website refresh &amp; rebuild</a>
+        <a href="https://web.canosoftware.net/pricing.html" style="font-size:14.5px;color:var(--text);">Pricing</a>
+        <a href="https://web.canosoftware.net#contact" style="font-size:14.5px;color:var(--text);">Get a quote</a>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:9px;">
