@@ -42,6 +42,16 @@ preflight and allows any `https://*.canosoftware.net` origin, so Ledger's landin
 cross-origin for its launch-email form. Any future `*.canosoftware.net` subdomain can reuse it
 the same way, no further backend change needed.
 
+**Web services is a B2B offering, linked but not hosted here.** `web.canosoftware.net` sells
+website refresh/rebuild/from-scratch work to small businesses — a separate product line from
+the four consumer apps above, with its own repo (`CanoSoftware/Web`) and its own Cloudflare
+Worker deployment. Since 2026-09-07, `index.html`'s nav has a "Web services" pill (after
+Support) and the footer has a fourth "Web services" column (Website refresh & rebuild,
+Pricing, Get a quote), both linking out to `https://web.canosoftware.net`. Both use a new
+`--accent-services` CSS variable (`#2E5B4C` light / `#7FAE9B` dark) instead of the site's
+usual terracotta `--accent`, so the link visually reads as a distinct offering rather than a
+fifth app card. `sitemap.xml` doesn't list it, matching Beacon/Ledger's own omission.
+
 Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
 URLs:
@@ -80,3 +90,6 @@ All under the [CanoSoftware](https://github.com/CanoSoftware) org:
 - `Ledger` — app source (Xcode project). Its own `site/` directory (not this repo) holds the
   marketing landing page, privacy policy, and AASA file, deployed on its own Cloudflare project at
   `ledger.canosoftware.net`.
+- `Web` (repo `web-services`) — the website-services product's full source (six pages: Home,
+  Services, Work, Pricing, About, Contact), deployed as a Cloudflare Worker at
+  `web.canosoftware.net`. Linked from this repo's `index.html` nav/footer but not hosted here.
