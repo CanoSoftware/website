@@ -53,6 +53,7 @@ a:hover{opacity:0.72;}
 ::selection{background:var(--accent);color:var(--accent-contrast);}
 img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:cover;background:var(--bg-alt);}
 [data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
+#top,#apps,#studio{scroll-margin-top:96px;}
 </style>
 </head>
 <body>
@@ -78,8 +79,15 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
 
   <header id="top" style="position:relative;padding:clamp(48px,9vw,120px) 0 72px;overflow:hidden;">
     <h1 data-hero style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.6rem,8vw,6.5rem);line-height:0.98;letter-spacing:-0.025em;margin:0 0 28px;color:var(--text);transform-origin:left center;">Software<br>that remembers</h1>
-    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;max-width:900px;">
+    <div data-hero-lede style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;max-width:900px;">
       <p style="flex:1 1 380px;min-width:0;font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0;max-width:520px;">&hellip; so you don't have to. Five small apps for your goals, your house, your car and your family's week. And each has a one-time price that doesn't expire.</p>
+      <div style="flex:0 1 auto;display:flex;gap:8px;">
+        <img src="icons/onward-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
+        <img src="icons/steward-icon.png" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
+        <img src="icons/roadworthy-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
+        <img src="icons/homestead-icon.png" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
+        <img src="icons/ledger-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
+      </div>
     </div>
   </header>
 
@@ -148,23 +156,40 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
     </div>
   </section>
 
-  <section data-reveal="1" style="padding:48px 0 8px;border-top:1px solid var(--border);">
-    <div style="padding:clamp(32px,5vw,56px) clamp(24px,4vw,44px);border-radius:16px;background:var(--accent-services);">
-      <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;">
-        <div style="flex:1 1 420px;min-width:0;">
-          <span style="font-size:14px;font-weight:600;color:var(--bg);opacity:.85;display:block;margin-bottom:14px;">For small businesses</span>
-          <h2 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-0.018em;margin:0 0 14px;color:var(--bg);">I also build websites for small businesses.</h2>
-          <p style="font-size:16px;line-height:1.6;margin:0;color:var(--bg);opacity:.88;max-width:520px;">A refresh of what you have, a rebuild, or something from scratch. Fixed quotes, no retainer, and you own everything at the end.</p>
+  <section data-reveal="1" style="padding:56px 0;">
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;">
+      <div style="flex:1 1 180px;min-width:0;max-width:220px;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;"></span>
+          <span style="font-size:14.5px;font-weight:600;color:var(--accent);">Now</span>
         </div>
-        <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:10px;">
-          <a href="https://web.canosoftware.net" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--accent-services);background:var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">Go to web services <span aria-hidden="true">&#8599;</span></a>
-          <a href="https://web.canosoftware.net/pricing.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">See pricing <span aria-hidden="true">&#8594;</span></a>
-        </div>
+        <span style="font-size:14.5px;color:var(--text-muted);">What I'm building</span>
       </div>
+      <p style="flex:1 1 460px;min-width:0;font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:500;line-height:1.32;letter-spacing:-0.012em;margin:0;color:var(--text);max-width:700px;">Ledger is in TestFlight &mdash; zero-based budgeting that syncs between the Mac and the phone. After that, Watch complications for Onward.</p>
     </div>
   </section>
 
-  <section id="studio" data-reveal="1" style="padding:8px 0 72px;max-width:820px;">
+</div>
+
+<section data-reveal="1" style="background:var(--accent-services);">
+  <div style="max-width:1080px;margin:0 auto;padding:clamp(40px,7vw,64px) 24px;">
+    <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;">
+      <div style="flex:1 1 420px;min-width:0;">
+        <span style="font-size:14px;font-weight:600;color:var(--bg);opacity:.85;display:block;margin-bottom:14px;">For small businesses</span>
+        <h2 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-0.018em;margin:0 0 14px;color:var(--bg);">I also build websites for small businesses.</h2>
+        <p style="font-size:16px;line-height:1.6;margin:0;color:var(--bg);opacity:.88;max-width:520px;">A refresh of what you have, a rebuild, or something from scratch. Fixed quotes, no retainer, and you own everything at the end.</p>
+      </div>
+      <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:10px;">
+        <a href="https://web.canosoftware.net" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--accent-services);background:var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">Go to web services <span aria-hidden="true">&#8599;</span></a>
+        <a href="https://web.canosoftware.net/pricing.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">See pricing <span aria-hidden="true">&#8594;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+
+  <section id="studio" data-reveal="1" style="padding:56px 0 72px;max-width:820px;">
     <div style="display:flex;flex-wrap:wrap;gap:36px;">
       <div style="flex:1 1 160px;min-width:0;">
         <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);display:block;margin:48px 0 20px;">About the studio</span>
@@ -256,14 +281,17 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
         updateBar();
       }
 
-      // Hero shrinks slightly as you scroll past it.
+      // Hero shrinks slightly as you scroll past it; the lede + app icons fade.
       var hero = document.querySelector('[data-hero]');
-      if (hero && !reduced) {
+      var lede = document.querySelector('[data-hero-lede]');
+      if ((hero || lede) && !reduced) {
         var heroRaf = null;
+        var clamp01 = function (v) { return Math.min(1, Math.max(0, v)); };
         var updateHero = function () {
           heroRaf = null;
-          var p = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight * 0.7)));
-          hero.style.transform = 'translateY(' + (-p * 40).toFixed(1) + 'px) scale(' + (1 - p * 0.06).toFixed(4) + ')';
+          var p = clamp01(window.scrollY / Math.max(1, window.innerHeight * 0.7));
+          if (hero) hero.style.transform = 'translateY(' + (-p * 40).toFixed(1) + 'px) scale(' + (1 - p * 0.06).toFixed(4) + ')';
+          if (lede) lede.style.opacity = (1 - clamp01((p - 0.25) / 0.45) * 0.85).toFixed(3);
         };
         window.addEventListener('scroll', function () {
           if (heroRaf) return;
