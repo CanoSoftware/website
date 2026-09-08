@@ -14,323 +14,472 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500&display=swap" rel="stylesheet">
 <style>
-.mark-light{display:block;}
-.mark-dark{display:none;}
-@media (prefers-color-scheme: dark){
-  .mark-light{display:none;}
-  .mark-dark{display:block;}
-}
 :root{
-  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
-  --text:#262220;--text-muted:#6B6259;
-  --accent:#B5563B;--accent-contrast:#FBF3EC;
-  --border:#DDD4C4;--border-strong:#C9BEA9;
+  --page:#F7F3EC;--surface-raised:#FBF8F2;--surface-sunken:#EFE9DD;--surface-tile:#FBF3EC;
+  --text-primary:#262220;--text-secondary:#6B6259;--text-tertiary:#706758;
+  --terracotta:#B5563B;--terracotta-text:#9C462E;--text-on-terracotta:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;--border-interactive:#8F8169;
+  --pill-shipped-bg:#9C462E;--pill-shipped-text:#FBF3EC;
+  --pill-soon-border:#C9BEA9;--pill-soon-text:#6B6259;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
-    --text:#EDE6DA;--text-muted:#A79C8C;
-    --accent:#E08863;--accent-contrast:#17140F;
-    --border:#33291F;--border-strong:#463A2B;
+    --page:#17140F;--surface-raised:#211D18;--surface-sunken:#100E0A;--surface-tile:#262220;
+    --text-primary:#EDE6DA;--text-secondary:#A79C8C;--text-tertiary:#93897A;
+    --terracotta:#E08863;--terracotta-text:#E08863;
+    --border:#33291F;--border-strong:#463A2C;--border-interactive:#7F6C54;
+    --pill-shipped-bg:#E08863;--pill-shipped-text:#17140F;--text-on-terracotta:#17140F;
+    --pill-soon-border:#463A2C;--pill-soon-text:#A79C8C;
   }
 }
-html{background:var(--bg);color-scheme:light dark;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
-a{color:var(--accent);text-decoration:none;}
-a:hover{opacity:0.72;}
-::selection{background:var(--accent);color:var(--accent-contrast);}
-details summary::-webkit-details-marker{display:none;}
+html{background:var(--page);color-scheme:light dark;}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--terracotta-text);text-decoration:none;}
+a:hover{opacity:.72;}
+::selection{background:var(--terracotta);color:var(--text-on-terracotta);}
 img{max-width:100%;height:auto;display:block;}
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){.mark-light{display:none;}.mark-dark{display:block;}}
+details summary::-webkit-details-marker{display:none;}
+.shot-rail{scrollbar-width:none;}
+.shot-rail::-webkit-scrollbar{display:none;}
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
+[data-reveal].is-visible{opacity:1;transform:translateY(0);}
+.heat-cell{appearance:none;padding:0;cursor:pointer;aspect-ratio:1/1;border-radius:6px;border:1px solid var(--border);background:var(--page);transition:background .16s ease,border-color .16s ease;}
+.heat-cell.is-kept{background:var(--terracotta);border-color:var(--terracotta);}
 </style>
 </head>
 <body>
 
-<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+<div style="background:var(--page)">
 
-  <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
-    <a href="/index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="31" height="20">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="31" height="20">
-      CanoSoftware
-    </a>
-    <div style="display:flex;gap:28px;flex-wrap:wrap;">
-      <a href="/index.html#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
-      <a href="/index.html#about" style="font-size:15px;color:var(--text-muted);">About</a>
-      <a href="/support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
-    </div>
-  </nav>
-
-  <header style="padding:48px 0 64px;display:flex;gap:48px;align-items:center;flex-wrap:wrap;">
-    <div style="flex:1 1 420px;min-width:0;max-width:560px;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-        <img src="/icons/onward-icon.svg" alt="Onward app icon" width="44" height="44" style="border-radius:9.6px;display:block;">
-        <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Onward</span>
-        <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
+  <div style="position:sticky;top:0;z-index:60;background:var(--page);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;color:var(--text-primary)">
+          <img class="mark-light" src="/assets/mark.svg" alt="" width="28" height="18"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="28" height="18">
+          <span style="font-size:16px;font-weight:600;letter-spacing:-0.01em">CanoSoftware</span>
+        </a>
+        <span aria-hidden="true" style="color:var(--text-tertiary);font-size:15px">/</span>
+        <span style="font-size:16px;font-weight:600;color:var(--text-secondary)">Onward</span>
       </div>
-      <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.1rem,5vw + 1rem,3.4rem);line-height:1.12;letter-spacing:-0.01em;margin:0 0 20px;color:var(--text);">Everything you're working toward, in one place.</h1>
-      <p style="font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0 0 28px;">Daily habits, running totals, targets by a date, and one-time resolutions — with streaks and insights that never leave your device.</p>
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);font-size:15px;font-weight:600;">Download on the App Store</a>
-        <span style="font-size:14px;color:var(--text-muted);">Free to start · No account required</span>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <a href="#ways" style="font-size:14.5px;color:var(--text-secondary)">Four ways to track</a>
+        <a href="#record" style="font-size:14.5px;color:var(--text-secondary)">The record</a>
+        <a href="#pro" style="font-size:14.5px;color:var(--text-secondary)">Pro</a>
+        <a href="#privacy" style="font-size:14.5px;color:var(--text-secondary)">Privacy</a>
+        <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:9px 16px;border-radius:20px;white-space:nowrap">Get Onward <span aria-hidden="true" style="font-size:13px">↗</span></a>
       </div>
     </div>
-    <img src="assets/today.jpg" alt="Onward Today screen showing habits grouped by morning, afternoon, and evening" style="width:280px;flex:0 0 280px;border-radius:24px;border:1px solid var(--border);">
-  </header>
+    <div style="height:2px;margin-bottom:-2px;position:relative;z-index:1"><div id="scroll-progress" style="height:2px;background:var(--terracotta);width:0%;transition:width .12s linear"></div></div>
+  </div>
 
-  <section id="features" style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 12px;">Four ways to track</h2>
-    <p style="font-size:17px;line-height:1.6;color:var(--text);margin:0 0 32px;max-width:620px;">However you actually think about progress, one of these fits it.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
-      <div style="display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div style="width:36px;height:36px;border-radius:50%;border:3px solid var(--text);"></div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Daily Habit</span>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">The classic streak. Flexible frequencies, specific weekdays, rest days that don't break it, and quit-habit tracking that counts the days you stay clean.</p>
+  <section style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px">
+      <div style="display:flex;flex-wrap:wrap">
+        <div id="hero-left" style="flex:1 1 460px;min-width:0;padding:76px 52px 72px 0;box-sizing:border-box;border-right:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px">
+            <img src="/icons/onward-icon.svg" alt="Onward app icon" data-magnet="1" style="width:56px;height:56px;border-radius:13px;background:var(--surface-sunken)">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:5px 11px;border-radius:20px;background:var(--pill-shipped-bg);color:var(--pill-shipped-text)">On the App Store</span>
+            <span style="font-size:13.5px;color:var(--text-tertiary)">iPhone · Apple Watch</span>
+          </div>
+          <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.3rem,6.2vw,5rem);line-height:1.02;letter-spacing:-0.03em;margin:0">Everything<br>you're working<br>toward, in<br>one place.</h1>
+          <p style="font-size:18px;line-height:1.7;color:var(--text-secondary);margin:30px 0 0;max-width:490px">Daily habits, running totals, targets by a date, and one-time resolutions — with streaks and insights that never leave your device.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px">
+            <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:12px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px">Download on the App Store <span aria-hidden="true">↗</span></a>
+            <span style="font-size:14.5px;color:var(--text-tertiary)">Free to start · No account required</span>
+          </div>
         </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div style="display:flex;align-items:flex-end;gap:5px;height:36px;">
-          <span style="width:8px;height:14px;background:var(--text);border-radius:2px;"></span>
-          <span style="width:8px;height:24px;background:var(--text);border-radius:2px;"></span>
-          <span style="width:8px;height:36px;background:var(--text);border-radius:2px;"></span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Running Total</span>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Count something up — miles, pages, glasses of water, dollars saved. Log it in a couple of taps and watch it add up.</p>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div style="position:relative;width:36px;height:36px;">
-          <div style="position:absolute;inset:0;border-radius:50%;border:3px solid var(--text);"></div>
-          <div style="position:absolute;inset:9px;border-radius:50%;border:3px solid var(--text-muted);"></div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Target by Date</span>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">"Read 12 books by December." Onward does the pace math and tells you, honestly, whether you're ahead, on track, or behind.</p>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div style="width:36px;height:36px;border-radius:10px;border:3px solid var(--text);"></div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Resolution</span>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">A one-time goal with no schedule — "update my will," "plan the trip." Track it as a checkbox, a percentage, or a checklist, with an optional due date.</p>
+        <div id="hero-right" style="flex:1 1 320px;min-width:0;padding:76px 0 72px 52px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:22px">
+          <img src="assets/today.jpg" alt="Onward's Today screen, with habits grouped into morning, afternoon and evening" style="width:100%;max-width:320px;border-radius:24px;border:1px solid var(--border)">
+          <div style="display:flex;align-items:flex-end;gap:12px;max-width:320px">
+            <span id="streak-count" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(2.6rem,6vw,4rem);font-weight:500;line-height:0.86;letter-spacing:-0.03em;color:var(--terracotta-text)">0</span>
+            <span style="font-size:14px;line-height:1.45;color:var(--text-tertiary);padding-bottom:5px">day streak on<br>the habit above</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 12px;">See how far you've come</h2>
-    <p style="font-size:17px;line-height:1.6;color:var(--text);margin:0 0 32px;max-width:620px;">Your history becomes feedback: streaks, completion rates, an activity heatmap, trend charts, milestones, and a weekly review.</p>
-    <div style="display:flex;gap:20px;overflow-x:auto;padding-bottom:8px;">
-      <div style="flex:0 0 auto;">
-        <img src="assets/today.jpg" alt="Today screen" style="width:180px;border-radius:18px;border:1px solid var(--border);">
-        <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-align:center;">Today</p>
+  <section id="ways" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:500;letter-spacing:-0.018em;margin:0;max-width:22em">However you actually think about progress, one of these fits it.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">Four ways to track</span>
       </div>
-      <div style="flex:0 0 auto;">
-        <img src="assets/insights.jpg" alt="Insights overview with milestones, stat cards, and activity heatmap" style="width:180px;border-radius:18px;border:1px solid var(--border);">
-        <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-align:center;">Insights</p>
-      </div>
-      <div style="flex:0 0 auto;">
-        <img src="assets/totals.jpg" alt="Running Total goal showing cumulative miles logged and a 30-day trend" style="width:180px;border-radius:18px;border:1px solid var(--border);">
-        <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-align:center;">Running totals</p>
-      </div>
-      <div style="flex:0 0 auto;">
-        <img src="assets/pace.jpg" alt="Pace screen" style="width:180px;border-radius:18px;border:1px solid var(--border);">
-        <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-align:center;">Pace</p>
-      </div>
-      <div style="flex:0 0 auto;">
-        <img src="assets/streak.jpg" alt="Meditate habit detail with a 27-day streak and completion stats" style="width:180px;border-radius:18px;border:1px solid var(--border);">
-        <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-align:center;">Streaks</p>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 32px;">Built to fit real life</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;">
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" style="margin-bottom:12px;"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l3 2"></path><path d="M9 2h6"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Focus timer</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Timed habits and a built-in focus timer for deep work sessions.</p>
-      </div>
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><path d="M6 17c0-4 1.5-9 6-9s6 5 6 9"></path><path d="M4 17h16"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Reminders</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">As many as you need per habit, grouped by time of day.</p>
-      </div>
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><path d="M6 3h9l4 4v14H6z"></path><path d="M15 3v4h4"></path><path d="M9 12h6M9 15.5h6"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Notes and mood</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Add a note and a mood tag to any entry.</p>
-      </div>
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;"><rect x="3" y="5" width="18" height="16" rx="2.5"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Full calendar</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">A complete history you can edit and backfill.</p>
-      </div>
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" style="margin-bottom:12px;"><path d="M15.5 13.5A7 7 0 0 1 9.5 3a7.5 7.5 0 1 0 8.4 12.5 7 7 0 0 1-2.4-2z"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Light and dark mode</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Looks right, day or night.</p>
-      </div>
-      <div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linejoin="round" style="margin-bottom:12px;"><rect x="7" y="6" width="10" height="12" rx="3.5"></rect><path d="M9.5 3.5h5v3h-5zM9.5 17.5h5v3h-5z"></path><path d="M17 10v4"></path></svg>
-        <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 6px;">Apple Watch</h4>
-        <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Log habits and check streaks right from your wrist.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="pro" style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 12px;">Free to start. Pro when you're ready.</h2>
-    <p style="font-size:17px;line-height:1.6;color:var(--text);margin:0 0 32px;max-width:620px;">A one-time unlock, not a subscription. If you were already using Onward, you keep everything for free.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-      <div style="padding:28px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;border:1px solid var(--border-strong);color:var(--text-muted);">Free</span>
-        <ul style="list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">All four goal types</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">iCloud sync across your devices</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Apple Watch app</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Up to 5 active goals</li>
-        </ul>
-      </div>
-      <div style="padding:28px;border:1px solid var(--accent);border-radius:16px;background:var(--card);">
-        <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);">Onward Pro</span>
-        <p style="font-size:13px;color:var(--text-muted);margin:10px 0 0;">One-time unlock · no subscription</p>
-        <ul style="list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Unlimited active goals</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Full Insights dashboard &amp; Weekly Review</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Timed habits &amp; focus timer</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Apple Health import</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">CSV import/export</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Multiple reminders per habit</li>
-          <li style="font-size:15px;line-height:1.4;color:var(--text);">Resolution progress tracking</li>
-        </ul>
-      </div>
-    </div>
-    <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:24px 0 0;max-width:620px;">Already using Onward? You keep everything for free, permanently — thanks for being an early user.</p>
-  </section>
-
-  <section id="privacy" style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 24px;">Privacy</h2>
-    <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap;">
-      <div style="flex:1 1 420px;min-width:0;max-width:600px;">
-        <h3 style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-weight:500;font-size:1.6rem;line-height:1.2;letter-spacing:-0.01em;margin:0 0 16px;color:var(--text);">Local-first, by design.</h3>
-        <p style="font-size:16px;line-height:1.6;color:var(--text);margin:0 0 20px;">Your data lives on your device — no account, no sign-in, no analytics, no ads. The App Store privacy label says it plainly: <strong>Data Not Collected</strong>.</p>
-        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:15px;line-height:1.5;color:var(--text-muted);">iCloud sync uses your own private iCloud account — I never see it.</li>
-          <li style="font-size:15px;line-height:1.5;color:var(--text-muted);">Apple Health import happens on demand and never leaves your device.</li>
-          <li style="font-size:15px;line-height:1.5;color:var(--text-muted);">No third-party SDKs, no analytics, no advertising.</li>
-        </ul>
-      </div>
-      <div style="flex:0 0 260px;max-width:260px;border-radius:18px;border:1px solid var(--border);overflow:hidden;">
-        <img src="assets/privacy.png" alt="Onward is free to use, with a one-time $9.99 Pro unlock. No ads, no tracking, no servers of ours. App Store privacy label: Data Not Collected." style="width:100%;display:block;">
-      </div>
-    </div>
-  </section>
-
-  <section style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 32px;">Getting started</h2>
-    <div style="display:flex;flex-direction:column;gap:24px;max-width:620px;">
-      <div style="display:flex;gap:18px;">
-        <div style="flex:0 0 32px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--text);">1</div>
-        <div>
-          <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;">Create your first goal</h4>
-          <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Tap + and choose Daily Habit, Running Total, or Target by Date.</p>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">01</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Daily Habit</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">The classic streak. Flexible frequencies, specific weekdays, rest days that don't break it, and quit-habit tracking that counts the days you stay clean.</p>
         </div>
-      </div>
-      <div style="display:flex;gap:18px;">
-        <div style="flex:0 0 32px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--text);">2</div>
-        <div>
-          <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;">Set the details</h4>
-          <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Frequency, weekdays, reminders, and rest days if you want them.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">02</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Running Total</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Count something up — miles, pages, glasses of water, dollars saved. Log it in a couple of taps and watch it add up.</p>
         </div>
-      </div>
-      <div style="display:flex;gap:18px;">
-        <div style="flex:0 0 32px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--text);">3</div>
-        <div>
-          <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;">Log from Today</h4>
-          <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Check it off, add a note or mood, and keep your streak alive.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">03</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Target by Date</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">"Read 12 books by December." Onward does the pace math and tells you, honestly, whether you're ahead, on track, or behind.</p>
         </div>
-      </div>
-      <div style="display:flex;gap:18px;">
-        <div style="flex:0 0 32px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--text);">4</div>
-        <div>
-          <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;">Check Insights weekly</h4>
-          <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">See your heatmap, streaks, and milestones, and review your week.</p>
-        </div>
-      </div>
-      <div style="display:flex;gap:18px;">
-        <div style="flex:0 0 32px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--text);">5</div>
-        <div>
-          <h4 style="font-size:16px;font-weight:600;color:var(--text);margin:0 0 4px;">Connect Health and iCloud</h4>
-          <p style="font-size:14.5px;line-height:1.5;color:var(--text-muted);margin:0;">Optional: import workouts from Apple Health and sync across devices in Settings.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">04</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Resolution</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">A one-time goal with no schedule — "update my will," "plan the trip." Track it as a checkbox, a percentage, or a checklist, with an optional due date.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="faq" style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 32px;">Frequently asked</h2>
-    <div style="display:flex;flex-direction:column;gap:10px;max-width:680px;">
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Is Onward free?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">The free tier is fully capable: all four goal types, iCloud sync, Apple Watch, and up to 5 active goals, no account required. Onward Pro is an optional one-time unlock, not a subscription, that removes the goal limit and adds the full Insights dashboard, Weekly Review, timed habits, Apple Health import, CSV import/export, multiple reminders, and Resolution progress tracking.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">I was already using Onward — do I have to pay?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">No. If you were using Onward before Onward Pro launched, you keep everything for free, permanently, as a thank-you for being an early user.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Do I need an account?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">No. There's no sign-in of any kind. Onward works the moment you open it.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Does Onward collect my data?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">No. Onward has no servers, no analytics, and no third-party SDKs. Its App Store privacy label reads "Data Not Collected."</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Can I sync across my devices?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">Yes, via your own private iCloud account. Onward never has access to that data.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Does it connect to Apple Health?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">Optionally. You can import workout data into a goal on demand. Onward never runs in the background or monitors Health continuously.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Is there an Apple Watch app?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">Yes. Log habits and check your streaks right from your wrist.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">Running Total vs. Target by Date — what's the difference?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">Running Total just adds up what you log. Target by Date does that plus a deadline, and calculates whether you're ahead, on pace, or behind.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">What's a Resolution?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">A one-time goal with no quantity or recurring schedule — things like "update my will" or "plan the trip." Mark it done with a checkbox, or track partial progress with a percentage or a checklist of sub-tasks. An optional due date is a plain deadline; there's no pace math since there's no quantity to pace against.</p>
-      </details>
-      <details style="border:1px solid var(--border);border-radius:16px;background:var(--card);padding:16px 20px;">
-        <summary style="font-size:15.5px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;">What happens if I miss a day?</summary>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--text-muted);">Depends on the habit. Rest days don't break a streak, flexible frequencies give you room, and quit-habits simply restart the clean-day count.</p>
-      </details>
+  <section id="record" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:flex-start">
+        <div style="flex:1 1 340px;min-width:0;max-width:420px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">The record</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 18px">Twelve weeks, and the gaps you can see.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 16px">Onward's heatmap is the whole history at a glance. Rest days don't break a streak and flexible frequencies give you room — but a missed day stays a missed day.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--text-tertiary);margin:0">Tap the squares to see how the numbers move.</p>
+        </div>
+        <div style="flex:1 1 440px;min-width:0">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px">
+            <span style="font-size:13.5px;color:var(--text-tertiary)">Mar – May</span>
+            <span id="heat-filled-label" style="font-size:13.5px;color:var(--text-tertiary)"></span>
+          </div>
+          <div id="heat-grid" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:32px;margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+            <div><div id="heat-best" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1;color:var(--terracotta-text)"></div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Longest streak</div></div>
+            <div><div id="heat-kept" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1"></div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Days kept</div></div>
+            <div><div id="heat-missed" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1"></div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Days missed</div></div>
+            <div><div id="heat-rate" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1"></div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Completion</div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer style="padding:0 0 56px;border-top:1px solid var(--border);">
-    <div style="display:flex;gap:24px;flex-wrap:wrap;padding:40px 0 24px;">
-      <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" style="font-size:14.5px;">Download</a>
-      <a href="privacy.html" style="font-size:14.5px;">Privacy Policy</a>
-      <a href="mailto:support@canosoftware.net" style="font-size:14.5px;">Support</a>
+  <section data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 0 68px">
+      <div style="max-width:1280px;margin:0 auto;padding:0 40px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px">
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:500;letter-spacing:-0.018em;margin:0;max-width:20em">Your history becomes feedback.</h2>
+          <span style="font-size:14.5px;color:var(--text-tertiary)">Streaks · heatmap · trends · weekly review</span>
+        </div>
+      </div>
+      <div class="shot-rail" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 40px 8px">
+        <div style="flex:0 0 auto;scroll-snap-align:start">
+          <img src="assets/insights.jpg" alt="Insights overview with milestones, stat cards and an activity heatmap" style="width:230px;border-radius:20px;border:1px solid var(--border)">
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-tertiary)">Insights</p>
+        </div>
+        <div style="flex:0 0 auto;scroll-snap-align:start">
+          <img src="assets/totals.jpg" alt="A Running Total goal showing cumulative miles logged and a 30-day trend" style="width:230px;border-radius:20px;border:1px solid var(--border)">
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-tertiary)">Running totals</p>
+        </div>
+        <div style="flex:0 0 auto;scroll-snap-align:start">
+          <img src="assets/pace.jpg" alt="Pace screen showing whether a target by date is ahead or behind" style="width:230px;border-radius:20px;border:1px solid var(--border)">
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-tertiary)">Pace</p>
+        </div>
+        <div style="flex:0 0 auto;scroll-snap-align:start">
+          <img src="assets/streak.jpg" alt="Meditate habit detail with a 27-day streak and completion stats" style="width:230px;border-radius:20px;border:1px solid var(--border)">
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-tertiary)">Streaks</p>
+        </div>
+        <div style="flex:0 0 auto;scroll-snap-align:start">
+          <img src="assets/today.jpg" alt="Today screen with habits grouped by time of day" style="width:230px;border-radius:20px;border:1px solid var(--border)">
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-tertiary)">Today</p>
+        </div>
+      </div>
     </div>
-    <div style="display:flex;align-items:center;gap:9px;">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Onward for iOS &amp; Apple Watch</p>
+  </section>
+
+  <section id="privacy" data-reveal style="background:#262220;color:#F7F3EC">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+        <div style="flex:1 1 460px;min-width:0;max-width:620px">
+          <span style="font-size:15px;font-weight:600;opacity:.8;display:block;margin-bottom:16px">Privacy</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.9rem,4.4vw,3.1rem);font-weight:500;line-height:1.12;letter-spacing:-0.02em;margin:0 0 18px">Local-first, by design.</h2>
+          <p style="font-size:17.5px;line-height:1.65;margin:0 0 22px;opacity:.88">Your data lives on your device — no account, no sign-in, no analytics, no ads. The App Store privacy label says it plainly: <strong>Data Not Collected</strong>.</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">iCloud sync</span><span style="font-size:13.5px;opacity:.75">Your private account — I never see it</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Apple Health import</span><span style="font-size:13.5px;opacity:.75">On demand, on device</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Third-party SDKs</span><span style="font-size:13.5px;opacity:.75">None</span></div>
+          </div>
+        </div>
+        <div style="flex:1 1 300px;min-width:0;max-width:380px">
+          <p style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:24px;line-height:1.45;margin:0 0 18px">I'm TJ. I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends.</p>
+          <p style="font-size:16px;line-height:1.7;margin:0;opacity:.82">Onward was the first. Every tracker I tried wanted an account before it would let me count a run, so I made the one I wanted — one of five apps that hold the things you'd rather not hold in your head.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pro" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:68px 40px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:500;letter-spacing:-0.018em;margin:0">Free to start. Pro when you're ready.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">$9.99 one-time unlock · no subscription</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+        <div style="padding:32px;border:1px solid var(--border);border-radius:18px;background:var(--surface-raised)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:5px 11px;border-radius:20px;border:1px solid var(--border-interactive);color:var(--text-secondary)">Free</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:30px;font-weight:500;line-height:1">$0</span>
+          </div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--text-tertiary)">·</span><span>All four goal types</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--text-tertiary)">·</span><span>iCloud sync across your devices</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--text-tertiary)">·</span><span>Apple Watch app</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--text-tertiary)">·</span><span>Up to 5 active goals</span></div>
+        </div>
+        <div style="padding:32px;border:1px solid var(--terracotta);border-radius:18px;background:var(--surface-raised)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:5px 11px;border-radius:20px;background:var(--terracotta);color:var(--text-on-terracotta)">Onward Pro</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:30px;font-weight:500;line-height:1">$9.99<span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;font-weight:400;color:var(--text-tertiary)"> once</span></span>
+          </div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Unlimited active goals</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Full Insights dashboard and Weekly Review</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Timed habits and focus timer</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Apple Health import</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>CSV import and export</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Multiple reminders per habit</span></div>
+          <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:15.5px;line-height:1.45;color:var(--text-primary)"><span aria-hidden="true" style="color:var(--terracotta-text)">·</span><span>Resolution progress tracking</span></div>
+        </div>
+      </div>
+      <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:24px 0 0;max-width:620px">Already using Onward? You keep everything for free, permanently — thanks for being an early user.</p>
+    </div>
+  </section>
+
+  <section data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px">
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">Built to fit real life</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:30px;margin-top:30px">
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Focus timer</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">Timed habits and a built-in timer for deep work.</p></div>
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Reminders</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">As many as you need per habit, grouped by time of day.</p></div>
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Notes and mood</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">Add a note and a mood tag to any entry.</p></div>
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Full calendar</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">A complete history you can edit and backfill.</p></div>
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Apple Watch</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">Log habits and check streaks right from your wrist.</p></div>
+        <div><div style="font-size:16px;font-weight:600;margin-bottom:7px">Light and dark mode</div><p style="margin:0;font-size:15px;line-height:1.55;color:var(--text-secondary)">Looks right, day or night.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+        <div style="flex:1 1 240px;min-width:0;max-width:280px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">Frequently asked</span>
+        </div>
+        <div style="flex:1 1 520px;min-width:0;max-width:720px;display:flex;flex-direction:column">
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">Is Onward free?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">The free tier is fully capable: all four goal types, iCloud sync, Apple Watch, and up to 5 active goals, no account required. Pro is an optional one-time unlock, not a subscription.</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">I was already using Onward — do I have to pay?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">No. If you were using Onward before Pro launched, you keep everything for free, permanently, as a thank-you for being an early user.</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">Do I need an account?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">No. There's no sign-in of any kind. Onward works the moment you open it.</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">Does Onward collect my data?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">No. Onward has no servers, no analytics and no third-party SDKs. Its App Store privacy label reads "Data Not Collected."</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">Can I sync across my devices?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">Yes, via your own private iCloud account. Onward never has access to that data.</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">Running Total vs. Target by Date — what's the difference?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">Running Total just adds up what you log. Target by Date does that plus a deadline, and calculates whether you're ahead, on pace or behind.</p>
+          </details>
+          <details style="border-top:1px solid var(--border);padding:20px 0">
+            <summary style="font-size:16.5px;font-weight:600;color:var(--text-primary);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px">What happens if I miss a day?<span aria-hidden="true" style="color:var(--terracotta-text);font-weight:400">+</span></summary>
+            <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--text-secondary);max-width:620px">Depends on the habit. Rest days don't break a streak, flexible frequencies give you room, and quit-habits simply restart the clean-day count.</p>
+          </details>
+          <div style="border-top:1px solid var(--border)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:68px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;justify-content:space-between">
+        <div style="flex:1 1 420px;min-width:0">
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:500;line-height:1.14;letter-spacing:-0.02em;margin:0 0 14px">Start with one habit today.</h2>
+          <p style="font-size:16.5px;line-height:1.65;color:var(--text-secondary);margin:0;max-width:480px">Free to download, no account, and the Watch app is included. Pro is a one-time $9.99 unlock if you outgrow five goals.</p>
+        </div>
+        <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:12px">
+          <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px;min-width:250px">Download on the App Store <span aria-hidden="true">↗</span></a>
+          <a href="privacy.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-primary);border:1px solid var(--border-interactive);padding:15px 24px;border-radius:12px;min-width:250px">Read the privacy policy <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal>
+    <div style="max-width:1280px;margin:0 auto;padding:60px 40px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:500;letter-spacing:-0.018em;margin:0">The rest of the shelf.</h2>
+        <a href="/index.html" style="font-size:14.5px">All five apps →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <a href="/steward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/steward-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Steward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Home upkeep</div></div></a>
+        <a href="/roadworthy/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/roadworthy-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Roadworthy</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Car maintenance</div></div></a>
+        <a href="/homestead/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/homestead-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Homestead</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">The family week</div></div></a>
+        <a href="https://ledger.canosoftware.net" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px dashed var(--border-strong);border-radius:16px;color:var(--text-primary)"><img src="/icons/ledger-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Ledger</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Coming soon</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 40px 56px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75">
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">© 2026 CanoSoftware · Onward for iOS &amp; Apple Watch</p>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="/index.html" style="font-size:13.5px;color:var(--text-primary)">canosoftware.net</a>
+        <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" style="font-size:13.5px;color:var(--text-primary)">Download</a>
+        <a href="privacy.html" style="font-size:13.5px;color:var(--text-primary)">Privacy policy</a>
+        <a href="mailto:support@canosoftware.net" style="font-size:13.5px;color:var(--text-primary)">Support</a>
+      </div>
     </div>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // scroll progress bar
+  var bar = document.getElementById("scroll-progress");
+  var raf = null;
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var p = Math.min(1, Math.max(0, window.scrollY / max));
+      bar.style.width = (p * 100).toFixed(2) + "%";
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // animated streak counter
+  var streakEl = document.getElementById("streak-count");
+  var target = 27;
+  if (reduced) {
+    streakEl.textContent = target;
+  } else {
+    var t0 = performance.now();
+    function tick(now){
+      var k = Math.min(1, (now - t0) / 1200);
+      var e = 1 - Math.pow(1 - k, 3);
+      streakEl.textContent = Math.round(target * e);
+      if (k < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // heatmap
+  var cells = [];
+  for (var i = 0; i < 84; i++) {
+    var r = Math.sin(i * 12.9898) * 43758.5453;
+    var f = r - Math.floor(r);
+    cells.push(i < 5 ? f > 0.55 : f > 0.22);
+  }
+  var grid = document.getElementById("heat-grid");
+  var bestEl = document.getElementById("heat-best");
+  var keptEl = document.getElementById("heat-kept");
+  var missedEl = document.getElementById("heat-missed");
+  var rateEl = document.getElementById("heat-rate");
+  var filledLabelEl = document.getElementById("heat-filled-label");
+
+  function renderStats(){
+    var best = 0, run = 0, kept = 0;
+    cells.forEach(function(v){
+      if (v) { run += 1; kept += 1; if (run > best) best = run; }
+      else run = 0;
+    });
+    var missed = cells.length - kept;
+    var rate = Math.round((kept / cells.length) * 100) + "%";
+    bestEl.textContent = best;
+    keptEl.textContent = kept;
+    missedEl.textContent = missed;
+    rateEl.textContent = rate;
+    filledLabelEl.textContent = kept + " of " + cells.length + " days";
+  }
+
+  cells.forEach(function(v, idx){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "heat-cell" + (v ? " is-kept" : "");
+    btn.setAttribute("aria-label", "Day " + (idx + 1) + (v ? ", kept" : ", missed"));
+    btn.addEventListener("click", function(){
+      cells[idx] = !cells[idx];
+      btn.className = "heat-cell" + (cells[idx] ? " is-kept" : "");
+      btn.setAttribute("aria-label", "Day " + (idx + 1) + (cells[idx] ? ", kept" : ", missed"));
+      renderStats();
+    });
+    grid.appendChild(btn);
+  });
+  renderStats();
+
+  // hero split border
+  var L = document.getElementById("hero-left");
+  var R = document.getElementById("hero-right");
+  function applyHero(){
+    if (!L || !R) return;
+    var wide = Math.abs(L.offsetTop - R.offsetTop) < 2;
+    L.style.borderRight = wide ? "1px solid var(--border)" : "0";
+    L.style.paddingRight = wide ? "52px" : "0";
+    L.style.paddingBottom = wide ? "72px" : "40px";
+    R.style.marginLeft = "0";
+    R.style.paddingLeft = wide ? "52px" : "0";
+    R.style.paddingTop = wide ? "76px" : "0";
+  }
+  applyHero();
+  window.addEventListener("resize", applyHero);
+
+  // reveal on scroll
+  var reveal = function(el){ el.classList.add("is-visible"); };
+  var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (reduced) {
+    nodes.forEach(reveal);
+  } else if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.05 });
+    nodes.forEach(function(n){ io.observe(n); });
+    setTimeout(function(){ nodes.forEach(reveal); }, 2500);
+  } else {
+    nodes.forEach(reveal);
+  }
+
+  // magnetic hover
+  if (!reduced) {
+    document.querySelectorAll("[data-magnet]").forEach(function(el){
+      el.style.willChange = "transform";
+      el.addEventListener("pointermove", function(e){
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) / r.width;
+        var dy = (e.clientY - r.top - r.height / 2) / r.height;
+        el.style.transition = "transform .09s linear";
+        el.style.transform = "translate(" + dx * 9 + "px," + dy * 7 + "px)";
+      });
+      el.addEventListener("pointerleave", function(){
+        el.style.transition = "transform .55s cubic-bezier(.2,1.3,.3,1)";
+        el.style.transform = "translate(0,0)";
+      });
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
