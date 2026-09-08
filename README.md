@@ -82,10 +82,25 @@ light mode (invisible text) — changed to a fixed dark-ink background with
 light-cream text instead, matching what the section's own already-hardcoded
 border color implied was intended.
 
-**`steward/`, `roadworthy/`, and `homestead/` have not been through the
-2026-09-08 redesign pass** (hub or Onward) and still use their earlier design.
-TJ's stated plan is to redesign them next, once more usage/budget is
-available — treat that as the next phase, not yet started.
+**`steward/index.html` was redesigned 2026-09-08** from the same Claude Design
+project ("Canosoftware Marketing Redesign" — `Steward-Final.dc.html`),
+converted by hand the same way as Onward: plain HTML/CSS/vanilla JS in one
+inline `<script>` block, same terracotta/cream tokens and editorial layout. New
+pieces: a sticky breadcrumb nav + scroll-progress bar, an interactive "What's
+due" task list (click a row to mark it done — strikes the name, swaps its due
+label to "Done today", and live-updates the Overdue/This week/This month/Done
+counts above), a numbered "What it keeps" feature list, a horizontal
+screenshot rail, and a full-bleed dark-ink privacy/bio panel. Also added a
+touch of vertical padding to the sticky nav row's container on **both**
+`onward/index.html` and `steward/index.html` — its wrapped second line (on
+narrow phones, where the nav links drop below the breadcrumb) had no room
+before the divider underneath it. `steward/privacy.html` was **not** touched in
+this pass and still uses the earlier design.
+
+**`roadworthy/` and `homestead/` have not been through the 2026-09-08 redesign
+pass** (hub, Onward, or Steward) and still use their earlier design. TJ's
+stated plan is to redesign them next, once more usage/budget is available —
+treat that as the next phase, not yet started.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
