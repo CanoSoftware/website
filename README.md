@@ -63,9 +63,29 @@ Pricing, Get a quote), both linking out to `https://web.canosoftware.net`. Both 
 usual terracotta `--accent`, so the link visually reads as a distinct offering rather than a
 fifth app card. `sitemap.xml` doesn't list it, matching Beacon/Ledger's own omission.
 
-Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
+Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), then all four were redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
 
-**These four app pages have not been through the 2026-09-08 hub redesign** (see below) and still use their earlier design pass. TJ's stated plan is to redesign them next, once more usage/budget is available — treat that as the next phase, not yet started.
+**`onward/index.html` was redesigned 2026-09-08** from a Claude Design project
+("Canosoftware Marketing Redesign" — `Onward-Final.dc.html`), converted by hand
+to plain HTML/CSS/vanilla JS (no build step, no framework), same as the hub
+page. New pieces, all in one inline `<script>` block: a sticky breadcrumb nav +
+scroll-progress bar, an animated hero streak counter, an interactive 84-day
+click-to-toggle heatmap with live stats ("The record"), a horizontal
+screenshot rail, a full-bleed dark-ink privacy/bio panel, free-vs-Pro pricing
+cards, and reveal-on-scroll + magnetic-hover motion on CTAs — all on the same
+terracotta/cream tokens the other app pages already used, just restructured
+into the newer editorial layout. `onward/privacy.html` was **not** touched in
+this pass and still uses the earlier design. One fix made against the source
+design file: its Privacy section spec'd `background:var(--surface-tile);
+color:var(--page)`, which resolves to near-identical off-white-on-off-white in
+light mode (invisible text) — changed to a fixed dark-ink background with
+light-cream text instead, matching what the section's own already-hardcoded
+border color implied was intended.
+
+**`steward/`, `roadworthy/`, and `homestead/` have not been through the
+2026-09-08 redesign pass** (hub or Onward) and still use their earlier design.
+TJ's stated plan is to redesign them next, once more usage/budget is
+available — treat that as the next phase, not yet started.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
