@@ -16,6 +16,17 @@ roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
 ```
 
+**`index.html` was redesigned 2026-09-08** from a Claude Design project
+("Canosoftware Marketing Redesign" — `Home-Broadsheet.dc.html`), converted
+by hand to plain HTML/CSS/vanilla JS (no build step, no framework). New
+pieces, all in one inline `<script>` block: a sticky nav + scroll-progress
+bar, a scroll-scaling serif hero with a fading app-icon row, a full-bleed
+"Now / what I'm building" section, a full-bleed pine "for small businesses"
+callout linking to `web.canosoftware.net`, and animated App-Store-count
+stat tiles in the Studio section. `support.html` and the four app folders
+below were not part of this pass — see the app-folder note further down
+for what's planned next there.
+
 **Beacon is not linked from the public hub page (`index.html`) or footer.** TJ doesn't
 want coworkers who get the canosoftware.net link to see it, since it's a job-search tool
 and its presence would signal he's job hunting. It's still fully live at
@@ -53,6 +64,8 @@ usual terracotta `--accent`, so the link visually reads as a distinct offering r
 fifth app card. `sitemap.xml` doesn't list it, matching Beacon/Ledger's own omission.
 
 Each app folder (`onward/`, `steward/`, `roadworthy/`, `homestead/`) is self-contained: its own `index.html`, `privacy.html`, and `assets/`. They were originally migrated as-is from each app's standalone marketing site (previously hosted on Vercel), but all four have since been redesigned to share one inline-style design system (warm-neutral palette, serif headlines, shared CanoSoftware nav/footer using the root `assets/mark.svg` / `mark-dark.svg` and `icons/<app>-icon.png`). There's no shared stylesheet — each page's CSS lives in a `<style>` block in its own `<head>`. Editing one app's folder has no effect on the others or on the hub page.
+
+**These four app pages have not been through the 2026-09-08 hub redesign** (see below) and still use their earlier design pass. TJ's stated plan is to redesign them next, once more usage/budget is available — treat that as the next phase, not yet started.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
