@@ -97,10 +97,24 @@ narrow phones, where the nav links drop below the breadcrumb) had no room
 before the divider underneath it. `steward/privacy.html` was **not** touched in
 this pass and still uses the earlier design.
 
-**`roadworthy/` and `homestead/` have not been through the 2026-09-08 redesign
-pass** (hub, Onward, or Steward) and still use their earlier design. TJ's
-stated plan is to redesign them next, once more usage/budget is available —
-treat that as the next phase, not yet started.
+**`roadworthy/index.html` was redesigned 2026-09-08** from the same Claude
+Design project ("Canosoftware Marketing Redesign" — `Roadworthy-Final.dc.html`),
+converted by hand the same way as Onward and Steward: plain HTML/CSS/vanilla JS
+in one inline `<script>` block, same terracotta/cream tokens and editorial
+layout. New pieces: a sticky breadcrumb nav + scroll-progress bar, an
+interactive "Whichever comes first" odometer slider (drag it and the
+maintenance-item list live re-sorts by overdue/soon/later, recomputing each
+item's mile-vs-date trigger the same way the source component did), a numbered
+"The garage" feature list, a due-list screenshot section, free-vs-Pro pricing
+cards, and a full-bleed dark-ink privacy/bio panel. The sticky nav's container
+already got the vertical-padding fix (from the Onward/Steward pass) applied
+from the start, rather than as a follow-up. `roadworthy/privacy.html` was
+**not** touched in this pass and still uses the earlier design.
+
+**`homestead/` has not been through the 2026-09-08 redesign pass** (hub,
+Onward, Steward, or Roadworthy) and still uses its earlier design. TJ's stated
+plan is to redesign it next, once more usage/budget is available — treat that
+as the next phase, not yet started.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
