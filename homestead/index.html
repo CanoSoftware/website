@@ -10,186 +10,507 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500&display=swap" rel="stylesheet">
 <style>
-.mark-light{display:block;}
-.mark-dark{display:none;}
-@media (prefers-color-scheme: dark){
-  .mark-light{display:none;}
-  .mark-dark{display:block;}
-}
 :root{
-  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
-  --text:#262220;--text-muted:#6B6259;
-  --accent:#B5563B;--accent-contrast:#FBF3EC;
-  --border:#DDD4C4;--border-strong:#C9BEA9;
+  --page:#F7F3EC;--surface-raised:#FBF8F2;--surface-sunken:#EFE9DD;--surface-tile:#FBF3EC;
+  --text-primary:#262220;--text-secondary:#6B6259;--text-tertiary:#706758;
+  --terracotta:#B5563B;--terracotta-text:#9C462E;--text-on-terracotta:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;--border-interactive:#8F8169;
+  --pill-shipped-bg:#9C462E;--pill-shipped-text:#FBF3EC;
+  --pill-soon-border:#C9BEA9;--pill-soon-text:#6B6259;
+  --band:#262220;--band-text:#F7F3EC;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
-    --text:#EDE6DA;--text-muted:#A79C8C;
-    --accent:#E08863;--accent-contrast:#17140F;
-    --border:#33291F;--border-strong:#463A2B;
+    --page:#17140F;--surface-raised:#211D18;--surface-sunken:#100E0A;--surface-tile:#262220;
+    --text-primary:#EDE6DA;--text-secondary:#A79C8C;--text-tertiary:#93897A;
+    --terracotta:#E08863;--terracotta-text:#E08863;
+    --border:#33291F;--border-strong:#463A2C;--border-interactive:#7F6C54;
+    --pill-shipped-bg:#E08863;--pill-shipped-text:#17140F;--text-on-terracotta:#17140F;
+    --pill-soon-border:#463A2C;--pill-soon-text:#A79C8C;
+    --band:#211D18;--band-text:#EDE6DA;
   }
 }
-html{background:var(--bg);color-scheme:light dark;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
-a{color:var(--accent);text-decoration:none;}
-a:hover{opacity:0.72;}
-::selection{background:var(--accent);color:var(--accent-contrast);}
+html{background:var(--page);color-scheme:light dark;}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--terracotta-text);text-decoration:none;}
+a:hover{opacity:.72;}
+::selection{background:var(--terracotta);color:var(--text-on-terracotta);}
 img{max-width:100%;height:auto;display:block;}
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){.mark-light{display:none;}.mark-dark{display:block;}}
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
+[data-reveal].is-visible{opacity:1;transform:translateY(0);}
+.day-btn{font-family:inherit;cursor:pointer;flex:1 1 0;min-width:0;padding:14px 4px 13px;background:transparent;color:var(--text-secondary);border:0;border-right:1px solid var(--border);text-align:center;}
+.day-btn:last-of-type{border-right:0;}
+.day-btn.is-active{background:var(--terracotta);color:var(--text-on-terracotta);}
+.day-abbr{display:block;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;opacity:.75;}
+.day-num{display:block;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:19px;font-weight:500;margin-top:5px;}
+.chore-dot{flex:0 0 auto;width:16px;height:16px;border-radius:4px;border:1px solid var(--border-strong);background:transparent;}
+.chore-dot.is-done{border-color:var(--terracotta);background:var(--terracotta);}
+.chore-name.is-done{color:var(--text-tertiary);text-decoration:line-through;}
 </style>
 </head>
 <body>
 
-<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+<div style="background:var(--page)">
 
-  <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
-    <a href="/index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="31" height="20">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="31" height="20">
-      CanoSoftware
-    </a>
-    <div style="display:flex;gap:28px;flex-wrap:wrap;">
-      <a href="/index.html#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
-      <a href="/index.html#about" style="font-size:15px;color:var(--text-muted);">About</a>
-      <a href="/support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
-    </div>
-  </nav>
-
-  <header style="display:flex;flex-direction:column;gap:20px;padding:48px 0 56px;max-width:680px;">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <img src="/icons/homestead-icon.png" alt="Homestead app icon" width="44" height="44" style="border-radius:10px;object-fit:cover;background:var(--bg-alt);">
-      <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Homestead</span>
-    </div>
-    <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.1rem,5vw + 1rem,3.4rem);line-height:1.12;letter-spacing:-0.01em;margin:0;color:var(--text);">Your family's day, on the wall and in your pocket.</h1>
-    <p style="font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0;">Chores, calendar, meals, and groceries, kept in one place your whole family can see and edit.</p>
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);font-size:15px;font-weight:600;">Download on the App Store</a>
-      <a href="#pricing" style="font-size:15px;color:var(--accent);">See pricing →</a>
-    </div>
-  </header>
-
-  <section style="padding:0 0 72px;">
-    <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card);">
-      <img src="assets/screenshot-board.jpg" alt="Homestead's kiosk board mounted on a kitchen wall, showing the week's agenda, tonight's dinner, and everyone's chores" width="2000" height="1499">
-    </div>
-  </section>
-
-  <section id="features" style="padding:0 0 72px;">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 16px;">Features</h2>
-    <div style="max-width:640px;margin:0 0 40px;">
-      <h3 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:1.7rem;line-height:1.25;letter-spacing:-0.01em;margin:0 0 12px;color:var(--text);">Everything the fridge whiteboard was trying to do</h3>
-      <p style="font-size:16px;line-height:1.6;color:var(--text-muted);margin:0;">One system for chores, calendar, meals, and groceries. No account to set up, nothing tracking you.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h9" stroke-linecap="round"/><circle cx="19" cy="18" r="2.2"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Chores</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Assigned per person, set to repeat, and easy to check off. No red badges nagging anyone.</p>
+  <div style="position:sticky;top:0;z-index:60;background:var(--page);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;flex-wrap:wrap;box-sizing:border-box">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;color:var(--text-primary)">
+          <img class="mark-light" src="/assets/mark.svg" alt="" width="28" height="18"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="28" height="18">
+          <span style="font-size:16px;font-weight:600;letter-spacing:-0.01em">CanoSoftware</span>
+        </a>
+        <span aria-hidden="true" style="color:var(--text-tertiary);font-size:15px">/</span>
+        <span style="font-size:16px;font-weight:600;color:var(--text-secondary)">Homestead</span>
       </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke-linecap="round"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Shared calendar</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Everyone in the household sees it and can edit it. No more guessing whose day it is.</p>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <a href="#week" style="font-size:14.5px;color:var(--text-secondary)">The week</a>
+        <a href="#wall" style="font-size:14.5px;color:var(--text-secondary)">On the wall</a>
+        <a href="#features" style="font-size:14.5px;color:var(--text-secondary)">Features</a>
+        <a href="#pricing" style="font-size:14.5px;color:var(--text-secondary)">Pricing</a>
+        <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:9px 16px;border-radius:20px;white-space:nowrap">Get Homestead <span aria-hidden="true" style="font-size:13px">↗</span></a>
       </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><path d="M6 3v18M6 3c-2 0-2 3 0 5s0 5 0 5M18 3v18M18 3c0 4 3 4 3 8s-3 4-3 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Meal planning</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Plan the week and the grocery list builds itself.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l3 2M9 2h6" stroke-linecap="round"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Weather at a glance</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Current conditions on the board, the full forecast in your pocket.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><circle cx="12" cy="13" r="8"/><path d="M12 8v5l3.5 3M9 2h6M12 2v2" stroke-linecap="round"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Timers</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Pasta, homework, screen time. Start it from the kitchen, see it on the board.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:12px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 15.5l5-4.5 4 3 3.5-3.5 4.5 5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="9" r="1.4"/></svg>
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Photo slideshow</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">When the day winds down, the board dims and drifts through family photos.</p>
-      </div>
-
     </div>
-  </section>
+    <div style="height:2px;margin-bottom:-2px;position:relative;z-index:1"><div id="scroll-progress" style="height:2px;background:var(--terracotta);width:0%;transition:width .12s linear"></div></div>
+  </div>
 
-  <section style="padding:0 0 72px;border-top:1px solid var(--border);">
-    <div style="max-width:620px;margin:48px 0 32px;">
-      <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:1.7rem;line-height:1.25;letter-spacing:-0.01em;margin:0 0 12px;color:var(--text);">Built for the wall, not just the pocket</h2>
-      <p style="font-size:16px;line-height:1.6;color:var(--text-muted);margin:0;">Mount an old iPad in the kitchen and it becomes the household's day at a glance: agenda, chores, and conditions, always on.</p>
-    </div>
-    <div style="border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card);">
-      <img src="assets/screenshot-board.jpg" alt="Homestead's kiosk board showing the week ahead, tonight's dinner, and each family member's chores" width="2000" height="1499">
-    </div>
-  </section>
-
-  <section id="pricing" style="padding:0 0 72px;">
-    <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:1.7rem;line-height:1.25;letter-spacing:-0.01em;margin:0 0 32px;color:var(--text);text-align:center;">Simple pricing</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:820px;margin:0 auto;">
-
-      <div style="display:flex;flex-direction:column;gap:20px;padding:28px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div>
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Free</span>
-          <div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:2rem;font-weight:500;color:var(--text);margin-top:4px;">$0</div>
+  <section style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px">
+      <div style="display:flex;flex-wrap:wrap">
+        <div id="hero-left" style="flex:1 1 440px;min-width:0;padding:76px 52px 72px 0;box-sizing:border-box;border-right:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
+            <img src="/icons/homestead-icon.png" alt="Homestead app icon" data-magnet="1" style="width:56px;height:56px;border-radius:13px;object-fit:cover;background:var(--surface-sunken)">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:5px 11px;border-radius:20px;background:var(--pill-shipped-bg);color:var(--pill-shipped-text)">On the App Store</span>
+            <span style="font-size:13.5px;color:var(--text-tertiary)">iPhone · iPad · Family Sharing</span>
+          </div>
+          <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.2rem,5.8vw,4.7rem);line-height:1.04;letter-spacing:-0.03em;margin:0">The family's day,<br>on the wall and<br>in your pocket.</h1>
+          <p style="font-size:18px;line-height:1.7;color:var(--text-secondary);margin:28px 0 0;max-width:500px">Chores, calendar, meals and groceries in one place the whole household can see and edit. Mount an old iPad in the kitchen and it becomes the board everyone checks on the way past.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px">
+            <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:12px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px">Download on the App Store <span aria-hidden="true">↗</span></a>
+            <span style="font-size:14.5px;color:var(--text-tertiary)">Free to start · Pro adds the wall board</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;padding-top:26px;border-top:1px solid var(--border)">
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1;color:var(--terracotta-text)">4</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Chores, calendar,<br>meals, groceries</div></div>
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1">∞</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Family members,<br>free forever</div></div>
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1">0</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Accounts to make.<br>No red badges</div></div>
+          </div>
         </div>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;">
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Unlimited family members</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Unlimited chores and full history</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Calendar viewing and editing</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Current-conditions weather</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Timers</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Up to 15 recipes</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>iCloud sync across your own devices</li>
-        </ul>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:20px;padding:28px;border:1px solid var(--border-strong);border-radius:16px;background:var(--card);position:relative;">
-        <span style="position:absolute;top:24px;right:24px;font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);">Most popular</span>
-        <div>
-          <span style="font-size:17px;font-weight:600;color:var(--text);">Pro</span>
-          <div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:2rem;font-weight:500;color:var(--text);margin-top:4px;">$29.99<span style="font-size:1rem;color:var(--text-muted);">/yr</span></div>
-          <div style="font-size:13.5px;color:var(--text-muted);margin-top:4px;line-height:1.5;">or $3.99/mo, with a 14-day free trial<br>or $69.99 once, for life</div>
+        <div id="hero-right" style="flex:1 1 380px;min-width:0;padding:76px 0 72px 52px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:14px">
+          <div style="border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--surface-raised)">
+            <img src="assets/screenshot-board.jpg" alt="Homestead's kiosk board mounted on a kitchen wall, showing the week's agenda, tonight's dinner and everyone's chores" width="2000" height="1499">
+          </div>
+          <p style="font-size:13.5px;color:var(--text-tertiary);margin:0">The board, running in kiosk mode on a wall-mounted iPad.</p>
         </div>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;">
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Kiosk / wall board mode</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Photo slideshow</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Full weekly meal planner with grocery lists sent to Reminders</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Unlimited recipes, plus import from the web</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Full 5-day forecast</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Multi-calendar color coding</li>
-          <li style="font-size:14.5px;color:var(--text);display:flex;gap:9px;"><span style="color:var(--accent);">✓</span>Household sharing, invite by Apple Account</li>
-        </ul>
       </div>
-
     </div>
-    <p style="text-align:center;font-size:14px;color:var(--text-muted);margin:28px 0 0;">Free to start. Buy it once if you'd rather not pay rent for it.</p>
   </section>
 
-  <footer style="padding:24px 0 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:9px;">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Built in Maryland</p>
+  <section id="week" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:flex-start">
+        <div style="flex:1 1 300px;min-width:0;max-width:380px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">The week</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 18px">Everything the fridge whiteboard was trying to do.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 16px">One day at a time: who has what, what's for dinner, and which chores belong to whom. Plan the meals and the grocery list builds itself.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--text-tertiary);margin:0">Pick a day.</p>
+        </div>
+        <div style="flex:1 1 480px;min-width:0;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--page)">
+          <div id="day-tabs" style="display:flex;border-bottom:1px solid var(--border)"></div>
+          <div style="padding:22px 24px 18px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <span id="day-name" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.02em"></span>
+              <span id="day-cond" style="font-size:13.5px;color:var(--text-tertiary)"></span>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap">
+            <div style="flex:1 1 220px;min-width:0;padding:20px 24px;box-sizing:border-box;border-right:1px solid var(--border);border-bottom:1px solid var(--border)">
+              <span style="display:block;font-size:11.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px">Agenda</span>
+              <div id="day-agenda"></div>
+            </div>
+            <div style="flex:1 1 220px;min-width:0;padding:20px 24px;box-sizing:border-box;border-bottom:1px solid var(--border)">
+              <span style="display:block;font-size:11.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px">Chores</span>
+              <div id="day-chores"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;padding:18px 24px">
+            <div>
+              <span style="display:block;font-size:11.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:6px">Dinner</span>
+              <span id="day-dinner" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:20px;font-weight:500"></span>
+            </div>
+            <span id="day-groceries" style="font-size:13.5px;color:var(--terracotta-text)"></span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div style="display:flex;gap:24px;flex-wrap:wrap;">
-      <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-muted);">Download</a>
-      <a href="privacy.html" style="font-size:13px;color:var(--text-muted);">Privacy Policy</a>
-      <a href="/support.html" style="font-size:13px;color:var(--text-muted);">Support</a>
-      <a href="mailto:support@canosoftware.net" style="font-size:13px;color:var(--text-muted);">support@canosoftware.net</a>
+  </section>
+
+  <section id="features" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:500;letter-spacing:-0.018em;margin:0;max-width:22em">Six things, all in one place.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">Features</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">01</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Chores</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">Assigned per person, set to repeat, easy to check off. No red badges nagging anyone.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">02</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Shared calendar</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">Everyone in the household sees it and can edit it. No more guessing whose day it is — colour-coded per calendar with Pro.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">03</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Meal planning</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">Plan the week and the grocery list builds itself, then goes straight to Reminders. Import recipes from the web.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">04</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Weather at a glance</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">Current conditions on the board, the full five-day forecast in your pocket.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">05</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Timers</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">Pasta, homework, screen time. Start it from the kitchen, see it on the board.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">06</span>
+          <h3 style="flex:0 1 230px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:26px;font-weight:500;letter-spacing:-0.015em;margin:0">Photo slideshow</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:620px">When the day winds down, the board dims and drifts through family photos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wall" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;margin-bottom:32px">
+        <div style="flex:1 1 380px;min-width:0;max-width:560px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">On the wall</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 14px">Built for the wall, not just the pocket.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0">Mount an old iPad in the kitchen and it becomes the household's day at a glance: agenda, chores and conditions, always on.</p>
+        </div>
+        <div style="flex:1 1 240px;min-width:0;display:flex;flex-direction:column;border-top:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Runs on</span><span style="font-size:14px;color:var(--text-tertiary)">Any iPad you already own</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Stays on</span><span style="font-size:14px;color:var(--text-tertiary)">Kiosk mode, no timeout</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Idle</span><span style="font-size:14px;color:var(--text-tertiary)">Dims into family photos</span></div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--page)">
+        <img src="assets/screenshot-board.jpg" alt="Homestead's kiosk board showing the week ahead, tonight's dinner and each family member's chores" width="2000" height="1499">
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;letter-spacing:-0.018em;margin:0">Free to start. Buy it once if you'd rather not pay rent for it.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">Pricing</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <div style="border:1px solid var(--border);border-radius:18px;padding:28px;background:var(--surface-raised)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+            <span style="font-size:15px;font-weight:600">Free</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1">$0</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px">
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited family members</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited chores and full history</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Calendar viewing and editing</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Current-conditions weather</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Timers</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Up to 15 recipes</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">iCloud sync across your own devices</span>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border-interactive);border-radius:18px;padding:28px;background:var(--surface-raised)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+            <span style="font-size:15px;font-weight:600;color:var(--terracotta-text)">Pro</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1">$29.99<span style="font-size:16px;color:var(--text-tertiary)">/yr</span></span>
+          </div>
+          <p style="font-size:13.5px;color:var(--text-tertiary);margin:14px 0 4px">or $3.99/mo with a 14-day free trial · $69.99 once, for life</p>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px">
+            <span style="font-size:15.5px;color:var(--text-secondary)">Kiosk / wall board mode</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Photo slideshow</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Full weekly meal planner, groceries sent to Reminders</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited recipes, plus import from the web</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Full 5-day forecast</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Multi-calendar colour coding</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Household sharing, invite by Apple Account</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="background:var(--band);color:var(--band-text)">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+        <div style="flex:1 1 460px;min-width:0;max-width:620px">
+          <span style="font-size:15px;font-weight:600;opacity:.8;display:block;margin-bottom:16px">Privacy</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.9rem,4.4vw,3.1rem);font-weight:500;line-height:1.12;letter-spacing:-0.02em;margin:0 0 18px">Private by design.</h2>
+          <p style="font-size:17.5px;line-height:1.65;margin:0 0 22px;opacity:.88">Homestead runs on your devices and syncs through your own iCloud. No accounts, no ads, no analytics — your family's week is nobody else's business.</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Sync</span><span style="font-size:13.5px;opacity:.75">Your private iCloud only</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Accounts</span><span style="font-size:13.5px;opacity:.75">None to make</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Sharing</span><span style="font-size:13.5px;opacity:.75">Invite by Apple Account</span></div>
+          </div>
+          <p style="margin:22px 0 0"><a href="privacy.html" style="color:var(--band-text);font-size:15px;font-weight:600;border-bottom:1px solid rgba(247,243,236,.5)">Read the full privacy policy →</a></p>
+        </div>
+        <div style="flex:1 1 300px;min-width:0;max-width:380px">
+          <p style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:24px;line-height:1.45;margin:0 0 18px">Our whiteboard was three colours of marker and always a week behind, so I built Homestead.</p>
+          <p style="font-size:16px;line-height:1.7;margin:0;opacity:.82">I'm TJ — I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends. Homestead is one of five that hold the things you'd rather not hold in your head.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:68px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;justify-content:space-between">
+        <div style="flex:1 1 420px;min-width:0">
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:500;line-height:1.14;letter-spacing:-0.02em;margin:0 0 14px">Start with tonight's dinner.</h2>
+          <p style="font-size:16.5px;line-height:1.65;color:var(--text-secondary);margin:0;max-width:500px">Chores, calendar and timers are free for the whole household. Add the wall board when the iPad comes off the shelf.</p>
+        </div>
+        <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:12px">
+          <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px;min-width:250px">Download on the App Store <span aria-hidden="true">↗</span></a>
+          <a href="privacy.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-primary);border:1px solid var(--border-interactive);padding:15px 24px;border-radius:12px;min-width:250px">Read the privacy policy <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal>
+    <div style="max-width:1280px;margin:0 auto;padding:60px 40px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:500;letter-spacing:-0.018em;margin:0">The rest of the shelf.</h2>
+        <a href="/index.html" style="font-size:14.5px">All five apps →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <a href="/onward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/onward-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Onward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Habits and goals</div></div></a>
+        <a href="/steward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/steward-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Steward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Home upkeep</div></div></a>
+        <a href="/roadworthy/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/roadworthy-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Roadworthy</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Car maintenance</div></div></a>
+        <a href="https://ledger.canosoftware.net" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px dashed var(--border-strong);border-radius:16px;color:var(--text-primary)"><img src="/icons/ledger-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Ledger</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Coming soon</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 40px 56px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75">
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">© 2026 CanoSoftware · Built in Maryland</p>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="/index.html" style="font-size:13.5px;color:var(--text-primary)">canosoftware.net</a>
+        <a href="https://apps.apple.com/us/app/homestead-household-hq/id6796331376" target="_blank" rel="noopener" style="font-size:13.5px;color:var(--text-primary)">Download</a>
+        <a href="privacy.html" style="font-size:13.5px;color:var(--text-primary)">Privacy policy</a>
+        <a href="mailto:support@canosoftware.net" style="font-size:13.5px;color:var(--text-primary)">Support</a>
+      </div>
     </div>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // scroll progress bar
+  var bar = document.getElementById("scroll-progress");
+  var raf = null;
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var p = Math.min(1, Math.max(0, window.scrollY / max));
+      bar.style.width = (p * 100).toFixed(2) + "%";
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // The week: day picker
+  var week = [
+    { abbr: "Mon", num: 14, name: "Monday", cond: "58° · rain by 4pm", dinner: "Sheet-pan chicken", groceries: 4,
+      agenda: [["7:40a", "Bus"], ["6:00p", "Ruby — piano"], ["8:15p", "Trash to the curb"]],
+      chores: [["Dishwasher", "Ruby", true], ["Feed the dog", "Sam", true], ["Recycling out", "Dad", false]] },
+    { abbr: "Tue", num: 15, name: "Tuesday", cond: "61° · clearing", dinner: "Leftover chicken tacos", groceries: 2,
+      agenda: [["7:40a", "Bus"], ["4:30p", "Sam — soccer practice"]],
+      chores: [["Dishwasher", "Sam", false], ["Fold laundry", "Ruby", false]] },
+    { abbr: "Wed", num: 16, name: "Wednesday", cond: "64° · sunny", dinner: "Pasta and salad", groceries: 6,
+      agenda: [["7:40a", "Bus"], ["12:00p", "Furnace filter (Steward)"], ["7:00p", "Back-to-school night"]],
+      chores: [["Dishwasher", "Ruby", false], ["Take out trash", "Sam", false], ["Water the plants", "Mom", true]] },
+    { abbr: "Thu", num: 17, name: "Thursday", cond: "66° · sunny", dinner: "Grilled sausages", groceries: 3,
+      agenda: [["7:40a", "Bus"], ["5:15p", "Ruby — dentist"]],
+      chores: [["Dishwasher", "Sam", false], ["Vacuum upstairs", "Ruby", false]] },
+    { abbr: "Fri", num: 18, name: "Friday", cond: "63° · breezy", dinner: "Pizza night", groceries: 1,
+      agenda: [["7:40a", "Bus"], ["6:30p", "Movie on the board"]],
+      chores: [["Dishwasher", "Ruby", false], ["Sheets in the wash", "Mom", false]] },
+    { abbr: "Sat", num: 19, name: "Saturday", cond: "68° · clear", dinner: "Chili in the slow cooker", groceries: 11,
+      agenda: [["9:00a", "Sam — game at Riverside"], ["2:00p", "Oil change (Roadworthy)"]],
+      chores: [["Mow the yard", "Dad", false], ["Bathrooms", "Ruby", false], ["Groceries", "Mom", false]] },
+    { abbr: "Sun", num: 20, name: "Sunday", cond: "65° · overcast", dinner: "Roast and potatoes", groceries: 7,
+      agenda: [["10:00a", "Church"], ["4:00p", "Plan next week's meals"]],
+      chores: [["Meal plan", "Mom", false], ["Bins to the curb", "Sam", false]] }
+  ];
+  var dayIndex = 2;
+
+  var tabsEl = document.getElementById("day-tabs");
+  var nameEl = document.getElementById("day-name");
+  var condEl = document.getElementById("day-cond");
+  var agendaEl = document.getElementById("day-agenda");
+  var choresEl = document.getElementById("day-chores");
+  var dinnerEl = document.getElementById("day-dinner");
+  var groceriesEl = document.getElementById("day-groceries");
+
+  var tabButtons = week.map(function(d, i){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "day-btn";
+    btn.setAttribute("aria-pressed", i === dayIndex ? "true" : "false");
+
+    var abbr = document.createElement("span");
+    abbr.className = "day-abbr";
+    abbr.textContent = d.abbr;
+    var num = document.createElement("span");
+    num.className = "day-num";
+    num.textContent = d.num;
+    btn.appendChild(abbr);
+    btn.appendChild(num);
+
+    btn.addEventListener("click", function(){ selectDay(i); });
+    tabsEl.appendChild(btn);
+    return btn;
+  });
+
+  function selectDay(i){
+    dayIndex = i;
+    var d = week[i];
+
+    tabButtons.forEach(function(btn, n){
+      var isActive = n === i;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    nameEl.textContent = d.name + " the " + d.num + "th";
+    condEl.textContent = d.cond;
+    dinnerEl.textContent = d.dinner;
+    groceriesEl.textContent = d.groceries + " items on the grocery list →";
+
+    agendaEl.innerHTML = "";
+    d.agenda.forEach(function(a){
+      var row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.gap = "12px";
+      row.style.padding = "7px 0";
+      var time = document.createElement("span");
+      time.style.flex = "0 0 58px";
+      time.style.fontSize = "13.5px";
+      time.style.color = "var(--text-tertiary)";
+      time.textContent = a[0];
+      var what = document.createElement("span");
+      what.style.flex = "1 1 auto";
+      what.style.minWidth = "0";
+      what.style.fontSize = "15px";
+      what.textContent = a[1];
+      row.appendChild(time);
+      row.appendChild(what);
+      agendaEl.appendChild(row);
+    });
+
+    choresEl.innerHTML = "";
+    d.chores.forEach(function(c){
+      var row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.alignItems = "center";
+      row.style.gap = "11px";
+      row.style.padding = "7px 0";
+
+      var dot = document.createElement("span");
+      dot.className = "chore-dot" + (c[2] ? " is-done" : "");
+
+      var name = document.createElement("span");
+      name.className = "chore-name" + (c[2] ? " is-done" : "");
+      name.style.flex = "1 1 auto";
+      name.style.minWidth = "0";
+      name.style.fontSize = "15px";
+      name.textContent = c[0];
+
+      var who = document.createElement("span");
+      who.style.flex = "0 0 auto";
+      who.style.fontSize = "13px";
+      who.style.color = "var(--text-tertiary)";
+      who.textContent = c[2] ? "done · " + c[1] : c[1];
+
+      row.appendChild(dot);
+      row.appendChild(name);
+      row.appendChild(who);
+      choresEl.appendChild(row);
+    });
+  }
+  selectDay(dayIndex);
+
+  // hero split border
+  var L = document.getElementById("hero-left");
+  var R = document.getElementById("hero-right");
+  function applyHero(){
+    if (!L || !R) return;
+    var wide = Math.abs(L.offsetTop - R.offsetTop) < 2;
+    L.style.borderRight = wide ? "1px solid var(--border)" : "0";
+    L.style.paddingRight = wide ? "52px" : "0";
+    L.style.paddingBottom = wide ? "72px" : "40px";
+    R.style.paddingLeft = wide ? "52px" : "0";
+    R.style.paddingTop = wide ? "76px" : "0";
+  }
+  applyHero();
+  window.addEventListener("resize", applyHero);
+
+  // reveal on scroll
+  var reveal = function(el){ el.classList.add("is-visible"); };
+  var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (reduced) {
+    nodes.forEach(reveal);
+  } else if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.05 });
+    nodes.forEach(function(n){ io.observe(n); });
+    setTimeout(function(){ nodes.forEach(reveal); }, 2500);
+  } else {
+    nodes.forEach(reveal);
+  }
+
+  // magnetic hover
+  if (!reduced) {
+    document.querySelectorAll("[data-magnet]").forEach(function(el){
+      el.style.willChange = "transform";
+      el.addEventListener("pointermove", function(e){
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) / r.width;
+        var dy = (e.clientY - r.top - r.height / 2) / r.height;
+        el.style.transition = "transform .09s linear";
+        el.style.transform = "translate(" + dx * 9 + "px," + dy * 7 + "px)";
+      });
+      el.addEventListener("pointerleave", function(){
+        el.style.transition = "transform .55s cubic-bezier(.2,1.3,.3,1)";
+        el.style.transform = "translate(0,0)";
+      });
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
