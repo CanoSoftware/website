@@ -10,170 +10,466 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
 <link rel="shortcut icon" href="assets/favicon.ico">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
-  --text:#262220;--text-muted:#6B6259;
-  --accent:#B5563B;--accent-contrast:#FBF3EC;
-  --border:#DDD4C4;--border-strong:#C9BEA9;
+  --page:#F7F3EC;--surface-raised:#FBF8F2;--surface-sunken:#EFE9DD;--surface-tile:#FBF3EC;
+  --text-primary:#262220;--text-secondary:#6B6259;--text-tertiary:#706758;
+  --terracotta:#B5563B;--terracotta-text:#9C462E;--text-on-terracotta:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;--border-interactive:#8F8169;
+  --pill-shipped-bg:#9C462E;--pill-shipped-text:#FBF3EC;
+  --pill-soon-border:#C9BEA9;--pill-soon-text:#6B6259;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
-    --text:#EDE6DA;--text-muted:#A79C8C;
-    --accent:#E08863;--accent-contrast:#17140F;
-    --border:#33291F;--border-strong:#463A2B;
+    --page:#17140F;--surface-raised:#211D18;--surface-sunken:#100E0A;--surface-tile:#262220;
+    --text-primary:#EDE6DA;--text-secondary:#A79C8C;--text-tertiary:#93897A;
+    --terracotta:#E08863;--terracotta-text:#E08863;
+    --border:#33291F;--border-strong:#463A2C;--border-interactive:#7F6C54;
+    --pill-shipped-bg:#E08863;--pill-shipped-text:#17140F;--text-on-terracotta:#17140F;
+    --pill-soon-border:#463A2C;--pill-soon-text:#A79C8C;
   }
 }
-html{background:var(--bg);color-scheme:light dark;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
-a{color:var(--accent);text-decoration:none;}
-a:hover{opacity:0.72;}
-::selection{background:var(--accent);color:var(--accent-contrast);}
+html{background:var(--page);color-scheme:light dark;}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--terracotta-text);text-decoration:none;}
+a:hover{opacity:.72;}
+::selection{background:var(--terracotta);color:var(--text-on-terracotta);}
+img{max-width:100%;height:auto;display:block;}
 .mark-light{display:block;}
 .mark-dark{display:none;}
-@media (prefers-color-scheme: dark){
-  .mark-light{display:none;}
-  .mark-dark{display:block;}
-}
-img{max-width:100%;height:auto;display:block;}
+@media (prefers-color-scheme: dark){.mark-light{display:none;}.mark-dark{display:block;}}
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
+[data-reveal].is-visible{opacity:1;transform:translateY(0);}
+.odo-row{display:flex;align-items:center;gap:16px;padding:16px 24px;border-bottom:1px solid var(--border);}
+.odo-row:last-of-type{border-bottom:0;}
+.odo-dot{flex:0 0 auto;width:9px;height:9px;border-radius:50%;}
+.odo-name{display:block;font-size:15.5px;color:var(--text-primary);}
+input[type=range].odo{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--border-strong);border-radius:2px;outline:none;margin:0;}
+input[type=range].odo::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--terracotta);border:3px solid var(--page);cursor:grab;}
+input[type=range].odo::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--terracotta);border:3px solid var(--page);cursor:grab;}
+input[type=range].odo:focus-visible{outline:2px solid var(--terracotta);outline-offset:6px;}
 </style>
 </head>
 <body>
 
-<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+<div style="background:var(--page)">
 
-  <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;flex-wrap:wrap;">
-    <a href="/index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="31" height="20">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="31" height="20">
-      CanoSoftware
-    </a>
-    <div style="display:flex;gap:28px;flex-wrap:wrap;">
-      <a href="/index.html#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
-      <a href="/index.html#about" style="font-size:15px;color:var(--text-muted);">About</a>
-      <a href="/support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
-    </div>
-  </nav>
-
-  <header style="padding:48px 0 64px;display:flex;align-items:center;gap:48px;flex-wrap:wrap;">
-    <div style="flex:1 1 400px;min-width:280px;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-        <img src="/icons/roadworthy-icon.svg" alt="Roadworthy app icon" width="44" height="44" style="border-radius:9.6px;display:block;">
-        <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Roadworthy</span>
-        <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
+  <div style="position:sticky;top:0;z-index:60;background:var(--page);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;color:var(--text-primary)">
+          <img class="mark-light" src="/assets/mark.svg" alt="" width="28" height="18"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="28" height="18">
+          <span style="font-size:16px;font-weight:600;letter-spacing:-0.01em">CanoSoftware</span>
+        </a>
+        <span aria-hidden="true" style="color:var(--text-tertiary);font-size:15px">/</span>
+        <span style="font-size:16px;font-weight:600;color:var(--text-secondary)">Roadworthy</span>
       </div>
-      <h1 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.1rem,5vw + 1rem,3.4rem);line-height:1.12;letter-spacing:-0.01em;margin:0 0 20px;color:var(--text);">One garage. Every car. Nothing forgotten.</h1>
-      <p style="font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0 0 24px;max-width:480px;">Roadworthy tracks maintenance, mileage, recalls, and cost for every vehicle in the garage, and tells you what's due by date or by mile, whichever comes first.</p>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-        <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);font-size:15px;font-weight:600;">Download on the App Store</a>
-        <span style="font-size:14px;color:var(--text-muted);">Free to start · Pro unlocks unlimited vehicles</span>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <a href="#whichever" style="font-size:14.5px;color:var(--text-secondary)">Whichever first</a>
+        <a href="#garage" style="font-size:14.5px;color:var(--text-secondary)">The garage</a>
+        <a href="#screens" style="font-size:14.5px;color:var(--text-secondary)">Screens</a>
+        <a href="#pricing" style="font-size:14.5px;color:var(--text-secondary)">Pricing</a>
+        <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:9px 16px;border-radius:20px;white-space:nowrap">Get Roadworthy <span aria-hidden="true" style="font-size:13px">↗</span></a>
       </div>
     </div>
-    <div style="flex:0 0 300px;border:1px solid var(--border);border-radius:16px;background:var(--card);overflow:hidden;">
-      <img src="assets/screenshot-garage.png" alt="Roadworthy's Garage screen, listing every vehicle in one place" style="display:block;width:100%;height:380px;object-fit:cover;object-position:top;">
-    </div>
-  </header>
+    <div style="height:2px;margin-bottom:-2px;position:relative;z-index:1"><div id="scroll-progress" style="height:2px;background:var(--terracotta);width:0%;transition:width .12s linear"></div></div>
+  </div>
 
-  <section style="padding:8px 0 72px;border-top:1px solid var(--border);">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:48px 0 12px;">Features</h2>
-    <h3 style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:var(--text);margin:0 0 32px;">Everything one garage needs.</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Due by date or mileage</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Every item tracks both triggers at once and shows whichever arrives first.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">One garage, every car</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Add your whole household's vehicles and switch between "all" and "this one" with a tap.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Mileage, predicted</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Roadworthy estimates where your odometer sits between check-ins, so due dates stay accurate.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Recalls, automatically</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Every vehicle you add is checked against NHTSA's open-recall database automatically.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Share the garage</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Invite the household. Everyone sees the same due list for the same cars.</p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <span style="font-size:17px;font-weight:600;color:var(--text);">Know what it costs</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.55;color:var(--text-muted);">Real cost-of-ownership tracking, with a full service history you can export as a PDF.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <section style="padding:40px 32px;margin-bottom:72px;border:1px solid var(--border);border-radius:16px;background:var(--bg-alt);display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
-    <div style="flex:1 1 260px;">
-      <h3 style="font-size:21px;font-weight:600;margin:0 0 12px;color:var(--text);">See what's due, across every vehicle.</h3>
-      <p style="font-size:15.5px;line-height:1.6;color:var(--text-muted);margin:0;max-width:420px;">Overdue, due soon, upcoming, and as-needed, grouped and ready to share as a checklist before your next shop visit.</p>
-    </div>
-    <div style="flex:0 0 260px;border:1px solid var(--border);border-radius:16px;background:var(--card);overflow:hidden;">
-      <img src="assets/screenshot-due.png" alt="Roadworthy's Due dashboard, grouped by overdue, due soon, upcoming, and as-needed" style="display:block;width:100%;height:320px;object-fit:cover;object-position:top;">
-    </div>
-  </section>
-
-  <section style="padding:8px 0 72px;">
-    <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px;">Pricing</h2>
-    <h3 style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:var(--text);margin:0 0 32px;">Free to start. Upgrade if you need more.</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
-
-      <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div>
-          <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Free</div>
-          <div style="font-size:32px;font-weight:600;color:var(--text);">$0</div>
+  <section style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px">
+      <div style="display:flex;flex-wrap:wrap">
+        <div id="hero-left" style="flex:1 1 460px;min-width:0;padding:76px 52px 72px 0;box-sizing:border-box;border-right:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
+            <img src="/icons/roadworthy-icon.svg" alt="Roadworthy app icon" data-magnet="1" style="width:56px;height:56px;border-radius:13px;background:var(--surface-sunken)">
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:5px 11px;border-radius:20px;background:var(--pill-shipped-bg);color:var(--pill-shipped-text)">On the App Store</span>
+            <span style="font-size:13.5px;color:var(--text-tertiary)">iPhone · Family Sharing</span>
+          </div>
+          <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.3rem,6.2vw,5rem);line-height:1.02;letter-spacing:-0.03em;margin:0">One garage.<br>Every car.<br>Nothing forgotten.</h1>
+          <p style="font-size:18px;line-height:1.7;color:var(--text-secondary);margin:28px 0 0;max-width:500px">Roadworthy tracks maintenance, mileage, recalls and cost for every vehicle in the garage, and tells you what's due by date or by mile — whichever comes first.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px">
+            <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;gap:12px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px">Download on the App Store <span aria-hidden="true">↗</span></a>
+            <span style="font-size:14.5px;color:var(--text-tertiary)">Free to start · Pro unlocks unlimited vehicles</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;padding-top:26px;border-top:1px solid var(--border)">
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1;color:var(--terracotta-text)">2</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Triggers per item:<br>date and mileage</div></div>
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1">NHTSA</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Open recalls,<br>checked for you</div></div>
+            <div><div style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:30px;font-weight:500;line-height:1">0</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Glovebox receipts<br>to dig through</div></div>
+          </div>
         </div>
-        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:14.5px;color:var(--text);">Up to 2 vehicles</li>
-          <li style="font-size:14.5px;color:var(--text);">Unlimited maintenance logging and history</li>
-          <li style="font-size:14.5px;color:var(--text);">Due reminders, recalls, and warranties</li>
-          <li style="font-size:14.5px;color:var(--text);">Up to 10 documents</li>
-        </ul>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:20px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);">
-        <div>
-          <div style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Pro</div>
-          <div style="font-size:32px;font-weight:600;color:var(--text);">$19.99<span style="font-size:15px;font-weight:500;color:var(--text-muted);">/yr</span></div>
-          <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">or $2.99/mo · $59.99 once, lifetime · 7-day free trial</div>
+        <div id="hero-right" style="flex:1 1 320px;min-width:0;padding:76px 0 72px 52px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center">
+          <img src="assets/screenshot-garage.png" alt="Roadworthy's Garage screen, listing every vehicle in one place" style="width:100%;max-width:330px;border-radius:24px;border:1px solid var(--border);background:var(--surface-raised)">
         </div>
-        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
-          <li style="font-size:14.5px;color:var(--text);">Unlimited vehicles</li>
-          <li style="font-size:14.5px;color:var(--text);">Garage sharing</li>
-          <li style="font-size:14.5px;color:var(--text);">Receipt scanning</li>
-          <li style="font-size:14.5px;color:var(--text);">Service history PDF export</li>
-          <li style="font-size:14.5px;color:var(--text);">Unlimited documents</li>
-          <li style="font-size:14.5px;color:var(--text);">Family Sharing — one purchase covers your whole household</li>
-        </ul>
       </div>
-
     </div>
   </section>
 
-  <footer style="padding:24px 0 56px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-    <div style="display:flex;align-items:center;gap:9px;">
-      <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 Roadworthy · A CanoSoftware app</p>
+  <section id="whichever" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:flex-start">
+        <div style="flex:1 1 320px;min-width:0;max-width:400px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">Whichever comes first</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 18px">An oil change isn't due in March. It's due at 52,000 — or March.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 16px">Every item carries both triggers at once. Roadworthy watches them together and surfaces whichever arrives first, estimating where your odometer sits between check-ins.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--text-tertiary);margin:0">Drag the odometer and watch the list re-sort.</p>
+        </div>
+        <div style="flex:1 1 460px;min-width:0;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--page)">
+          <div style="padding:22px 24px 20px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span id="odo-label" style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1;letter-spacing:-0.02em">48,200</span>
+                <span style="font-size:13.5px;color:var(--text-tertiary)">mi · 2019 Outback</span>
+              </div>
+              <span id="odo-summary" style="font-size:13.5px;color:var(--terracotta-text)">0 overdue · 0 due soon</span>
+            </div>
+            <input class="odo" id="odo-slider" type="range" min="46000" max="58000" step="100" value="48200" aria-label="Odometer reading">
+          </div>
+          <div id="odo-list"></div>
+          <div style="padding:16px 24px;font-size:13.5px;color:var(--text-tertiary)">Log the service once and both triggers reset together.</div>
+        </div>
+      </div>
     </div>
-    <div style="display:flex;gap:20px;flex-wrap:wrap;">
-      <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-muted);">Download</a>
-      <a href="privacy.html" style="font-size:13px;color:var(--text-muted);">Privacy Policy</a>
-      <a href="mailto:support@canosoftware.net" style="font-size:13px;color:var(--text-muted);">support@canosoftware.net</a>
+  </section>
+
+  <section id="garage" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:500;letter-spacing:-0.018em;margin:0;max-width:22em">Everything one garage needs.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">The garage</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">01</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">One garage, every car</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Add the whole household's vehicles and switch between "all" and "this one" with a tap. Invite the people who drive them and everyone sees the same due list.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">02</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Mileage, predicted</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">You won't log the odometer every day, so Roadworthy estimates where it sits between check-ins. Due dates stay honest without the busywork.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">03</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Recalls, automatically</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Every vehicle you add is checked against NHTSA's open-recall database. You find out from the app, not from a letter you nearly threw away.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:14px;color:var(--terracotta-text)">04</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Know what it costs</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Real cost-of-ownership tracking with a full service history you can export as a PDF — for the shop, the buyer, or the argument about whether to keep it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:center">
+        <div style="flex:1 1 300px;min-width:0;display:flex;justify-content:center">
+          <img src="assets/screenshot-due.png" alt="Roadworthy's Due dashboard, grouped by overdue, due soon, upcoming and as-needed" style="width:100%;max-width:300px;border-radius:22px;border:1px solid var(--border);background:var(--surface-raised)">
+        </div>
+        <div style="flex:1 1 380px;min-width:0;max-width:520px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">The due list</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 18px">See what's due, across every vehicle.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 24px">Overdue, due soon, upcoming and as-needed — grouped and ready to hand over as a checklist before your next shop visit.</p>
+          <div style="display:flex;flex-direction:column;border-top:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Grouping</span><span style="font-size:14px;color:var(--text-tertiary)">Overdue · soon · upcoming · as-needed</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Scope</span><span style="font-size:14px;color:var(--text-tertiary)">All vehicles, or one</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Share</span><span style="font-size:14px;color:var(--text-tertiary)">As a checklist</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;letter-spacing:-0.018em;margin:0">Free to start. Upgrade if you need more.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">Pricing</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <div style="border:1px solid var(--border);border-radius:18px;padding:28px;background:var(--page)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+            <span style="font-size:15px;font-weight:600">Free</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:34px;font-weight:500;line-height:1">$0</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px">
+            <span style="font-size:15.5px;color:var(--text-secondary)">Up to 2 vehicles</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited maintenance logging and history</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Due reminders, recalls and warranties</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Up to 10 documents</span>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border-interactive);border-radius:18px;padding:28px;background:var(--page)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+            <span style="font-size:15px;font-weight:600;color:var(--terracotta-text)">Pro</span>
+            <span style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:34px;font-weight:500;line-height:1">$19.99<span style="font-size:16px;color:var(--text-tertiary)">/yr</span></span>
+          </div>
+          <p style="font-size:13.5px;color:var(--text-tertiary);margin:14px 0 4px">or $2.99/mo · $59.99 once, lifetime · 7-day free trial</p>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:14px">
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited vehicles</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Garage sharing</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Receipt scanning</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Service history PDF export</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Unlimited documents</span>
+            <span style="font-size:15.5px;color:var(--text-secondary)">Family Sharing — one purchase covers the household</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="background:#262220;color:#F7F3EC">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+        <div style="flex:1 1 460px;min-width:0;max-width:620px">
+          <span style="font-size:15px;font-weight:600;opacity:.8;display:block;margin-bottom:16px">Privacy</span>
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.9rem,4.4vw,3.1rem);font-weight:500;line-height:1.12;letter-spacing:-0.02em;margin:0 0 18px">Private by design.</h2>
+          <p style="font-size:17.5px;line-height:1.65;margin:0 0 22px;opacity:.88">Roadworthy runs on your devices and syncs through your own iCloud. No accounts, no ads, no analytics — what you drive and what you spend on it is nobody else's business.</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Sync</span><span style="font-size:13.5px;opacity:.75">Your private iCloud only</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Accounts</span><span style="font-size:13.5px;opacity:.75">None to make</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Recall lookups</span><span style="font-size:13.5px;opacity:.75">NHTSA's public database</span></div>
+          </div>
+          <p style="margin:22px 0 0"><a href="privacy.html" style="color:#F7F3EC;font-size:15px;font-weight:600;border-bottom:1px solid rgba(247,243,236,.5)">Read the full privacy policy →</a></p>
+        </div>
+        <div style="flex:1 1 300px;min-width:0;max-width:380px">
+          <p style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:24px;line-height:1.45;margin:0 0 18px">I couldn't remember whether the oil change was due by month or by mile, so I built Roadworthy.</p>
+          <p style="font-size:16px;line-height:1.7;margin:0;opacity:.82">I'm TJ — I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends. Roadworthy is one of five that hold the things you'd rather not hold in your head.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:68px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;justify-content:space-between">
+        <div style="flex:1 1 420px;min-width:0">
+          <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:500;line-height:1.14;letter-spacing:-0.02em;margin:0 0 14px">Start with the car in the driveway.</h2>
+          <p style="font-size:16.5px;line-height:1.65;color:var(--text-secondary);margin:0;max-width:500px">Two vehicles are free, forever. Add the third when you need it — annually, monthly, or once and it doesn't expire.</p>
+        </div>
+        <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:12px">
+          <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px;min-width:250px">Download on the App Store <span aria-hidden="true">↗</span></a>
+          <a href="privacy.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:16px;font-size:15.5px;font-weight:600;color:var(--text-primary);border:1px solid var(--border-interactive);padding:15px 24px;border-radius:12px;min-width:250px">Read the privacy policy <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal>
+    <div style="max-width:1280px;margin:0 auto;padding:60px 40px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+        <h2 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:500;letter-spacing:-0.018em;margin:0">The rest of the shelf.</h2>
+        <a href="/index.html" style="font-size:14.5px">All five apps →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <a href="/onward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/onward-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Onward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Habits and goals</div></div></a>
+        <a href="/steward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/steward-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Steward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Home upkeep</div></div></a>
+        <a href="/homestead/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/homestead-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Homestead</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">The family week</div></div></a>
+        <a href="https://ledger.canosoftware.net" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px dashed var(--border-strong);border-radius:16px;color:var(--text-primary)"><img src="/icons/ledger-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:'Source Serif 4',ui-serif,Georgia,serif;font-size:18px;font-weight:500">Ledger</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Coming soon</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 40px 56px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75">
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">© 2026 CanoSoftware · Roadworthy for iPhone</p>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="/index.html" style="font-size:13.5px;color:var(--text-primary)">canosoftware.net</a>
+        <a href="https://apps.apple.com/us/app/roadworthy-car-maintenance/id6795292753" target="_blank" rel="noopener" style="font-size:13.5px;color:var(--text-primary)">Download</a>
+        <a href="privacy.html" style="font-size:13.5px;color:var(--text-primary)">Privacy policy</a>
+        <a href="mailto:support@canosoftware.net" style="font-size:13.5px;color:var(--text-primary)">Support</a>
+      </div>
     </div>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // scroll progress bar
+  var bar = document.getElementById("scroll-progress");
+  var raf = null;
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var p = Math.min(1, Math.max(0, window.scrollY / max));
+      bar.style.width = (p * 100).toFixed(2) + "%";
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // whichever-comes-first odometer widget
+  var base = [
+    { name: "Oil and filter", dueMiles: 52000, dueDays: 96, dateLabel: "Dec 13" },
+    { name: "Tire rotation", dueMiles: 49500, dueDays: 41, dateLabel: "Oct 19" },
+    { name: "Cabin air filter", dueMiles: 54000, dueDays: 12, dateLabel: "Sep 20" },
+    { name: "Brake fluid", dueMiles: 57500, dueDays: 402, dateLabel: "Oct 2027" },
+    { name: "State inspection", dueMiles: 999999, dueDays: -6, dateLabel: "Sep 2" }
+  ];
+
+  var slider = document.getElementById("odo-slider");
+  var odoLabelEl = document.getElementById("odo-label");
+  var odoSummaryEl = document.getElementById("odo-summary");
+  var odoListEl = document.getElementById("odo-list");
+  var order = { overdue: 0, soon: 1, later: 2 };
+
+  function computeRows(odo){
+    var rows = base.map(function(it){
+      var milesLeft = it.dueMiles - odo;
+      var mileTriggered = milesLeft <= 0;
+      var dateTriggered = it.dueDays <= 0;
+      var mileSoon = milesLeft > 0 && milesLeft <= 800;
+      var dateSoon = it.dueDays > 0 && it.dueDays <= 21;
+      var milesAsDays = milesLeft / 35;
+      var byMiles = it.dueMiles !== 999999 && milesAsDays <= it.dueDays;
+      var state, status, by;
+      if (mileTriggered || dateTriggered) {
+        state = "overdue";
+        status = mileTriggered ? Math.abs(milesLeft).toLocaleString() + " mi over" : Math.abs(it.dueDays) + " days over";
+        by = mileTriggered ? "by mileage" : "by date";
+      } else if (mileSoon || dateSoon) {
+        state = "soon";
+        status = byMiles ? "in " + milesLeft.toLocaleString() + " mi" : "in " + it.dueDays + " days";
+        by = byMiles ? "by mileage" : "by date · " + it.dateLabel;
+      } else {
+        state = "later";
+        status = byMiles ? "in " + milesLeft.toLocaleString() + " mi" : it.dateLabel;
+        by = byMiles ? "at " + it.dueMiles.toLocaleString() + " mi" : "by date";
+      }
+      return {
+        name: it.name,
+        rule: it.dueMiles === 999999 ? "Annually" : "Every 5,000 mi or 6 months",
+        status: status,
+        by: by,
+        state: state,
+        dot: state === "overdue" ? "var(--terracotta)" : state === "soon" ? "var(--border-interactive)" : "var(--border-strong)",
+        color: state === "overdue" ? "var(--terracotta-text)" : "var(--text-secondary)"
+      };
+    });
+    rows.sort(function(a, b){ return order[a.state] - order[b.state]; });
+    return rows;
+  }
+
+  function renderOdo(){
+    var odo = Number(slider.value);
+    var rows = computeRows(odo);
+    odoLabelEl.textContent = odo.toLocaleString();
+    var overdueCount = rows.filter(function(r){ return r.state === "overdue"; }).length;
+    var soonCount = rows.filter(function(r){ return r.state === "soon"; }).length;
+    odoSummaryEl.textContent = overdueCount + " overdue · " + soonCount + " due soon";
+
+    odoListEl.innerHTML = "";
+    rows.forEach(function(r){
+      var row = document.createElement("div");
+      row.className = "odo-row";
+
+      var dot = document.createElement("span");
+      dot.className = "odo-dot";
+      dot.style.background = r.dot;
+
+      var mid = document.createElement("span");
+      mid.style.flex = "1 1 auto";
+      mid.style.minWidth = "0";
+      var name = document.createElement("span");
+      name.className = "odo-name";
+      name.textContent = r.name;
+      var rule = document.createElement("span");
+      rule.style.display = "block";
+      rule.style.fontSize = "13px";
+      rule.style.color = "var(--text-tertiary)";
+      rule.style.marginTop = "3px";
+      rule.textContent = r.rule;
+      mid.appendChild(name);
+      mid.appendChild(rule);
+
+      var right = document.createElement("span");
+      right.style.flex = "0 0 auto";
+      right.style.textAlign = "right";
+      var status = document.createElement("span");
+      status.style.display = "block";
+      status.style.fontSize = "13.5px";
+      status.style.color = r.color;
+      status.textContent = r.status;
+      var by = document.createElement("span");
+      by.style.display = "block";
+      by.style.fontSize = "12px";
+      by.style.color = "var(--text-tertiary)";
+      by.style.marginTop = "3px";
+      by.textContent = r.by;
+      right.appendChild(status);
+      right.appendChild(by);
+
+      row.appendChild(dot);
+      row.appendChild(mid);
+      row.appendChild(right);
+      odoListEl.appendChild(row);
+    });
+  }
+  slider.addEventListener("input", renderOdo);
+  renderOdo();
+
+  // hero split border
+  var L = document.getElementById("hero-left");
+  var R = document.getElementById("hero-right");
+  function applyHero(){
+    if (!L || !R) return;
+    var wide = Math.abs(L.offsetTop - R.offsetTop) < 2;
+    L.style.borderRight = wide ? "1px solid var(--border)" : "0";
+    L.style.paddingRight = wide ? "52px" : "0";
+    L.style.paddingBottom = wide ? "72px" : "40px";
+    R.style.paddingLeft = wide ? "52px" : "0";
+    R.style.paddingTop = wide ? "76px" : "0";
+  }
+  applyHero();
+  window.addEventListener("resize", applyHero);
+
+  // reveal on scroll
+  var reveal = function(el){ el.classList.add("is-visible"); };
+  var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (reduced) {
+    nodes.forEach(reveal);
+  } else if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.05 });
+    nodes.forEach(function(n){ io.observe(n); });
+    setTimeout(function(){ nodes.forEach(reveal); }, 2500);
+  } else {
+    nodes.forEach(reveal);
+  }
+
+  // magnetic hover
+  if (!reduced) {
+    document.querySelectorAll("[data-magnet]").forEach(function(el){
+      el.style.willChange = "transform";
+      el.addEventListener("pointermove", function(e){
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) / r.width;
+        var dy = (e.clientY - r.top - r.height / 2) / r.height;
+        el.style.transition = "transform .09s linear";
+        el.style.transform = "translate(" + dx * 9 + "px," + dy * 7 + "px)";
+      });
+      el.addEventListener("pointerleave", function(){
+        el.style.transition = "transform .55s cubic-bezier(.2,1.3,.3,1)";
+        el.style.transform = "translate(0,0)";
+      });
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
