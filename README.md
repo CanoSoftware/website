@@ -111,10 +111,20 @@ already got the vertical-padding fix (from the Onward/Steward pass) applied
 from the start, rather than as a follow-up. `roadworthy/privacy.html` was
 **not** touched in this pass and still uses the earlier design.
 
-**`homestead/` has not been through the 2026-09-08 redesign pass** (hub,
-Onward, Steward, or Roadworthy) and still uses its earlier design. TJ's stated
-plan is to redesign it next, once more usage/budget is available — treat that
-as the next phase, not yet started.
+**`homestead/index.html` was redesigned 2026-09-08** from the same Claude
+Design project ("Canosoftware Marketing Redesign" — `Homestead-Final.dc.html`),
+converted by hand the same way as Onward, Steward, and Roadworthy: plain
+HTML/CSS/vanilla JS in one inline `<script>` block, same terracotta/cream
+tokens and editorial layout. New pieces: a sticky breadcrumb nav +
+scroll-progress bar, an interactive "The week" day picker (click a day tab and
+the agenda, chores, dinner, and grocery-list count all swap to that day's
+data), a numbered six-item feature list, an "On the wall" kiosk-mode section,
+free-vs-Pro pricing cards, and a full-bleed dark-ink privacy/bio panel. The
+sticky nav's container already got the vertical-padding fix (from the
+Onward/Steward pass) applied from the start, rather than as a follow-up.
+`homestead/privacy.html` was **not** touched in this pass and still uses the
+earlier design. This closes out the 2026-09-08 redesign pass across the hub
+and all four app pages.
 
 URLs:
 - `canosoftware.net/onward/`, `/onward/privacy.html`
