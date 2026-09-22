@@ -54,6 +54,9 @@ a:hover{opacity:0.72;}
 img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:cover;background:var(--bg-alt);}
 [data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
 #top,#apps,#studio{scroll-margin-top:96px;}
+.coming-soon{position:relative;cursor:default;}
+.coming-soon::after{content:"Coming soon";position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--text);color:var(--bg);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s ease,transform .15s ease;}
+.coming-soon:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -66,7 +69,7 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
         <a href="#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
         <a href="#studio" style="font-size:15px;color:var(--text-muted);">Studio</a>
         <a href="support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
-        <a href="https://web.canosoftware.net" data-magnet="1" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--bg);background:var(--accent-services);padding:9px 16px;border-radius:20px;white-space:nowrap;">Web services <span aria-hidden="true" style="font-size:13px;">&#8599;</span></a>
+        <span class="coming-soon" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-muted);background:var(--border);padding:9px 16px;border-radius:20px;white-space:nowrap;">Web services</span>
       </div>
     </nav>
   </div>
@@ -177,13 +180,13 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
   <div style="max-width:1080px;margin:0 auto;padding:clamp(40px,7vw,64px) 24px;">
     <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;">
       <div style="flex:1 1 420px;min-width:0;">
-        <span style="font-size:14px;font-weight:600;color:var(--bg);opacity:.85;display:block;margin-bottom:14px;">For small businesses</span>
+        <span style="font-size:14px;font-weight:600;color:var(--bg);opacity:.85;display:block;margin-bottom:14px;">For small businesses &middot; Coming soon</span>
         <h2 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-0.018em;margin:0 0 14px;color:var(--bg);">I also build websites for small businesses.</h2>
         <p style="font-size:16px;line-height:1.6;margin:0;color:var(--bg);opacity:.88;max-width:520px;">A refresh of what you have, a rebuild, or something from scratch. Fixed quotes, no retainer, and you own everything at the end.</p>
       </div>
       <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:10px;">
-        <a href="https://web.canosoftware.net" data-magnet="1" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--accent-services);background:var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">Go to web services <span aria-hidden="true">&#8599;</span></a>
-        <a href="https://web.canosoftware.net/pricing.html" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">See pricing <span aria-hidden="true">&#8594;</span></a>
+        <span class="coming-soon" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);opacity:.55;border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">Go to web services</span>
+        <span class="coming-soon" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);opacity:.55;border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">See pricing</span>
       </div>
     </div>
   </div>
@@ -388,10 +391,10 @@ img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:
         <a href="https://ledger.canosoftware.net/privacy" style="font-size:14.5px;color:var(--text);">Ledger</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-services);margin-bottom:4px;">Web services</span>
-        <a href="https://web.canosoftware.net#services" style="font-size:14.5px;color:var(--text);">Website refresh &amp; rebuild</a>
-        <a href="https://web.canosoftware.net/pricing.html" style="font-size:14.5px;color:var(--text);">Pricing</a>
-        <a href="https://web.canosoftware.net#contact" style="font-size:14.5px;color:var(--text);">Get a quote</a>
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-services);margin-bottom:4px;">Web services &middot; Coming soon</span>
+        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Website refresh &amp; rebuild</span>
+        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Pricing</span>
+        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Get a quote</span>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:9px;">
