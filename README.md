@@ -8,7 +8,8 @@ Source for [canosoftware.net](https://canosoftware.net) — the CanoSoftware stu
 index.html          Studio hub: hero, app list, about, footer
 everything.html      Unlisted page: all six apps, including Beacon
 support.html         Shared support/FAQ page for all four apps
-icons/                App icons used on the hub page
+icons/                App icons used on the hub page (current App Store icons)
+assets/app-icons/       New-family light/dark app-icon SVGs used by the hub page
 
 onward/               Onward marketing + privacy pages
 steward/               Steward marketing + privacy pages
@@ -16,7 +17,37 @@ roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
 ```
 
-**`index.html` was redesigned 2026-09-08** from a Claude Design project
+**`index.html` was redesigned again 2026-09-28** from the Claude Design project
+"CanoSoftware landing page redesign" (`Homepage v2.dc.html`, project id
+`80323cdd-e667-4d5e-9fe9-880e57f9c936`, read via `DesignSync`), converted by hand
+to plain HTML/CSS/vanilla JS. It supersedes the 2026-09-08 design below. New
+pieces: a centered serif hero with clickable app icons, a tabbed app rotator
+(autoplay with per-tab progress bar, pauses on hover, stops permanently after a
+manual click; state machine ported from the canvas's React component into the
+inline `<script>`), a dark "no accounts, no analytics" privacy card with a Ledger
+exception plus a "Buy them outright" pricing card, the pine web-services band, and
+a two-column studio/signup section. The design system's tokens
+(`tokens/*.css`) are inlined verbatim in the page's `<style>`; dark mode follows
+`prefers-color-scheme` rather than the canvas's `data-theme` attribute.
+
+Deliberate differences from the design source, and things to know:
+- **New app-icon family.** `assets/app-icons/<app>-{light,dark}.svg` (five apps)
+  are used on the homepage via `<picture>`. The old `icons/<app>-icon.*` files are
+  still what the app pages and the App Store use, so the homepage icons currently
+  differ from them. Switching back is a path change in the hero/tab markup.
+- **Source Serif 4 is loaded from Google Fonts** (as the design specifies); the
+  other pages still use the system serif.
+- **Dropped from the homepage** because the design doesn't include them: the
+  "Now / what I'm building" band, the animated stat tiles, and the footer
+  "Web services" column. The Web services nav pill and callout remain, unlinked,
+  marked "Coming soon".
+- Footer/nav links and the `/api/subscribe` signup form (with honeypot and status
+  message) were filled in; the canvas had `href="#"` and a non-functional form.
+- Copy claims taken from the design that should stay accurate: Ledger has no
+  subscription/purchase in v1, uses Sign in with Apple and a server, and supports
+  in-app export/delete.
+
+**`index.html` was previously redesigned 2026-09-08** from a Claude Design project
 ("Canosoftware Marketing Redesign" — `Home-Broadsheet.dc.html`), converted
 by hand to plain HTML/CSS/vanilla JS (no build step, no framework). New
 pieces, all in one inline `<script>` block: a sticky nav + scroll-progress
