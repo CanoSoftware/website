@@ -23,388 +23,532 @@
   "description": "Apps that keep track of your goals, your house, your car, and your family's week. Built by one person in Maryland."
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
 <style>
-.mark-light{display:block;}
-.mark-dark{display:none;}
-@media (prefers-color-scheme: dark){
-  .mark-light{display:none;}
-  .mark-dark{display:block;}
-}
+/* ---- Design tokens: CanoSoftware design system (tokens/*.css), verbatim ---- */
 :root{
-  --bg:#F7F3EC;--bg-alt:#EFE9DD;--card:#FBF8F2;
-  --text:#262220;--text-muted:#6B6259;
-  --accent:#B5563B;--accent-contrast:#FBF3EC;
-  --border:#DDD4C4;--border-strong:#C9BEA9;
-  --accent-services:#2E5B4C;
+  --ink:#262220;
+  --terracotta:#B5563B;
+  --terracotta-dark:#9C462E;
+  --terracotta-text:#9C462E;
+  --terracotta-tint:#E08863;
+  --page:#F7F3EC;
+  --surface-raised:#FBF8F2;
+  --surface-sunken:#EFE9DD;
+  --surface-tile:#FBF3EC;
+  --surface-paper:#FFFFFF;
+  --text-primary:#262220;
+  --text-secondary:#6B6259;
+  --text-tertiary:#706758;
+  --text-disabled:#9A9086;
+  --text-on-terracotta:#FBF3EC;
+  --border:#DDD4C4;
+  --border-strong:#C9BEA9;
+  --border-interactive:#8F8169;
+  --border-paper:#E7E1D6;
+  --rule-fill:#F3EFE7;
+  --pill-shipped-bg:#9C462E;
+  --pill-shipped-text:#FBF3EC;
+  --pill-soon-border:#C9BEA9;
+  --pill-soon-text:#6B6259;
+  --selection-bg:#B5563B;
+  --selection-text:#FBF3EC;
+  --focus-ring:#B5563B;
+
+  --font-display:"Source Serif 4",ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --type-lede-size:clamp(1.05rem,2.5vw,1.25rem);
+  --type-pill-size:11px;
+  --type-pill-track:0.02em;
+  --type-eyebrow-track:0.08em;
+
+  --radius-pill:20px;
+  --radius-control:10px;
+  --radius-panel:18px;
+
+  --ease-standard:cubic-bezier(.2,0,.2,1);
+  --dur-hover:120ms;
+  --dur-press:90ms;
+  --press-scale:.985;
 }
+@media (prefers-reduced-motion: reduce){
+  :root{ --press-scale:1; }
+}
+/* The design uses [data-theme="dark"]; the site follows the OS setting instead. */
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#17140F;--bg-alt:#211D17;--card:#1C1811;
-    --text:#EDE6DA;--text-muted:#A79C8C;
-    --accent:#E08863;--accent-contrast:#17140F;
-    --border:#33291F;--border-strong:#463A2B;
-    --accent-services:#7FAE9B;
+    --page:#17140F;
+    --surface-raised:#211D18;
+    --surface-sunken:#100E0A;
+    --surface-tile:#262220;
+    --text-primary:#EDE6DA;
+    --text-secondary:#A79C8C;
+    --text-tertiary:#93897A;
+    --terracotta:#E08863;
+    --terracotta-text:#E08863;
+    --text-disabled:#5F5647;
+    --border:#33291F;
+    --border-strong:#463A2C;
+    --border-interactive:#7F6C54;
   }
 }
-html{background:var(--bg);color-scheme:light dark;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
-a{color:var(--accent);text-decoration:none;}
-a:hover{opacity:0.72;}
-::selection{background:var(--accent);color:var(--accent-contrast);}
-img.app-icon{display:block;width:88px;height:88px;border-radius:16px;object-fit:cover;background:var(--bg-alt);}
-[data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
-#top,#apps,#studio{scroll-margin-top:96px;}
-.coming-soon{position:relative;cursor:default;}
-.coming-soon::after{content:"Coming soon";position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--text);color:var(--bg);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s ease,transform .15s ease;}
-.coming-soon:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---- Page ---- */
+html{background:var(--page);color-scheme:light dark;}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:var(--font-ui);-webkit-font-smoothing:antialiased;}
+a{color:var(--terracotta-text);text-decoration:none;transition:opacity .15s cubic-bezier(.2,0,.2,1);}
+a:hover{opacity:.72;}
+::selection{background:#B5563B;color:#FBF3EC;}
+img{max-width:100%;}
+button{font-family:var(--font-ui);}
+.wrap{max-width:1128px;margin:0 auto;padding:0 24px;}
+.page-root{background:var(--page);color:var(--text-primary);min-height:100vh;}
+[data-reveal]{will-change:opacity,translate;}
+#top,#apps,#privacy,#studio{scroll-margin-top:96px;}
+
+.eyebrow{font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:var(--type-eyebrow-track);text-transform:uppercase;color:var(--text-secondary);margin:0;}
+.pill{font-family:var(--font-ui);font-size:var(--type-pill-size);font-weight:600;letter-spacing:var(--type-pill-track);padding:4px 10px;border-radius:var(--radius-pill);white-space:nowrap;}
+.pill-shipped{background:var(--pill-shipped-bg);color:var(--pill-shipped-text);border:1px solid var(--pill-shipped-bg);}
+.pill-soon{background:transparent;color:var(--pill-soon-text);border:1px solid var(--pill-soon-border);}
+.btn{font-family:var(--font-ui);font-weight:600;border-radius:var(--radius-control);cursor:pointer;padding:12px 20px;font-size:15px;white-space:nowrap;transition:opacity var(--dur-hover) var(--ease-standard),transform var(--dur-press) var(--ease-standard);}
+.btn-primary{border:1px solid var(--border-interactive);background:var(--page);color:var(--text-primary);}
+.btn-accent{border:1px solid var(--terracotta);background:var(--terracotta);color:var(--text-on-terracotta);}
+.btn:disabled{opacity:.45;cursor:default;}
+[hidden]{display:none !important;}
+
+/* Nav */
+.nav-shell{position:sticky;top:0;z-index:60;background:var(--page);}
+nav.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;flex-wrap:wrap;}
+.nav-brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text-primary);}
+.nav-links{display:flex;gap:28px;flex-wrap:wrap;align-items:center;}
+.nav-links a{font-size:15px;color:var(--text-secondary);}
+.nav-pill{font-size:14px;font-weight:600;color:var(--text-secondary);background:var(--border);padding:9px 16px;border-radius:20px;white-space:nowrap;}
+.progress-track{height:2px;margin-bottom:-2px;position:relative;}
+.progress-bar{height:2px;width:0%;background:var(--terracotta);}
+
+/* Hero */
+header#top{padding:clamp(56px,10vw,120px) 0 72px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;}
+.hero-head{display:flex;flex-direction:column;align-items:center;gap:28px;will-change:transform;}
+.hero-head h1{font-family:var(--font-display);font-weight:500;font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.02;letter-spacing:-0.025em;margin:0;max-width:960px;text-wrap:balance;}
+.hero-lede{font-size:var(--type-lede-size);line-height:1.6;color:var(--text-secondary);margin:0;max-width:600px;text-wrap:pretty;}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.hero-icons{display:flex;gap:clamp(14px,3vw,28px);margin-top:36px;flex-wrap:wrap;justify-content:center;}
+.hero-icon{display:flex;flex-direction:column;align-items:center;gap:10px;background:transparent;border:none;padding:0;cursor:pointer;opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.2,0,.2,1) var(--d),transform .5s cubic-bezier(.2,0,.2,1) var(--d);}
+.hero-icons.loaded .hero-icon{opacity:1;transform:none;}
+.hero-icon img{display:block;width:clamp(64px,8vw,96px);height:clamp(64px,8vw,96px);border-radius:21px;background:var(--surface-sunken);transition:transform .22s cubic-bezier(.2,0,.2,1);}
+.hero-icon:hover img{transform:translateY(-6px);}
+.hero-icon span{font-size:13px;font-weight:600;color:var(--text-secondary);}
+
+/* Apps */
+#apps{padding:24px 0 0;}
+.apps-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+.tab-hint{font-size:13px;color:var(--text-secondary);}
+.tabs{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:8px;padding:6px;border:1px solid var(--border);border-radius:14px;background:var(--surface-sunken);overflow-x:auto;}
+.tab{min-width:0;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;text-align:left;color:var(--text-primary);transition:background .22s cubic-bezier(.2,0,.2,1),border-color .22s cubic-bezier(.2,0,.2,1),transform .09s cubic-bezier(.2,0,.2,1);}
+.tab:active{transform:scale(.985);}
+.tab.on{background:var(--surface-raised);border-color:var(--border-interactive);}
+.tab img{display:block;width:36px;height:36px;border-radius:8px;transition:transform .22s cubic-bezier(.2,0,.2,1);}
+.tab.on img{transform:translateY(-2px);}
+.tab-text{display:flex;flex-direction:column;gap:2px;}
+.tab-name{font-size:15px;font-weight:600;}
+.tab-short{font-size:12.5px;color:var(--text-secondary);}
+.tab-bar{position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--border);opacity:0;}
+.tab-bar i{display:block;height:2px;background:var(--terracotta);width:0%;}
+.stage{margin-top:20px;border:1px solid var(--border);border-radius:18px;background:var(--surface-raised);display:flex;flex-wrap:wrap;overflow:hidden;}
+.stage-copy{flex:1 1 380px;min-width:0;padding:clamp(32px,5vw,56px) clamp(24px,4vw,48px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:18px;transition:opacity .22s cubic-bezier(.2,0,.2,1),transform .22s cubic-bezier(.2,0,.2,1);}
+.stage-copy h2{font-family:var(--font-display);font-weight:500;font-size:clamp(2.2rem,4vw,3.25rem);line-height:1.05;letter-spacing:-0.02em;margin:0;}
+.stage-desc{margin:0;font-size:21px;line-height:1.5;max-width:440px;text-wrap:pretty;}
+.stage-story{margin:0;font-size:15.5px;line-height:1.6;color:var(--text-secondary);max-width:440px;text-wrap:pretty;}
+.stage-meta{font-size:13px;color:var(--text-secondary);}
+.stage-cta{font-size:15px;font-weight:600;}
+.stage-shot{flex:1 1 420px;min-width:0;min-height:560px;background:var(--surface-sunken);border-left:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
+.shot-inner{display:flex;align-items:flex-end;justify-content:center;width:100%;height:100%;transition:opacity .3s cubic-bezier(.2,0,.2,1),transform .45s cubic-bezier(.2,0,.2,1);}
+.shot-phone{display:block;width:290px;height:520px;object-fit:cover;object-position:top;border:1px solid var(--border-strong);border-bottom:none;border-radius:38px 38px 0 0;transition:transform .3s cubic-bezier(.2,0,.2,1);}
+.shot-phone:hover{transform:translateY(-10px);}
+.shot-ipad{display:block;width:86%;max-width:520px;height:auto;border:1px solid var(--border-strong);border-radius:18px;align-self:center;transition:transform .3s cubic-bezier(.2,0,.2,1);}
+.shot-ipad:hover{transform:scale(1.02);}
+.shot-none{align-self:center;display:flex;flex-direction:column;align-items:center;gap:22px;padding:40px;text-align:center;}
+.shot-none img{display:block;width:150px;height:150px;border-radius:32px;transition:transform .3s cubic-bezier(.2,0,.2,1);}
+.shot-none img:hover{transform:translateY(-6px);}
+.shot-none .quote{font-family:var(--font-display);font-size:26px;line-height:1.3;letter-spacing:-0.01em;max-width:320px;}
+.shot-none .plat{font-size:13px;color:var(--text-secondary);}
+
+/* Privacy + pricing */
+#privacy{padding:72px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;}
+.card-dark{border-radius:18px;background:#262220;color:#EDE6DA;padding:clamp(32px,4vw,48px);display:flex;flex-direction:column;gap:18px;transition:transform .3s cubic-bezier(.2,0,.2,1);}
+.card-dark:hover{transform:translateY(-4px);}
+.card-dark .big{margin:0;font-family:var(--font-display);font-size:clamp(1.6rem,2.6vw,2rem);line-height:1.28;letter-spacing:-0.012em;text-wrap:pretty;}
+.card-dark .exc{border-top:1px solid #463A2C;padding-top:18px;margin-top:6px;display:flex;flex-direction:column;gap:8px;}
+.card-dark .exc-label{font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A79C8C;}
+.card-dark .exc p{margin:0;font-size:15px;line-height:1.6;color:#C9BEA9;max-width:520px;}
+.card-dark .exc a{font-size:15px;font-weight:600;color:#E08863;}
+.card-sunken{border:1px solid var(--border);border-radius:18px;background:var(--surface-sunken);padding:clamp(32px,4vw,48px);display:flex;flex-direction:column;gap:16px;transition:transform .3s cubic-bezier(.2,0,.2,1),border-color .3s cubic-bezier(.2,0,.2,1);}
+.card-sunken:hover{transform:translateY(-4px);border-color:var(--border-strong);}
+.card-sunken .big{margin:0;font-family:var(--font-display);font-size:clamp(1.6rem,2.6vw,2rem);line-height:1.28;letter-spacing:-0.012em;}
+.card-sunken p.body{margin:0;font-size:16px;line-height:1.65;color:var(--text-secondary);}
+
+/* Web services band */
+.services{background:#2E5B4C;margin-top:72px;}
+.services-in{max-width:1128px;margin:0 auto;padding:clamp(40px,7vw,64px) 24px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:36px;}
+.services-copy{flex:1 1 420px;min-width:0;}
+.services-kicker{font-size:14px;font-weight:600;color:#F7F3EC;display:block;margin-bottom:14px;}
+.services h2{font-family:var(--font-display);font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-0.018em;margin:0 0 14px;color:#F7F3EC;}
+.services p{font-size:16px;line-height:1.6;margin:0;color:#F7F3EC;max-width:520px;}
+.services-btn{flex:none;font-size:15px;font-weight:600;color:#F7F3EC;border:1px solid #F7F3EC;padding:13px 20px;border-radius:10px;white-space:nowrap;}
+
+/* Studio */
+#studio{padding:72px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:start;}
+.studio-copy{display:flex;flex-direction:column;gap:18px;}
+.studio-copy p{font-size:17px;line-height:1.7;margin:0;max-width:620px;}
+.signup{padding:40px 32px;border:1px solid var(--border);border-radius:18px;background:var(--surface-sunken);display:flex;flex-direction:column;gap:14px;}
+.signup h3{font-size:21px;font-weight:600;margin:0;}
+.signup p{font-size:15.5px;line-height:1.6;color:var(--text-secondary);margin:0;}
+.signup form{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
+.signup input[type=email]{flex:1 1 220px;min-width:0;padding:12px 16px;border-radius:10px;border:1px solid var(--border-interactive);background:var(--page);color:var(--text-primary);font-size:15px;font-family:var(--font-ui);}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+#subscribe-status{margin:0;font-size:14px;line-height:1.5;min-height:1.2em;}
+
+/* Footer */
+footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;}
+.foot-col{display:flex;flex-direction:column;gap:10px;}
+.foot-brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:600;}
+.foot-copy{font-size:13px;color:var(--text-secondary);}
+.foot-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:4px;}
+.foot-col a{font-size:14.5px;color:var(--text-primary);}
 </style>
 </head>
 <body>
+<div class="page-root">
 
-<div style="position:sticky;top:0;z-index:60;background:var(--bg);">
-  <div style="max-width:1080px;margin:0 auto;padding:0 24px;">
-    <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;flex-wrap:wrap;">
-      <a href="index.html" style="display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);"><img class="mark mark-light" src="assets/mark.svg" alt="" width="31" height="20" /><img class="mark mark-dark" src="assets/mark-dark.svg" alt="" width="31" height="20" />CanoSoftware</a>
-      <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:center;">
-        <a href="#apps" style="font-size:15px;color:var(--text-muted);">Apps</a>
-        <a href="#studio" style="font-size:15px;color:var(--text-muted);">Studio</a>
-        <a href="support.html" style="font-size:15px;color:var(--text-muted);">Support</a>
-        <span class="coming-soon" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-muted);background:var(--border);padding:9px 16px;border-radius:20px;white-space:nowrap;">Web services</span>
-      </div>
-    </nav>
+  <div class="nav-shell">
+    <div class="wrap">
+      <nav class="nav">
+        <a href="/" class="nav-brand"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/mark-dark.svg"><img src="assets/mark.svg" alt="" width="31" height="20"></picture>CanoSoftware</a>
+        <div class="nav-links">
+          <a href="#apps">Apps</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#studio">Studio</a>
+          <a href="support.html">Support</a>
+          <span class="nav-pill">Web services</span>
+        </div>
+      </nav>
+    </div>
+    <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
   </div>
-  <div style="height:2px;margin-bottom:-2px;position:relative;">
-    <div data-scroll-progress style="height:2px;width:0%;background:var(--accent);transition:width .12s linear;"></div>
+
+  <div class="wrap">
+    <header id="top">
+      <div class="hero-head" id="hero">
+        <span class="eyebrow">Five apps · One person</span>
+        <h1>Software that remembers, so you don't have to.</h1>
+      </div>
+      <p class="hero-lede" id="lede">Small apps for your goals, your house, your car, your family's week and your budget. No ads, no analytics, and the App Store apps each have a one-time price that doesn't expire.</p>
+      <div class="hero-cta">
+        <button type="button" class="btn btn-accent" data-goto="apps">See the apps</button>
+        <button type="button" class="btn btn-primary" data-goto="studio">About the studio</button>
+      </div>
+      <div class="hero-icons" id="hero-icons">
+        <button type="button" class="hero-icon" data-pick="0" aria-label="Onward" style="--d:120ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/onward-dark.svg"><img src="assets/app-icons/onward-light.svg" alt=""></picture><span>Onward</span></button>
+        <button type="button" class="hero-icon" data-pick="1" aria-label="Steward" style="--d:190ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/steward-dark.svg"><img src="assets/app-icons/steward-light.svg" alt=""></picture><span>Steward</span></button>
+        <button type="button" class="hero-icon" data-pick="2" aria-label="Roadworthy" style="--d:260ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/roadworthy-dark.svg"><img src="assets/app-icons/roadworthy-light.svg" alt=""></picture><span>Roadworthy</span></button>
+        <button type="button" class="hero-icon" data-pick="3" aria-label="Homestead" style="--d:330ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/homestead-dark.svg"><img src="assets/app-icons/homestead-light.svg" alt=""></picture><span>Homestead</span></button>
+        <button type="button" class="hero-icon" data-pick="4" aria-label="Ledger" style="--d:400ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span>Ledger</span></button>
+      </div>
+    </header>
+
+    <section id="apps" data-reveal="1">
+      <div class="apps-head">
+        <span class="eyebrow">The apps</span>
+        <span class="tab-hint" id="tab-hint">Cycles through each app. Hover to pause.</span>
+      </div>
+      <div id="apps-rotator">
+        <div class="tabs">
+          <button type="button" class="tab on" data-tab="0"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/onward-dark.svg"><img src="assets/app-icons/onward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Onward</span><span class="tab-short">Habits and goals</span></span><span class="tab-bar"><i></i></span></button>
+          <button type="button" class="tab" data-tab="1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/steward-dark.svg"><img src="assets/app-icons/steward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Steward</span><span class="tab-short">The house</span></span><span class="tab-bar"><i></i></span></button>
+          <button type="button" class="tab" data-tab="2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/roadworthy-dark.svg"><img src="assets/app-icons/roadworthy-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Roadworthy</span><span class="tab-short">The cars</span></span><span class="tab-bar"><i></i></span></button>
+          <button type="button" class="tab" data-tab="3"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/homestead-dark.svg"><img src="assets/app-icons/homestead-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Homestead</span><span class="tab-short">The family's week</span></span><span class="tab-bar"><i></i></span></button>
+          <button type="button" class="tab" data-tab="4"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Ledger</span><span class="tab-short">The budget</span></span><span class="tab-bar"><i></i></span></button>
+        </div>
+
+        <div class="stage">
+          <div class="stage-copy" id="stage-copy">
+            <h2 id="st-name">Onward</h2>
+            <span class="pill pill-shipped" id="st-shipped">On the App Store</span>
+            <span class="pill pill-soon" id="st-soon" hidden>Coming soon</span>
+            <p class="stage-desc" id="st-desc">Habits, running totals, and goals with a deadline.</p>
+            <p class="stage-story" id="st-story">Streaks, weekly counts, and a pace line that tells you whether a goal is still on track.</p>
+            <span class="stage-meta" id="st-meta">iPhone and Apple Watch</span>
+            <a class="stage-cta" id="st-cta" href="/onward/">Visit the Onward page</a>
+          </div>
+          <div class="stage-shot">
+            <div class="shot-inner" id="shot-inner">
+              <img class="shot-phone" id="st-phone" src="onward/assets/today.jpg" alt="">
+              <img class="shot-ipad" id="st-ipad" src="" alt="" hidden>
+              <div class="shot-none" id="st-none" hidden>
+                <picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture>
+                <span class="quote">Every dollar has a job. You just confirm it.</span>
+                <span class="plat">iPhone · iPad · Mac</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="card-dark" data-reveal="1">
+        <img src="assets/mark-dark.svg" alt="" width="46" height="30">
+        <p class="big">Onward, Steward, Roadworthy and Homestead have no account system, no analytics package, and no advertising SDK.</p>
+        <span style="font-size:16px;color:#EDE6DA;">Your data lives on your device.</span>
+        <div class="exc">
+          <span class="exc-label">The exception</span>
+          <p>Ledger keeps one household budget in step across iPhone, iPad and Mac, so it uses Sign in with Apple and a server that can read your transactions. Still no ads and no analytics, and you can export or delete everything from inside the app.</p>
+          <a href="https://ledger.canosoftware.net/privacy">Read Ledger's privacy policy</a>
+        </div>
+      </div>
+      <div class="card-sunken" data-reveal="1">
+        <span class="eyebrow">Pricing</span>
+        <p class="big">Buy them outright.</p>
+        <p class="body">Every app on the App Store has a one-time price, and it doesn't expire. Two also offer a subscription, if you'd rather.</p>
+        <p class="body">Ledger has no subscription and no purchase in its first version. If you connect a bank, you pay the aggregator directly and hold that account yourself.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="services" data-reveal="1">
+    <div class="services-in">
+      <div class="services-copy">
+        <span class="services-kicker">For small businesses · Coming soon</span>
+        <h2>I also build websites for small businesses.</h2>
+        <p>A refresh of what you have, a rebuild, or something from scratch. Fixed quotes, no retainer, and you own everything at the end.</p>
+      </div>
+      <span class="services-btn">Go to web services</span>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="studio">
+      <div class="studio-copy" data-reveal="1">
+        <span class="eyebrow">About the studio</span>
+        <p>I'm TJ. I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends.</p>
+        <p>Each one solved a problem in my own house first. I kept forgetting when I last changed the furnace filter, so I built Steward. I wanted oil changes and tire rotations tracked in one place, so I built Roadworthy. Homestead came from wanting to see the family's week ahead without Sunday night turning into a meal-planning scramble.</p>
+      </div>
+      <div class="signup" data-reveal="1">
+        <h3>New apps, when there are new apps.</h3>
+        <p>I'll email you when I ship something. That's a few times a year, and I won't use your address for anything else.</p>
+        <form id="subscribe-form">
+          <input id="subscribe-email" type="email" required placeholder="you@example.com" aria-label="Email address">
+          <input id="subscribe-company" class="hp" type="text" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
+          <button id="subscribe-submit" type="submit" class="btn btn-primary">Notify me</button>
+        </form>
+        <p id="subscribe-status" role="status"></p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot-col">
+        <div class="foot-brand"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/mark-dark.svg"><img src="assets/mark.svg" alt="" width="31" height="20"></picture>CanoSoftware</div>
+        <span class="foot-copy">© 2026 CanoSoftware</span>
+      </div>
+      <div class="foot-col">
+        <span class="foot-title">Apps</span>
+        <a href="/onward/">Onward</a>
+        <a href="/steward/">Steward</a>
+        <a href="/roadworthy/">Roadworthy</a>
+        <a href="/homestead/">Homestead</a>
+        <a href="https://ledger.canosoftware.net">Ledger</a>
+      </div>
+      <div class="foot-col">
+        <span class="foot-title">Studio</span>
+        <a href="#studio">About</a>
+        <a href="support.html">Support</a>
+        <a href="mailto:support@canosoftware.net">support@canosoftware.net</a>
+      </div>
+      <div class="foot-col">
+        <span class="foot-title">Privacy</span>
+        <a href="/onward/privacy.html">Onward</a>
+        <a href="/steward/privacy.html">Steward</a>
+        <a href="/roadworthy/privacy.html">Roadworthy</a>
+        <a href="/homestead/privacy.html">Homestead</a>
+        <a href="https://ledger.canosoftware.net/privacy">Ledger</a>
+      </div>
+    </footer>
   </div>
 </div>
 
-<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var clamp01 = function (v) { return Math.min(1, Math.max(0, v)); };
 
-  <header id="top" style="position:relative;padding:clamp(48px,9vw,120px) 0 72px;overflow:hidden;">
-    <h1 data-hero style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(2.6rem,8vw,6.5rem);line-height:0.98;letter-spacing:-0.025em;margin:0 0 28px;color:var(--text);transform-origin:left center;">Software<br>that remembers</h1>
-    <div data-hero-lede style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px;max-width:900px;">
-      <p style="flex:1 1 380px;min-width:0;font-size:clamp(1.05rem,2.5vw,1.25rem);line-height:1.6;color:var(--text-muted);margin:0;max-width:520px;">&hellip; so you don't have to. Five small apps for your goals, your house, your car and your family's week. And each has a one-time price that doesn't expire.</p>
-      <div style="flex:0 1 auto;display:flex;gap:8px;">
-        <img src="icons/onward-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
-        <img src="icons/steward-icon.png" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
-        <img src="icons/roadworthy-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
-        <img src="icons/homestead-icon.png" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
-        <img src="icons/ledger-icon.svg" alt="" style="display:block;width:54px;height:54px;border-radius:12px;background:var(--bg-alt);">
-      </div>
-    </div>
-  </header>
+  function scrollToId(id) {
+    var el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 88, behavior: reduced ? 'auto' : 'smooth' });
+  }
+  $$('[data-goto]').forEach(function (b) { b.addEventListener('click', function () { scrollToId(b.getAttribute('data-goto')); }); });
 
-  <section id="apps" data-reveal="1" style="padding:12px 0 72px;">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+  /* Scroll progress bar + hero shrink/fade */
+  var bar = $('#bar'), hero = $('#hero'), lede = $('#lede'), raf = null;
+  function onScroll() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () {
+      raf = null;
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      bar.style.width = (Math.min(1, window.scrollY / max) * 100).toFixed(2) + '%';
+      if (reduced) return;
+      var p = clamp01(window.scrollY / (window.innerHeight * 0.7));
+      hero.style.transform = 'translateY(' + (-p * 36).toFixed(1) + 'px) scale(' + (1 - p * 0.05).toFixed(4) + ')';
+      lede.style.opacity = (1 - clamp01((p - 0.2) / 0.5) * 0.8).toFixed(3);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-      <a href="/onward/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/onward-icon.svg" alt="Onward app icon">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-            <span style="font-size:17px;font-weight:600;">Onward</span>
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
-          </div>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Habits, running totals, and goals with a deadline. iPhone and Apple Watch.</p>
-        </div>
-      </a>
+  /* Hero icons fade up on load */
+  setTimeout(function () { $('#hero-icons').classList.add('loaded'); }, 60);
 
-      <a href="/steward/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/steward-icon.png" alt="Steward app icon">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-            <span style="font-size:17px;font-weight:600;">Steward</span>
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
-          </div>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Appliances, warranties, and what your house is due for.</p>
-          <span style="font-size:12.5px;color:var(--text-muted);">Family Sharing</span>
-        </div>
-      </a>
+  /* Reveal on scroll */
+  (function () {
+    var nodes = $$('[data-reveal]');
+    var show = function (el) { el.style.opacity = '1'; el.style.translate = '0 0'; };
+    if (reduced || !('IntersectionObserver' in window)) return;
+    nodes.forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      el.style.opacity = '0'; el.style.translate = '0 24px';
+      var t = getComputedStyle(el).transition;
+      var base = (t && t.indexOf('all') !== 0 && t !== 'none 0s ease 0s') ? t + ', ' : '';
+      el.style.transition = base + 'opacity .6s cubic-bezier(.2,0,.2,1), translate .6s cubic-bezier(.2,0,.2,1)';
+    });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    nodes.forEach(function (n) { io.observe(n); });
+    setTimeout(function () { nodes.forEach(show); }, 4000);
+  })();
 
-      <a href="/roadworthy/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/roadworthy-icon.svg" alt="Roadworthy app icon">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-            <span style="font-size:17px;font-weight:600;">Roadworthy</span>
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
-          </div>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Every car's maintenance, tracked by date or by mileage.</p>
-          <span style="font-size:12.5px;color:var(--text-muted);">Family Sharing</span>
-        </div>
-      </a>
+  /* App rotator */
+  var APPS = [
+    { name: 'Onward', shipped: true, kind: 'phone', shot: 'onward/assets/today.jpg', href: '/onward/',
+      desc: 'Habits, running totals, and goals with a deadline.', meta: 'iPhone and Apple Watch',
+      story: 'Streaks, weekly counts, and a pace line that tells you whether a goal is still on track.' },
+    { name: 'Steward', shipped: true, kind: 'phone', shot: 'steward/assets/final-01-home.png', href: '/steward/',
+      desc: 'Appliances, warranties, and what your house is due for.', meta: 'iPhone · Family Sharing',
+      story: 'I kept forgetting when I last changed the furnace filter, so I built Steward.' },
+    { name: 'Roadworthy', shipped: true, kind: 'phone', shot: 'roadworthy/assets/screenshot-due.png', href: '/roadworthy/',
+      desc: "Every car's maintenance, tracked by date or by mileage.", meta: 'iPhone · Family Sharing',
+      story: 'I wanted oil changes and tire rotations tracked in one place, so I built Roadworthy.' },
+    { name: 'Homestead', shipped: true, kind: 'ipad', shot: 'homestead/assets/screenshot-board.jpg', href: '/homestead/',
+      desc: 'Chores, calendar, and meals on a wall-mounted iPad.', meta: 'iPad · Family Sharing',
+      story: "The family's week ahead, without Sunday night turning into a meal-planning scramble." },
+    { name: 'Ledger', shipped: false, kind: 'none', href: 'https://ledger.canosoftware.net', cta: 'Visit ledger.canosoftware.net',
+      desc: 'Zero-based budgeting that opens to your new transactions. Not to a blank form.',
+      meta: 'iPhone, iPad and Mac · Family Sharing',
+      story: 'The one app with a sign-in. It keeps one household budget in step across your devices, so it uses Sign in with Apple and a server.' }
+  ];
+  var DURATION = 6000;
+  var tabs = $$('.tab');
+  var copy = $('#stage-copy'), shotInner = $('#shot-inner');
+  var st = { tab: 0, manual: false, paused: false }, cycle = null, autoplay = !reduced;
+  var hint = $('#tab-hint');
 
-      <a href="/homestead/" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/homestead-icon.png" alt="Homestead app icon">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-            <span style="font-size:17px;font-weight:600;">Homestead</span>
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;background:var(--accent);color:var(--accent-contrast);white-space:nowrap;">On the App Store</span>
-          </div>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Chores, calendar, and meals on a wall-mounted iPad.</p>
-          <span style="font-size:12.5px;color:var(--text-muted);">Family Sharing</span>
-        </div>
-      </a>
-
-      <a href="https://ledger.canosoftware.net" style="display:flex;flex-direction:column;gap:16px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--card);color:var(--text);">
-        <img class="app-icon" src="icons/ledger-icon.svg" alt="Ledger app icon">
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-            <span style="font-size:17px;font-weight:600;">Ledger</span>
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;border:1px solid var(--border-strong);color:var(--text-muted);white-space:nowrap;">Coming soon</span>
-          </div>
-          <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--text-muted);">Zero-based budgeting, from your Mac or your phone.</p>
-          <span style="font-size:12.5px;color:var(--text-muted);">Family Sharing</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-</div>
-
-<section data-reveal="1" style="background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div style="max-width:1080px;margin:0 auto;padding:56px 24px;">
-    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;">
-      <div style="flex:1 1 180px;min-width:0;max-width:220px;">
-        <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
-          <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;"></span>
-          <span style="font-size:14.5px;font-weight:600;color:var(--accent);">Now</span>
-        </div>
-        <span style="font-size:14.5px;color:var(--text-muted);">What I'm building</span>
-      </div>
-      <p style="flex:1 1 460px;min-width:0;font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:500;line-height:1.32;letter-spacing:-0.012em;margin:0;color:var(--text);max-width:700px;">Ledger is in TestFlight &mdash; zero-based budgeting that syncs between the Mac and the phone. After that, Watch complications for Onward.</p>
-    </div>
-  </div>
-</section>
-
-<section data-reveal="1" style="background:var(--accent-services);">
-  <div style="max-width:1080px;margin:0 auto;padding:clamp(40px,7vw,64px) 24px;">
-    <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;">
-      <div style="flex:1 1 420px;min-width:0;">
-        <span style="font-size:14px;font-weight:600;color:var(--bg);opacity:.85;display:block;margin-bottom:14px;">For small businesses &middot; Coming soon</span>
-        <h2 style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-0.018em;margin:0 0 14px;color:var(--bg);">I also build websites for small businesses.</h2>
-        <p style="font-size:16px;line-height:1.6;margin:0;color:var(--bg);opacity:.88;max-width:520px;">A refresh of what you have, a rebuild, or something from scratch. Fixed quotes, no retainer, and you own everything at the end.</p>
-      </div>
-      <div style="flex:0 1 auto;display:flex;flex-direction:column;gap:10px;">
-        <span class="coming-soon" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);opacity:.55;border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">Go to web services</span>
-        <span class="coming-soon" style="display:inline-flex;align-items:center;justify-content:space-between;gap:14px;font-size:15px;font-weight:600;color:var(--bg);opacity:.55;border:1px solid var(--bg);padding:13px 20px;border-radius:12px;min-width:210px;">See pricing</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div style="max-width:1080px;margin:0 auto;padding:0 24px;">
-
-  <section id="studio" data-reveal="1" style="padding:56px 0 72px;max-width:820px;">
-    <div style="display:flex;flex-wrap:wrap;gap:36px;">
-      <div style="flex:1 1 160px;min-width:0;">
-        <span style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);display:block;margin:48px 0 20px;">About the studio</span>
-        <div style="display:flex;gap:22px;">
-          <div><div data-count="5" style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1;">0</div><div style="font-size:12.5px;line-height:1.4;color:var(--text-muted);margin-top:6px;">Apps</div></div>
-          <div><div data-count="4" style="font-family:ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:34px;font-weight:500;line-height:1;color:var(--accent);">0</div><div style="font-size:12.5px;line-height:1.4;color:var(--text-muted);margin-top:6px;">On the<br>App Store</div></div>
-        </div>
-      </div>
-      <div style="flex:2 1 380px;min-width:0;margin-top:48px;">
-        <p style="font-size:17px;line-height:1.7;margin:0 0 20px;color:var(--text);">I'm TJ. I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends.</p>
-        <p style="font-size:17px;line-height:1.7;margin:0 0 20px;color:var(--text);">Each one solved a problem in my own house first. I kept forgetting when I last changed the furnace filter, so I built Steward. I wanted oil changes and tire rotations tracked in one place, so I built Roadworthy. Homestead came from wanting to see the family's week ahead without Sunday night turning into a meal-planning scramble.</p>
-        <p style="font-size:17px;line-height:1.7;margin:0;color:var(--text);">Buy them outright if you want to. Two offer a subscription, but every app has a one-time price, and it doesn't expire.</p>
-      </div>
-    </div>
-  </section>
-
-  <section data-reveal="1" style="padding:40px 32px;margin-bottom:72px;border:1px solid var(--border);border-radius:16px;background:var(--bg-alt);">
-    <h2 style="font-size:21px;font-weight:600;margin:0 0 12px;color:var(--text);">New apps, when there are new apps.</h2>
-    <p style="font-size:15.5px;line-height:1.6;color:var(--text-muted);margin:0 0 24px;max-width:480px;">I'll email you when I ship something. That's a few times a year, and I won't use your address for anything else.</p>
-    <form id="subscribe-form" style="display:flex;gap:10px;flex-wrap:wrap;max-width:460px;">
-      <input id="subscribe-email" type="email" required placeholder="you@example.com" style="flex:1 1 220px;min-width:0;padding:12px 16px;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);font-size:15px;" />
-      <input id="subscribe-company" type="text" name="company" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
-      <button id="subscribe-submit" type="submit" style="padding:12px 20px;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);font-size:15px;font-weight:600;cursor:pointer;">Notify me</button>
-    </form>
-    <p id="subscribe-status" style="margin:12px 0 0;font-size:14px;line-height:1.5;min-height:1.2em;"></p>
-  </section>
-
-  <script>
-    (function () {
-      var form = document.getElementById('subscribe-form');
-      var status = document.getElementById('subscribe-status');
-      var submit = document.getElementById('subscribe-submit');
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var email = document.getElementById('subscribe-email').value.trim();
-        var company = document.getElementById('subscribe-company').value;
-
-        submit.disabled = true;
-        status.style.color = 'var(--text-muted)';
-        status.textContent = 'Submitting…';
-
-        fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, company: company }),
-        })
-          .then(function (res) {
-            return res.json().then(function (data) {
-              return { ok: res.ok, data: data };
-            });
-          })
-          .then(function (result) {
-            if (result.ok) {
-              status.style.color = 'var(--text)';
-              status.textContent = "You're on the list. Thanks!";
-              form.reset();
-            } else {
-              status.style.color = '#c0392b';
-              status.textContent = result.data && result.data.error ? result.data.error : 'Something went wrong. Try again later.';
-            }
-          })
-          .catch(function () {
-            status.style.color = '#c0392b';
-            status.textContent = 'Something went wrong. Try again later.';
-          })
-          .finally(function () {
-            submit.disabled = false;
-          });
-      });
-    })();
-
-    (function () {
-      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // Scroll progress bar under the sticky nav.
-      var bar = document.querySelector('[data-scroll-progress]');
-      if (bar) {
-        var barRaf = null;
-        var updateBar = function () {
-          barRaf = null;
-          var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-          bar.style.width = (Math.min(1, Math.max(0, window.scrollY / max)) * 100).toFixed(2) + '%';
-        };
-        window.addEventListener('scroll', function () {
-          if (barRaf) return;
-          barRaf = requestAnimationFrame(updateBar);
-        }, { passive: true });
-        updateBar();
+  function auto() { return autoplay && !st.manual; }
+  function paintTabs(animate) {
+    tabs.forEach(function (t, i) {
+      var on = i === st.tab, fill = $('.tab-bar i', t), track = $('.tab-bar', t);
+      t.classList.toggle('on', on);
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+      track.style.opacity = on && auto() ? '1' : '0';
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      if (on && auto() && animate) {
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          fill.style.transition = 'width ' + DURATION + 'ms linear';
+          fill.style.width = '100%';
+        }); });
       }
+    });
+    hint.textContent = auto() ? 'Cycles through each app. Hover to pause.' : '';
+  }
+  function startCycle() {
+    clearTimeout(cycle);
+    var run = auto() && !st.paused;
+    paintTabs(run);
+    if (!run) return;
+    cycle = setTimeout(function () { go((st.tab + 1) % APPS.length); }, DURATION);
+  }
+  function paintStage() {
+    var a = APPS[st.tab];
+    $('#st-name').textContent = a.name;
+    $('#st-shipped').hidden = !a.shipped;
+    $('#st-soon').hidden = a.shipped;
+    $('#st-desc').textContent = a.desc;
+    $('#st-story').textContent = a.story;
+    $('#st-meta').textContent = a.meta;
+    var cta = $('#st-cta'); cta.href = a.href; cta.textContent = a.cta || ('Visit the ' + a.name + ' page');
+    var phone = $('#st-phone'), ipad = $('#st-ipad'), none = $('#st-none');
+    phone.hidden = a.kind !== 'phone'; ipad.hidden = a.kind !== 'ipad'; none.hidden = a.kind !== 'none';
+    if (a.kind === 'phone') phone.src = a.shot;
+    if (a.kind === 'ipad') ipad.src = a.shot;
+  }
+  function fade(on) {
+    copy.style.opacity = on ? '0' : '1';
+    copy.style.transform = on ? 'translateY(8px)' : 'none';
+    shotInner.style.opacity = on ? '0' : '1';
+    shotInner.style.transform = on ? 'translateY(28px)' : 'none';
+  }
+  function go(i, manual) {
+    if (manual) st.manual = true;
+    if (i === st.tab) { startCycle(); return; }
+    clearTimeout(cycle);
+    fade(true);
+    setTimeout(function () { st.tab = i; paintStage(); fade(false); startCycle(); }, reduced ? 0 : 180);
+  }
+  tabs.forEach(function (t, i) { t.addEventListener('click', function () { go(i, true); }); });
+  $$('[data-pick]').forEach(function (b) {
+    b.addEventListener('click', function () { go(parseInt(b.getAttribute('data-pick'), 10), true); scrollToId('apps'); });
+  });
+  var rot = $('#apps-rotator');
+  rot.addEventListener('mouseenter', function () { if (st.manual) return; clearTimeout(cycle); st.paused = true; paintTabs(false); });
+  rot.addEventListener('mouseleave', function () { if (st.manual) return; st.paused = false; startCycle(); });
+  paintStage();
+  startCycle();
 
-      // Hero shrinks slightly as you scroll past it; the lede + app icons fade.
-      var hero = document.querySelector('[data-hero]');
-      var lede = document.querySelector('[data-hero-lede]');
-      if ((hero || lede) && !reduced) {
-        var heroRaf = null;
-        var clamp01 = function (v) { return Math.min(1, Math.max(0, v)); };
-        var updateHero = function () {
-          heroRaf = null;
-          var p = clamp01(window.scrollY / Math.max(1, window.innerHeight * 0.7));
-          if (hero) hero.style.transform = 'translateY(' + (-p * 40).toFixed(1) + 'px) scale(' + (1 - p * 0.06).toFixed(4) + ')';
-          if (lede) lede.style.opacity = (1 - clamp01((p - 0.25) / 0.45) * 0.85).toFixed(3);
-        };
-        window.addEventListener('scroll', function () {
-          if (heroRaf) return;
-          heroRaf = requestAnimationFrame(updateHero);
-        }, { passive: true });
-        updateHero();
-      }
-
-      // Fade sections up into place the first time they're visible.
-      var revealNodes = Array.from(document.querySelectorAll('[data-reveal]'));
-      var reveal = function (el) {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      };
-      var runCounters = function () {
-        Array.from(document.querySelectorAll('[data-count]')).forEach(function (el) {
-          var target = parseInt(el.getAttribute('data-count'), 10) || 0;
-          if (reduced) {
-            el.textContent = String(target);
-            return;
-          }
-          var t0 = performance.now();
-          var tick = function (now) {
-            var k = Math.min(1, (now - t0) / 900);
-            var e = 1 - Math.pow(1 - k, 3);
-            el.textContent = String(Math.round(target * e));
-            if (k < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        });
-      };
-      if (revealNodes.length) {
-        if (reduced || !('IntersectionObserver' in window)) {
-          revealNodes.forEach(reveal);
-          runCounters();
+  /* Newsletter signup */
+  var form = $('#subscribe-form'), status = $('#subscribe-status'), submit = $('#subscribe-submit');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = $('#subscribe-email').value.trim();
+    var company = $('#subscribe-company').value;
+    submit.disabled = true;
+    status.style.color = 'var(--text-secondary)';
+    status.textContent = 'Submitting…';
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, company: company })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (result.ok) {
+          status.style.color = 'var(--text-primary)';
+          status.textContent = "You're on the list. Thanks!";
+          form.reset();
         } else {
-          var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (!en.isIntersecting) return;
-              reveal(en.target);
-              if (en.target.id === 'studio') runCounters();
-              io.unobserve(en.target);
-            });
-          }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
-          revealNodes.forEach(function (n) { io.observe(n); });
-          setTimeout(function () { revealNodes.forEach(reveal); runCounters(); }, 2500);
+          status.style.color = '#c0392b';
+          status.textContent = result.data && result.data.error ? result.data.error : 'Something went wrong. Try again later.';
         }
-      }
-
-      // Small pointer-follow nudge on primary buttons/links.
-      if (!reduced) {
-        document.querySelectorAll('[data-magnet]').forEach(function (el) {
-          el.style.willChange = 'transform';
-          el.addEventListener('pointermove', function (e) {
-            var r = el.getBoundingClientRect();
-            var dx = (e.clientX - r.left - r.width / 2) / r.width;
-            var dy = (e.clientY - r.top - r.height / 2) / r.height;
-            el.style.transition = 'transform .09s linear';
-            el.style.transform = 'translate(' + dx * 8 + 'px,' + dy * 6 + 'px)';
-          });
-          el.addEventListener('pointerleave', function () {
-            el.style.transition = 'transform .55s cubic-bezier(.2,1.3,.3,1)';
-            el.style.transform = 'translate(0,0)';
-          });
-        });
-      }
-    })();
-  </script>
-
-  <footer style="padding:0 0 56px;border-top:1px solid var(--border);">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;padding:48px 0 40px;">
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Apps</span>
-        <a href="/onward/" style="font-size:14.5px;color:var(--text);">Onward</a>
-        <a href="/steward/" style="font-size:14.5px;color:var(--text);">Steward</a>
-        <a href="/roadworthy/" style="font-size:14.5px;color:var(--text);">Roadworthy</a>
-        <a href="/homestead/" style="font-size:14.5px;color:var(--text);">Homestead</a>
-        <a href="https://ledger.canosoftware.net" style="font-size:14.5px;color:var(--text);">Ledger</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Studio</span>
-        <a href="#studio" style="font-size:14.5px;color:var(--text);">About</a>
-        <a href="support.html" style="font-size:14.5px;color:var(--text);">Support</a>
-        <a href="mailto:support@canosoftware.net" style="font-size:14.5px;color:var(--text);">support@canosoftware.net</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Privacy</span>
-        <a href="/onward/privacy.html" style="font-size:14.5px;color:var(--text);">Onward</a>
-        <a href="/steward/privacy.html" style="font-size:14.5px;color:var(--text);">Steward</a>
-        <a href="/roadworthy/privacy.html" style="font-size:14.5px;color:var(--text);">Roadworthy</a>
-        <a href="/homestead/privacy.html" style="font-size:14.5px;color:var(--text);">Homestead</a>
-        <a href="https://ledger.canosoftware.net/privacy" style="font-size:14.5px;color:var(--text);">Ledger</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <span style="font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-services);margin-bottom:4px;">Web services &middot; Coming soon</span>
-        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Website refresh &amp; rebuild</span>
-        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Pricing</span>
-        <span class="coming-soon" style="font-size:14.5px;color:var(--text-muted);">Get a quote</span>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:9px;">
-      <img class="mark mark-light" src="assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;" />
-      <img class="mark mark-dark" src="assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;" />
-      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Built in Maryland</p>
-    </div>
-  </footer>
-
-</div>
-
+      })
+      .catch(function () {
+        status.style.color = '#c0392b';
+        status.textContent = 'Something went wrong. Try again later.';
+      })
+      .finally(function () { submit.disabled = false; });
+  });
+})();
+</script>
 </body>
 </html>
