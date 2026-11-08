@@ -61,16 +61,21 @@ a:hover{opacity:0.72;}
   <header style="padding:32px 0 8px;">
     <h2 style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 16px;">Privacy</h2>
     <h1 style="font-family:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;font-weight:500;font-size:clamp(1.8rem,4vw + 1rem,2.6rem);line-height:1.14;letter-spacing:-0.01em;margin:0 0 10px;color:var(--text);">Onward Privacy Policy</h1>
-    <p style="font-size:14px;color:var(--text-muted);margin:0 0 40px;">Last updated: July 2026</p>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 40px;">Last updated: November 2026</p>
   </header>
 
   <section style="padding:0 0 72px;">
     <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Onward doesn't collect, transmit, sell, or share any personal data. It has no servers of its own — everything below happens on your device or in your own private iCloud account.</p>
 
-    <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Everything you enter — goals, habits, log entries, notes, moods, and settings — is stored locally on your device. Onward has no user accounts, no analytics, and no third-party SDKs. Nothing you enter is sent to me or to anyone else.</p>
+    <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Everything you enter — goals, habits, log entries, notes, moods, and settings — is stored locally on your device. Onward has no user accounts of its own, no analytics, and no third-party SDKs. Nothing you enter is sent to me or to anyone else.</p>
 
     <h2 style="font-size:19px;font-weight:600;color:var(--text);margin:40px 0 12px;">iCloud sync</h2>
     <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Onward can sync your data across your own devices using iCloud. This data is stored in your private iCloud account and handled by Apple under Apple's terms. I never have access to it.</p>
+
+    <h2 style="font-size:19px;font-weight:600;color:var(--text);margin:40px 0 12px;">Onward on the web</h2>
+    <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Onward on the web (<a href="https://onward.canosoftware.net/web/">onward.canosoftware.net/web</a>) runs in your browser. You sign in on Apple's own sign-in page, and Apple gives your browser a session for your iCloud. From then on the page reads and writes your Onward data directly with Apple's CloudKit. Your goals and log entries go between your browser and Apple only. They never pass through a server of mine, and I can't see them. Onward never sees your Apple Account password.</p>
+    <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">So it opens quickly, the page keeps a copy of your goals, any changes still waiting to reach iCloud, and your iCloud session in your browser's storage on that computer. Signing out deletes all of it. If other people use the computer, sign out when you're done.</p>
+    <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">The page itself is a set of static files hosted by Cloudflare. Loading it is an ordinary web request, like visiting any website. It has no cookies of its own, no analytics, and no ads.</p>
 
     <h2 style="font-size:19px;font-weight:600;color:var(--text);margin:40px 0 12px;">Apple Health</h2>
     <p style="font-size:16px;line-height:1.7;color:var(--text);margin:0 0 20px;">Onward can optionally read workout data — distance, duration, active calories — from Apple Health, only when you choose to import a workout into a goal. This happens on demand: Onward doesn't run in the background or continuously monitor your Health data. Health data is never transmitted anywhere; it's only read on your device to fill in a log entry you control.</p>
@@ -89,12 +94,13 @@ a:hover{opacity:0.72;}
     <div style="display:flex;gap:24px;flex-wrap:wrap;padding:40px 0 24px;">
       <a href="https://apps.apple.com/us/app/onward-goal-habit-tracker/id6789669813" target="_blank" rel="noopener" style="font-size:14.5px;">Download</a>
       <a href="index.html" style="font-size:14.5px;">Onward</a>
+      <a href="https://onward.canosoftware.net/web/" style="font-size:14.5px;">Onward on the web</a>
       <a href="mailto:support@canosoftware.net" style="font-size:14.5px;">Support</a>
     </div>
     <div style="display:flex;align-items:center;gap:9px;">
       <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75;">
       <img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75;">
-      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Onward for iOS &amp; Apple Watch</p>
+      <p style="font-size:13px;color:var(--text-muted);margin:0;">© 2026 CanoSoftware · Onward for iOS, Apple Watch &amp; the web</p>
     </div>
   </footer>
 
