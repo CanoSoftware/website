@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Splitbook — a private running diary and training plan</title>
+<meta name="description" content="Splitbook is a private running diary and training planner for half and full marathon training. Plan a block toward a race, log what you ran, and compare the two. In TestFlight now.">
+<link rel="icon" type="image/svg+xml" href="assets/splitbook-light.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#F7F3EC;--surface-raised:#FBF8F2;--surface-sunken:#EFE9DD;--surface-tile:#FBF3EC;
+  --text-primary:#262220;--text-secondary:#6B6259;--text-tertiary:#706758;
+  --terracotta:#B5563B;--terracotta-text:#9C462E;--text-on-terracotta:#FBF3EC;
+  --border:#DDD4C4;--border-strong:#C9BEA9;--border-interactive:#8F8169;
+  --pill-soon-border:#C9BEA9;--pill-soon-text:#6B6259;
+  /* in-app colour roles (tokens/colors-app.css, from Splitbook's design pass) */
+  --status-good-bg:#DDF1E1;--status-good-text:#205431;
+  --status-caution-bg:#F6E5BF;--status-caution-text:#73500C;
+  --status-bad-bg:#F4DCD2;--status-bad-text:#9C462E;
+  --status-neutral-bg:#EFE9DD;--status-neutral-text:#6B6259;
+  --selected-fill:#F4DCD2;
+  --chart-track:#E6DED0;--chart-guide:#8F8169;
+  --ramp-1:#D9CBB2;--ramp-2:#C9A77F;--ramp-3:#C88052;--ramp-4:#B5563B;--ramp-5:#7E3522;
+  --error:#B3261E;
+  --serif:'Source Serif 4',ui-serif,Georgia,'Iowan Old Style','Palatino Linotype',serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --page:#17140F;--surface-raised:#211D18;--surface-sunken:#100E0A;--surface-tile:#262220;
+    --text-primary:#EDE6DA;--text-secondary:#A79C8C;--text-tertiary:#93897A;
+    --terracotta:#E08863;--terracotta-text:#E08863;--text-on-terracotta:#17140F;
+    --border:#33291F;--border-strong:#463A2C;--border-interactive:#7F6C54;
+    --pill-soon-border:#463A2C;--pill-soon-text:#A79C8C;
+    --status-good-bg:#1B3422;--status-good-text:#98D5A8;
+    --status-caution-bg:#3A2E12;--status-caution-text:#E8C26A;
+    --status-bad-bg:#3D2018;--status-bad-text:#F0A27F;
+    --status-neutral-bg:#2A241D;--status-neutral-text:#A79C8C;
+    --selected-fill:#3A2219;
+    --chart-track:#2E271F;--chart-guide:#7F6C54;
+    --ramp-1:#52473A;--ramp-2:#7A6346;--ramp-3:#A86E45;--ramp-4:#E08863;--ramp-5:#F2B08F;
+    --error:#F2B8B5;
+  }
+}
+html{background:var(--page);color-scheme:light dark;}
+body{margin:0;background:var(--page);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:var(--terracotta-text);text-decoration:none;}
+a:hover{opacity:.72;}
+::selection{background:var(--terracotta);color:var(--text-on-terracotta);}
+img{max-width:100%;height:auto;display:block;}
+.mark-light{display:block;}
+.mark-dark{display:none;}
+@media (prefers-color-scheme: dark){.mark-light{display:none;}.mark-dark{display:block;}}
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,0,.2,1),transform .6s cubic-bezier(.2,0,.2,1);}
+[data-reveal].is-visible{opacity:1;transform:translateY(0);}
+#week,#keeps,#privacy,#testflight{scroll-margin-top:80px;}
+
+/* The week: planned vs run */
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding:14px;border-bottom:1px solid var(--border);}
+.day{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 4px 12px;border:1px solid transparent;border-radius:10px;background:transparent;cursor:pointer;color:var(--text-primary);font-family:inherit;transition:background .2s cubic-bezier(.2,0,.2,1),border-color .2s cubic-bezier(.2,0,.2,1);}
+.day:hover{background:var(--surface-raised);}
+.day.on{background:var(--selected-fill);border-color:var(--border-interactive);}
+.day:focus-visible{outline:2px solid var(--terracotta);outline-offset:2px;}
+.day-name{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-secondary);}
+.day-bars{display:flex;align-items:flex-end;gap:3px;height:64px;}
+.day-bars i{display:block;width:9px;border-radius:3px;}
+.bar-plan{background:var(--chart-track);border:1px dashed var(--chart-guide);box-sizing:border-box;}
+.bar-run{background:var(--terracotta);}
+.day-mi{font-size:12px;color:var(--text-tertiary);font-variant-numeric:tabular-nums;}
+.tone{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap;text-transform:none;letter-spacing:0;}
+.tone-good{background:var(--status-good-bg);color:var(--status-good-text);}
+.tone-caution{background:var(--status-caution-bg);color:var(--status-caution-text);}
+.tone-bad{background:var(--status-bad-bg);color:var(--status-bad-text);}
+.tone-neutral{background:var(--status-neutral-bg);color:var(--status-neutral-text);}
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+.cmp > div{padding:20px 24px;}
+.cmp > div + div{border-left:1px solid var(--border);}
+.cmp-label{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-tertiary);}
+.cmp-title{font-family:var(--serif);font-size:21px;font-weight:500;letter-spacing:-0.01em;margin:8px 0 10px;}
+.cmp-line{font-size:14.5px;color:var(--text-secondary);line-height:1.6;font-variant-numeric:tabular-nums;}
+.zones{display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:12px;background:var(--chart-track);}
+.zones i{display:block;height:8px;}
+@media (max-width:560px){
+  .days{gap:3px;padding:10px 8px;}
+  .day-bars i{width:6px;}
+  .cmp{grid-template-columns:1fr;}
+  .cmp > div + div{border-left:0;border-top:1px solid var(--border);}
+}
+
+/* Form */
+.field{display:flex;flex-direction:column;gap:7px;}
+.field > span,.legend{font-size:13.5px;font-weight:600;color:var(--text-primary);}
+.input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:10px;border:1px solid var(--border-interactive);background:var(--page);color:var(--text-primary);font-size:15px;font-family:inherit;}
+.input:focus-visible,.check input:focus-visible + span{outline:2px solid var(--terracotta);outline-offset:2px;}
+textarea.input{min-height:92px;resize:vertical;line-height:1.5;}
+fieldset{border:0;margin:0;padding:0;min-width:0;}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.check{position:relative;}
+.check input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;}
+.check span{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border-strong);border-radius:20px;font-size:14.5px;color:var(--text-secondary);background:var(--page);transition:background .15s,border-color .15s,color .15s;}
+.check span::before{content:"";width:9px;height:9px;border-radius:50%;border:1.5px solid var(--border-interactive);box-sizing:border-box;}
+.check input:checked + span{background:var(--selected-fill);border-color:var(--border-interactive);color:var(--text-primary);}
+.check input:checked + span::before{background:var(--terracotta);border-color:var(--terracotta);}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+.submit{display:inline-flex;align-items:center;gap:10px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:14px 22px;border-radius:12px;border:0;cursor:pointer;font-family:inherit;}
+.submit:disabled{opacity:.5;cursor:default;}
+#tf-status{margin:0;font-size:14.5px;line-height:1.5;min-height:1.5em;}
+</style>
+</head>
+<body>
+
+<div style="background:var(--page)">
+
+  <div style="position:sticky;top:0;z-index:60;background:var(--page);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;color:var(--text-primary)">
+          <img class="mark-light" src="/assets/mark.svg" alt="" width="28" height="18"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="28" height="18">
+          <span style="font-size:16px;font-weight:600;letter-spacing:-0.01em">CanoSoftware</span>
+        </a>
+        <span aria-hidden="true" style="color:var(--text-tertiary);font-size:15px">/</span>
+        <span style="font-size:16px;font-weight:600;color:var(--text-secondary)">Splitbook</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <a href="#week" style="font-size:14.5px;color:var(--text-secondary)">The week</a>
+        <a href="#keeps" style="font-size:14.5px;color:var(--text-secondary)">What it keeps</a>
+        <a href="#privacy" style="font-size:14.5px;color:var(--text-secondary)">Privacy</a>
+        <a href="#testflight" data-magnet="1" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:9px 16px;border-radius:20px;white-space:nowrap">Request TestFlight access</a>
+      </div>
+    </div>
+    <div style="height:2px;margin-bottom:-2px;position:relative;z-index:1"><div id="scroll-progress" style="height:2px;background:var(--terracotta);width:0%;transition:width .12s linear"></div></div>
+  </div>
+
+  <section style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px">
+      <div style="display:flex;flex-wrap:wrap">
+        <div id="hero-left" style="flex:1 1 460px;min-width:0;padding:76px 52px 72px 0;box-sizing:border-box;border-right:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px;flex-wrap:wrap">
+            <picture data-magnet="1"><source media="(prefers-color-scheme: dark)" srcset="assets/splitbook-dark.svg"><img src="assets/splitbook-light.svg" alt="Splitbook app icon" style="width:56px;height:56px;border-radius:13px"></picture>
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;padding:4px 10px;border-radius:20px;border:1px solid var(--pill-soon-border);color:var(--pill-soon-text)">In TestFlight</span>
+            <span style="font-size:13.5px;color:var(--text-tertiary)">iPhone · iOS 26 or later</span>
+          </div>
+          <h1 style="font-family:var(--serif);font-weight:500;font-size:clamp(2.3rem,6.2vw,5rem);line-height:1.02;letter-spacing:-0.03em;margin:0">Plan the block.<br>Run it.<br>See how close you got.</h1>
+          <p style="font-size:18px;line-height:1.7;color:var(--text-secondary);margin:28px 0 0;max-width:500px">Splitbook is a running diary and training planner for half and full marathon training. Build a plan toward a race, log what you actually ran, and see the two side by side.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px">
+            <a href="#testflight" data-magnet="1" style="display:inline-flex;align-items:center;gap:12px;font-size:15.5px;font-weight:600;color:var(--text-on-terracotta);background:var(--terracotta);padding:15px 24px;border-radius:12px">Request TestFlight access <span aria-hidden="true">↓</span></a>
+            <span style="font-size:14.5px;color:var(--text-tertiary)">Free while it's in testing</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;padding-top:26px;border-top:1px solid var(--border)">
+            <div><div style="font-family:var(--serif);font-size:30px;font-weight:500;line-height:1;color:var(--terracotta-text)">FIT · GPX · TCX</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Files it reads,<br>plus Apple Health</div></div>
+            <div><div style="font-family:var(--serif);font-size:30px;font-weight:500;line-height:1">On device</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Where every number<br>is worked out</div></div>
+            <div><div style="font-family:var(--serif);font-size:30px;font-weight:500;line-height:1">0</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:7px">Public maps<br>of where you run</div></div>
+          </div>
+        </div>
+        <div id="hero-right" style="flex:1 1 320px;min-width:0;padding:76px 0 72px 52px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:14px">
+          <div style="max-width:380px;width:100%;border:1px solid var(--border);border-radius:22px;background:var(--surface-raised);overflow:hidden">
+            <div style="padding:22px 24px;border-bottom:1px solid var(--border)">
+              <div style="font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-tertiary)">Next race</div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:10px">
+                <span style="font-family:var(--serif);font-size:24px;font-weight:500;letter-spacing:-0.01em">Spring marathon</span>
+                <span style="font-size:14px;color:var(--text-secondary);white-space:nowrap">in 52 days</span>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+                <span class="tone tone-neutral">A goal 3:29</span>
+                <span class="tone tone-neutral">B goal 3:39</span>
+                <span class="tone tone-good">On track</span>
+              </div>
+            </div>
+            <div style="padding:18px 24px;border-bottom:1px solid var(--border)">
+              <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text-secondary)"><span>Block · week 9 of 16</span><span style="font-variant-numeric:tabular-nums">312 mi so far</span></div>
+              <div style="height:6px;border-radius:3px;background:var(--chart-track);margin-top:10px;overflow:hidden"><div style="height:6px;width:56%;background:var(--terracotta)"></div></div>
+            </div>
+            <div style="padding:18px 24px">
+              <div style="font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-tertiary)">Today</div>
+              <div style="font-size:16px;margin-top:8px">Tempo · 8 mi with 4 at 7:50</div>
+              <div style="font-size:13.5px;color:var(--text-tertiary);margin-top:4px">52°F and overcast at 7 am</div>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-tertiary);margin:0;max-width:380px">An example of the Home tab, drawn for this page. Screenshots come with the App Store release.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="week" data-reveal style="background:var(--surface-sunken);border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:flex-start">
+        <div style="flex:1 1 320px;min-width:0;max-width:400px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">Planned vs. run</span>
+          <h2 style="font-family:var(--serif);font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:500;line-height:1.16;letter-spacing:-0.018em;margin:16px 0 18px">The plan said 8 miles. What did you actually run?</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 16px">Every run is matched to the workout it was meant to be, so a week reads as planned against done, day by day. A missed day stays missed, and a long run that went long says so.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--text-tertiary);margin:0">Pick a day to compare the plan with the run.</p>
+        </div>
+        <div style="flex:1 1 460px;min-width:0;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--page)">
+          <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span id="wk-run" style="font-family:var(--serif);font-size:34px;font-weight:500;line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">0</span>
+              <span id="wk-plan" style="font-size:13.5px;color:var(--text-tertiary)">of 0 mi planned</span>
+            </div>
+            <span id="wk-summary" style="font-size:13.5px;color:var(--text-secondary)"></span>
+          </div>
+          <div class="days" id="days" role="group" aria-label="Days of the week"></div>
+          <div class="cmp">
+            <div>
+              <div class="cmp-label">Planned</div>
+              <div class="cmp-title" id="pl-title"></div>
+              <div class="cmp-line" id="pl-line"></div>
+            </div>
+            <div>
+              <div class="cmp-label" style="display:flex;align-items:center;justify-content:space-between;gap:10px">Ran <span class="tone" id="rn-tone"></span></div>
+              <div class="cmp-title" id="rn-title"></div>
+              <div class="cmp-line" id="rn-line"></div>
+              <div class="zones" id="rn-zones" aria-hidden="true"></div>
+              <div class="cmp-line" id="rn-zone-label" style="font-size:12.5px;margin-top:6px"></div>
+            </div>
+          </div>
+          <div style="padding:14px 24px;font-size:13.5px;color:var(--text-tertiary);border-top:1px solid var(--border)">Dashed bars are the plan. Filled bars are what you ran.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="keeps" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 40px 68px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+        <h2 style="font-family:var(--serif);font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:500;letter-spacing:-0.018em;margin:0;max-width:22em">Everything one training block needs.</h2>
+        <span style="font-size:14.5px;color:var(--text-tertiary)">What it keeps</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:var(--serif);font-size:14px;color:var(--terracotta-text)">01</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">A plan toward a race</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Set the race and your A, B and C goals, then build the block week by week. Copy a week forward with a percentage added, write structured workouts with paces and repeats, or import a plan from a spreadsheet. Between races, a base-building block keeps the weeks going.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:var(--serif);font-size:14px;color:var(--terracotta-text)">02</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Runs, sorted for you</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Import FIT, GPX or TCX files from your watch, or read runs from Apple Health. If the same run arrives twice, the more accurate copy wins and nothing you typed is lost. Each run gets its likely type (easy, tempo, intervals, long) and you confirm it with one tap.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:var(--serif);font-size:14px;color:var(--terracotta-text)">03</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">The numbers a coach would ask for</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Splits, grade-adjusted pace, heart rate zones and relative effort on every run. Across the block: training load, race time predictions, best efforts and how your PRs have moved, heartbeats per mile on easy days, and heart rate drift on long runs.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:var(--serif);font-size:14px;color:var(--terracotta-text)">04</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Computed, not guessed</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">Every metric comes from a written-down formula with tests behind it, worked out on your iPhone. On iPhones with Apple Intelligence, it can write a short summary of a run, using only numbers the app already calculated. Without it, nothing is missing.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:baseline;padding:26px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+          <span style="flex:0 0 34px;font-family:var(--serif);font-size:14px;color:var(--terracotta-text)">05</span>
+          <h3 style="flex:0 1 250px;min-width:0;font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-0.015em;margin:0">Race day, and the year</h3>
+          <p style="flex:1 1 320px;min-width:0;margin:0;font-size:16.5px;line-height:1.65;color:var(--text-secondary);max-width:600px">A readiness check on the next race, the weather you ran in and the forecast for race morning, shoe mileage, home screen widgets for the countdown and the week, and a year in review when December comes around.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" data-reveal style="background:#262220;color:#F7F3EC">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+        <div style="flex:1 1 460px;min-width:0;max-width:620px">
+          <span style="font-size:15px;font-weight:600;opacity:.8;display:block;margin-bottom:16px">Privacy</span>
+          <h2 style="font-family:var(--serif);font-size:clamp(1.9rem,4.4vw,3.1rem);font-weight:500;line-height:1.12;letter-spacing:-0.02em;margin:0 0 18px">Private by default.</h2>
+          <p style="font-size:17.5px;line-height:1.65;margin:0 0 16px;opacity:.88">Splitbook uses a server, which most of my apps don't. Apple doesn't allow health data in iCloud, so runs sync through a database I run. Before anything leaves your phone, routes, GPS tracks and the original files are encrypted with a key only your devices hold. I can't see where you ran.</p>
+          <p style="font-size:15.5px;line-height:1.65;margin:0 0 22px;opacity:.75">Summary numbers like distance, pace and heart rate are stored unencrypted so the app can total and sort them. They're locked to your account, but as the person running the server I could technically read them. I don't look. There are no ads, no analytics and no tracking in the app.</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Sign in</span><span style="font-size:13.5px;opacity:.75;text-align:right">Sign in with Apple</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Routes and GPS</span><span style="font-size:13.5px;opacity:.75;text-align:right">Encrypted on your phone</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Who sees your runs</span><span style="font-size:13.5px;opacity:.75;text-align:right">Only you</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border:1px solid rgba(247,243,236,.28);border-radius:12px"><span style="font-size:15px">Weather</span><span style="font-size:13.5px;opacity:.75;text-align:right">Open-Meteo, location rounded to about 11 km</span></div>
+          </div>
+        </div>
+        <div style="flex:1 1 300px;min-width:0;max-width:380px">
+          <p style="font-family:var(--serif);font-size:24px;line-height:1.45;margin:0 0 18px">I wanted my training plan and my runs in one place, on terms I set, so I built Splitbook.</p>
+          <p style="font-size:16px;line-height:1.7;margin:0;opacity:.82">I'm TJ. I live in Maryland, I work in corporate IT, and I build these apps at night and on weekends. Splitbook started as a tool for my own marathon training.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testflight" data-reveal style="border-bottom:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:68px 40px">
+      <div style="display:flex;flex-wrap:wrap;gap:52px;align-items:flex-start">
+        <div style="flex:1 1 340px;min-width:0;max-width:460px">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-tertiary)">TestFlight</span>
+          <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:500;line-height:1.14;letter-spacing:-0.02em;margin:16px 0 18px">Try it before it ships.</h2>
+          <p style="font-size:16.5px;line-height:1.7;color:var(--text-secondary);margin:0 0 24px">Splitbook isn't on the App Store yet. If you're training for a race and want to try it, ask here and I'll send a TestFlight invite. A few things to know first:</p>
+          <div style="display:flex;flex-direction:column;border-top:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Needs</span><span style="font-size:14px;color:var(--text-tertiary);text-align:right">iPhone on iOS 26 or later</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Getting runs in</span><span style="font-size:14px;color:var(--text-tertiary);text-align:right">FIT, GPX or TCX files, or Apple Health</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Garmin auto-sync</span><span style="font-size:14px;color:var(--text-tertiary);text-align:right">Not for testers yet</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Builds</span><span style="font-size:14px;color:var(--text-tertiary);text-align:right">Expire after 90 days; I send new ones</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--border)"><span style="font-size:15px">Cost</span><span style="font-size:14px;color:var(--text-tertiary);text-align:right">Free. No App Store price set yet</span></div>
+          </div>
+          <p style="font-size:14.5px;line-height:1.65;color:var(--text-tertiary);margin:18px 0 0">Automatic Garmin sync uses a personal key that Garmin's terms limit to my own account, so testers import files instead. Expect rough edges: it's a beta.</p>
+        </div>
+
+        <form id="tf-form" novalidate style="flex:1 1 400px;min-width:0;padding:32px;border:1px solid var(--border);border-radius:18px;background:var(--surface-sunken);display:flex;flex-direction:column;gap:20px">
+          <div>
+            <h3 style="font-size:21px;font-weight:600;margin:0">Request an invite</h3>
+            <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:8px 0 0">This comes straight to me. I'll use your email for the TestFlight invite and nothing else.</p>
+          </div>
+          <label class="field"><span>Name</span><input class="input" id="tf-name" name="name" type="text" autocomplete="name" required maxlength="100"></label>
+          <label class="field"><span>Email for the invite</span><input class="input" id="tf-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+          <fieldset>
+            <legend class="legend">Which app</legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="apps" value="splitbook" checked><span>Splitbook</span></label>
+              <label class="check"><input type="checkbox" name="apps" value="ledger"><span>Ledger, the budget app</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="legend">Your devices</legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="devices" value="iPhone" checked><span>iPhone</span></label>
+              <label class="check"><input type="checkbox" name="devices" value="iPad"><span>iPad</span></label>
+              <label class="check"><input type="checkbox" name="devices" value="Mac"><span>Mac</span></label>
+            </div>
+          </fieldset>
+          <label class="field"><span>Anything I should know <span style="font-weight:400;color:var(--text-tertiary)">(optional)</span></span><textarea class="input" id="tf-note" name="note" maxlength="1000" placeholder="The race you're training for, the watch you use"></textarea></label>
+          <input id="tf-company" class="hp" type="text" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+            <button class="submit" id="tf-submit" type="submit">Request access</button>
+            <p id="tf-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal>
+    <div style="max-width:1280px;margin:0 auto;padding:60px 40px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+        <h2 style="font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:500;letter-spacing:-0.018em;margin:0">The rest of the shelf.</h2>
+        <a href="/index.html" style="font-size:14.5px">All the apps →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <a href="/onward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/onward-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:var(--serif);font-size:18px;font-weight:500">Onward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Habits and goals</div></div></a>
+        <a href="/steward/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/steward-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:var(--serif);font-size:18px;font-weight:500">Steward</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">Home upkeep</div></div></a>
+        <a href="/roadworthy/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/roadworthy-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:var(--serif);font-size:18px;font-weight:500">Roadworthy</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">The cars</div></div></a>
+        <a href="/homestead/" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px solid var(--border);border-radius:16px;color:var(--text-primary)"><img src="/icons/homestead-icon.png" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:var(--serif);font-size:18px;font-weight:500">Homestead</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">The family week</div></div></a>
+        <a href="https://ledger.canosoftware.net" data-magnet="1" style="display:flex;align-items:center;gap:14px;padding:20px;border:1px dashed var(--border-strong);border-radius:16px;color:var(--text-primary)"><img src="/icons/ledger-icon.svg" alt="" style="width:42px;height:42px;border-radius:10px;background:var(--surface-sunken)"><div><div style="font-family:var(--serif);font-size:18px;font-weight:500">Ledger</div><div style="font-size:13px;color:var(--text-tertiary);margin-top:3px">The budget · in TestFlight</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border)">
+    <div style="max-width:1280px;margin:0 auto;padding:40px 40px 56px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img class="mark-light" src="/assets/mark.svg" alt="" width="22" height="14" style="opacity:.75"><img class="mark-dark" src="/assets/mark-dark.svg" alt="" width="22" height="14" style="opacity:.75">
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">© 2026 CanoSoftware · Splitbook for iPhone</p>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="/index.html" style="font-size:13.5px;color:var(--text-primary)">canosoftware.net</a>
+        <a href="#testflight" style="font-size:13.5px;color:var(--text-primary)">TestFlight</a>
+        <a href="mailto:support@canosoftware.net" style="font-size:13.5px;color:var(--text-primary)">Support</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id){ return document.getElementById(id); };
+
+  // scroll progress bar
+  var bar = $("scroll-progress"), raf = null;
+  window.addEventListener("scroll", function(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      bar.style.width = (Math.min(1, Math.max(0, window.scrollY / max)) * 100).toFixed(2) + "%";
+    });
+  }, { passive: true });
+
+  // planned vs run week. Example data, drawn for this page.
+  // zones: share of time in heart rate zones 1-5.
+  var WEEK = [
+    { d: "Mon", plan: { t: "Rest", mi: 0, line: "Rest or an easy 20-minute walk" },
+      run: null, tone: ["neutral", "Rest day"] },
+    { d: "Tue", plan: { t: "Intervals", mi: 7, line: "6 × 800 m at 3:20, 400 m jog between" },
+      run: { t: "Intervals", mi: 7.2, line: "6 × 800 m at 3:18 avg · 7.2 mi · 7:41/mi", z: [10, 18, 22, 32, 18] }, tone: ["good", "Done"] },
+    { d: "Wed", plan: { t: "Easy", mi: 6, line: "6 mi easy, zone 2" },
+      run: { t: "Easy", mi: 6.1, line: "6.1 mi · 9:02/mi · 141 bpm avg", z: [22, 58, 18, 2, 0] }, tone: ["good", "Done"] },
+    { d: "Thu", plan: { t: "Tempo", mi: 8, line: "2 mi warm-up, 4 mi at 7:50, 2 mi cool-down" },
+      run: { t: "Tempo", mi: 8, line: "4 mi at 7:56 avg · 8.0 mi · 8:24/mi", z: [8, 20, 26, 38, 8] }, tone: ["caution", "Slower than planned"] },
+    { d: "Fri", plan: { t: "Easy", mi: 5, line: "5 mi easy, zone 2" },
+      run: null, tone: ["bad", "Missed"] },
+    { d: "Sat", plan: { t: "Long run", mi: 16, line: "16 mi, last 3 at marathon pace" },
+      run: { t: "Long run", mi: 17.1, line: "17.1 mi · 8:51/mi · drift 4.2%", z: [6, 41, 37, 14, 2] }, tone: ["caution", "1.1 mi long"] },
+    { d: "Sun", plan: { t: "Recovery", mi: 4, line: "4 mi very easy" },
+      run: { t: "Recovery", mi: 4, line: "4.0 mi · 9:48/mi · 132 bpm avg", z: [48, 50, 2, 0, 0] }, tone: ["good", "Done"] }
+  ];
+  var MAX = 18, H = 64;
+  var daysEl = $("days"), sel = 5;
+  var fmt = function(n){ return (Math.round(n * 10) / 10).toString(); };
+
+  WEEK.forEach(function(w, i){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "day";
+    b.setAttribute("aria-label", w.d + ": planned " + (w.plan.mi ? w.plan.mi + " miles" : "rest") + ", ran " + (w.run ? fmt(w.run.mi) + " miles" : "nothing"));
+    var bars = document.createElement("span");
+    bars.className = "day-bars";
+    var p = document.createElement("i"); p.className = "bar-plan";
+    p.style.height = Math.max(4, w.plan.mi / MAX * H) + "px";
+    var r = document.createElement("i"); r.className = "bar-run";
+    r.style.height = (w.run ? Math.max(4, w.run.mi / MAX * H) : 0) + "px";
+    bars.appendChild(p); bars.appendChild(r);
+    var name = document.createElement("span"); name.className = "day-name"; name.textContent = w.d;
+    var mi = document.createElement("span"); mi.className = "day-mi"; mi.textContent = w.run ? fmt(w.run.mi) : "–";
+    b.appendChild(name); b.appendChild(bars); b.appendChild(mi);
+    b.addEventListener("click", function(){ sel = i; paint(); });
+    daysEl.appendChild(b);
+  });
+
+  var planned = WEEK.reduce(function(s, w){ return s + w.plan.mi; }, 0);
+  var ran = WEEK.reduce(function(s, w){ return s + (w.run ? w.run.mi : 0); }, 0);
+  $("wk-run").textContent = fmt(ran);
+  $("wk-plan").textContent = "of " + planned + " mi planned";
+  var done = WEEK.filter(function(w){ return w.run && w.plan.mi; }).length;
+  var sessions = WEEK.filter(function(w){ return w.plan.mi; }).length;
+  $("wk-summary").textContent = done + " of " + sessions + " workouts done";
+
+  var ZONE_COLORS = ["var(--ramp-1)", "var(--ramp-2)", "var(--ramp-3)", "var(--ramp-4)", "var(--ramp-5)"];
+  function paint(){
+    Array.prototype.forEach.call(daysEl.children, function(b, i){
+      b.classList.toggle("on", i === sel);
+      b.setAttribute("aria-pressed", i === sel ? "true" : "false");
+    });
+    var w = WEEK[sel];
+    $("pl-title").textContent = w.plan.t + (w.plan.mi ? " · " + w.plan.mi + " mi" : "");
+    $("pl-line").textContent = w.plan.line;
+    var tone = $("rn-tone");
+    tone.className = "tone tone-" + w.tone[0];
+    tone.textContent = w.tone[1];
+    var zones = $("rn-zones"), zl = $("rn-zone-label");
+    zones.innerHTML = "";
+    if (w.run) {
+      $("rn-title").textContent = w.run.t + " · " + fmt(w.run.mi) + " mi";
+      $("rn-line").textContent = w.run.line;
+      w.run.z.forEach(function(pct, k){
+        if (!pct) return;
+        var seg = document.createElement("i");
+        seg.style.width = pct + "%";
+        seg.style.background = ZONE_COLORS[k];
+        zones.appendChild(seg);
+      });
+      zones.style.display = "flex";
+      var top = w.run.z.indexOf(Math.max.apply(null, w.run.z));
+      zl.textContent = "Heart rate zones · most time in zone " + (top + 1) + " (" + w.run.z[top] + "%)";
+    } else {
+      $("rn-title").textContent = w.plan.mi ? "No run logged" : "Rest";
+      $("rn-line").textContent = w.plan.mi ? "It stays on the week as missed. Nothing is moved for you." : "Nothing planned, nothing logged.";
+      zones.style.display = "none";
+      zl.textContent = "";
+    }
+  }
+  paint();
+
+  // TestFlight request form → /api/testflight (Resend)
+  var form = $("tf-form"), status = $("tf-status"), submit = $("tf-submit");
+  function checked(name){
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function(i){ return i.value; });
+  }
+  function say(msg, kind){
+    status.textContent = msg;
+    status.style.color = kind === "error" ? "var(--error)" : kind === "ok" ? "var(--text-primary)" : "var(--text-secondary)";
+  }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var payload = {
+      name: $("tf-name").value.trim(),
+      email: $("tf-email").value.trim(),
+      apps: checked("apps"),
+      devices: checked("devices"),
+      note: $("tf-note").value.trim(),
+      company: $("tf-company").value,
+      page: "canosoftware.net/splitbook"
+    };
+    if (!payload.name) { say("Add your name.", "error"); $("tf-name").focus(); return; }
+    if (!$("tf-email").checkValidity() || !payload.email) { say("Enter a valid email address.", "error"); $("tf-email").focus(); return; }
+    if (!payload.apps.length) { say("Pick at least one app.", "error"); return; }
+    if (!payload.devices.length) { say("Pick at least one device.", "error"); return; }
+    submit.disabled = true;
+    say("Sending…");
+    fetch("/api/testflight", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function(res){ return res.json().catch(function(){ return {}; }).then(function(data){ return { ok: res.ok, data: data }; }); })
+      .then(function(r){
+        if (r.ok) {
+          say("Thanks. I'll send the TestFlight invite to " + payload.email + " soon.", "ok");
+          form.reset();
+        } else {
+          say((r.data && r.data.error) || "Something went wrong. Try again later.", "error");
+        }
+      })
+      .catch(function(){ say("Something went wrong. Try again later, or email tj@canosoftware.net.", "error"); })
+      .finally(function(){ submit.disabled = false; });
+  });
+
+  // hero split border
+  var L = $("hero-left"), R = $("hero-right");
+  function applyHero(){
+    var wide = Math.abs(L.offsetTop - R.offsetTop) < 2;
+    L.style.borderRight = wide ? "1px solid var(--border)" : "0";
+    L.style.paddingRight = wide ? "52px" : "0";
+    L.style.paddingBottom = wide ? "72px" : "40px";
+    R.style.paddingLeft = wide ? "52px" : "0";
+    R.style.paddingTop = wide ? "76px" : "0";
+  }
+  applyHero();
+  window.addEventListener("resize", applyHero);
+
+  // reveal on scroll
+  var reveal = function(el){ el.classList.add("is-visible"); };
+  var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (reduced || !("IntersectionObserver" in window)) {
+    nodes.forEach(reveal);
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.05 });
+    nodes.forEach(function(n){ io.observe(n); });
+    setTimeout(function(){ nodes.forEach(reveal); }, 2500);
+  }
+
+  // magnetic hover
+  if (!reduced) {
+    document.querySelectorAll("[data-magnet]").forEach(function(el){
+      el.style.willChange = "transform";
+      el.addEventListener("pointermove", function(e){
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left - r.width / 2) / r.width;
+        var dy = (e.clientY - r.top - r.height / 2) / r.height;
+        el.style.transition = "transform .09s linear";
+        el.style.transform = "translate(" + dx * 9 + "px," + dy * 7 + "px)";
+      });
+      el.addEventListener("pointerleave", function(){
+        el.style.transition = "transform .55s cubic-bezier(.2,1.3,.3,1)";
+        el.style.transform = "translate(0,0)";
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -15,7 +15,27 @@ onward/               Onward marketing + privacy pages
 steward/               Steward marketing + privacy pages
 roadworthy/             Roadworthy marketing + privacy pages
 homestead/               Homestead marketing + privacy pages
+splitbook/               Splitbook marketing page (in TestFlight; no privacy page yet)
+
+functions/api/subscribe.js    Newsletter signup → Resend contacts
+functions/api/testflight.js   TestFlight access requests → one email to tj@canosoftware.net via Resend
+assets/email/                 Images referenced by sent emails (absolute canosoftware.net URLs)
 ```
+
+**Splitbook (added 2026-11-21)** is a static page at `splitbook/index.html`, built on the same
+inline-style app-page layout as Roadworthy, plus the in-app status and zone-ramp tokens from the
+design system's `tokens/colors-app.css`. It has an interactive planned-vs-run week and an inline
+TestFlight request form. It is **not linked** from `index.html`, `everything.html` or `sitemap.xml`
+yet; see `../HOMEPAGE_SPLIT_PLAN.md` for the plan to add it alongside Ledger as "the two with a
+server". Its copy must never mention Strava (Splitbook's own rule).
+
+**TestFlight requests** (`functions/api/testflight.js`) accept `{name, email, apps[], devices[], note}`
+for `splitbook` and `ledger`, with the same honeypot and `*.canosoftware.net` CORS rule as
+`subscribe.js`. Each request sends one email via Resend's `POST /emails`, from
+`testflight@canosoftware.net` to `tj@canosoftware.net`, with Reply-To set to the requester. Nothing is
+stored. The email follows the design system's `email/` templates (600px tables, inline hexes, Georgia
+headline, `assets/email/mark-132.png`). Optional env vars: `TESTFLIGHT_TO`, `TESTFLIGHT_FROM`. The
+existing `RESEND_API_KEY` must have sending access, not just contacts.
 
 **`index.html` was redesigned again 2026-09-28** from the Claude Design project
 "CanoSoftware landing page redesign" (`Homepage v2.dc.html`, project id
