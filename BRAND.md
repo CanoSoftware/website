@@ -28,7 +28,7 @@ Canonical design source: Claude Design project ["CanoSoftware studio logo design
 - **Honest about money.** Always state pricing plainly, call out when something is a one-time purchase vs. subscription, and note when legacy users keep features for free.
 - **Short sentences, low jargon.** Written to be read by a normal person deciding whether to download an app, not by a reviewer.
 - **Self-deprecating restraint, not cuteness.** Confident but understated. No exclamation points in body copy.
-- **Privacy is a selling point, stated factually.** No accounts, no analytics SDKs, no ad SDKs — say so explicitly wherever it's true, and name the one or two exceptions (e.g. Roadworthy → NHTSA VIN lookup, Homestead → WeatherKit) rather than glossing over them.
+- **Privacy is a selling point, stated factually.** No accounts, no analytics SDKs, no ad SDKs — say so explicitly wherever it's true, and name the one or two exceptions (e.g. Roadworthy → NHTSA VIN lookup, Homestead → WeatherKit) rather than glossing over them. **Ledger and Splitbook are not serverless:** both use Sign in with Apple and sync through a Supabase database TJ runs. Never write "no account" or "no server" about all the apps; scope those claims to Onward, Steward, Roadworthy and Homestead, and say plainly what the server can read (Ledger: transactions; Splitbook: summary numbers, with routes/GPS encrypted on the phone).
 
 See [WRITING.md](WRITING.md) for the checklist of AI-generated-copy tells to strip out of any new marketing text before it ships.
 

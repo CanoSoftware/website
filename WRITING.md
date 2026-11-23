@@ -44,7 +44,7 @@ Reread [BRAND.md §2](BRAND.md#2-voice--tone) before drafting: first person, pla
 |---|---|
 | "Onward isn't just a habit tracker — it's your partner in building a better you, one day at a time." | "Habits, running totals, and goals with a deadline." |
 | "We're passionate about helping families stay organized and connected." | "Chores, calendar, and meals on a wall-mounted iPad." |
-| "Your data's security and privacy are our top priority." | "No app I make has an account system, an analytics package, or an advertising SDK. Your data lives on your device." |
+| "Your data's security and privacy are our top priority." | "Onward, Steward, Roadworthy and Homestead have no account system, no analytics package, and no advertising SDK. Your data lives on your devices." |
 | "Unlock powerful insights into your progress with our advanced analytics dashboard." | "Onward Pro... adds the Insights dashboard, weekly review, timed habits..." |
 
 The right column is shorter, more specific, and has zero adjectives doing the selling — the facts do the selling.

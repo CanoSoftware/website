@@ -25,9 +25,9 @@ assets/email/                 Images referenced by sent emails (absolute canosof
 **Splitbook (added 2026-11-21)** is a static page at `splitbook/index.html`, built on the same
 inline-style app-page layout as Roadworthy, plus the in-app status and zone-ramp tokens from the
 design system's `tokens/colors-app.css`. It has an interactive planned-vs-run week and an inline
-TestFlight request form. It is **not linked** from `index.html`, `everything.html` or `sitemap.xml`
-yet; see `../HOMEPAGE_SPLIT_PLAN.md` for the plan to add it alongside Ledger as "the two with a
-server". Its copy must never mention Strava (Splitbook's own rule).
+TestFlight request form. It is linked from `index.html`, `everything.html`, `sitemap.xml` and every app page's
+shelf, as one of "the two with a server" alongside Ledger. Its copy must never mention Strava
+(Splitbook's own rule).
 
 **TestFlight requests** (`functions/api/testflight.js`) accept `{name, email, apps[], devices[], note}`
 for `splitbook` and `ledger`, with the same honeypot and `*.canosoftware.net` CORS rule as
@@ -41,17 +41,19 @@ existing `RESEND_API_KEY` must have sending access, not just contacts.
 "CanoSoftware landing page redesign" (`Homepage v2.dc.html`, project id
 `80323cdd-e667-4d5e-9fe9-880e57f9c936`, read via `DesignSync`), converted by hand
 to plain HTML/CSS/vanilla JS. It supersedes the 2026-09-08 design below. New
-pieces: a centered serif hero with clickable app icons, a tabbed app rotator
+pieces: a centered serif hero with clickable app icons (a thin rule splits the four
+iCloud-only apps from Ledger and Splitbook), a tabbed app rotator whose tabs sit in two
+labeled groups ("On your devices" and "With a sign-in"), with a "Your data" line per app
 (autoplay with per-tab progress bar, pauses on hover, stops permanently after a
 manual click; state machine ported from the canvas's React component into the
-inline `<script>`), a dark "no accounts, no analytics" privacy card with a Ledger
-exception plus a "Buy them outright" pricing card, the pine web-services band, and
+inline `<script>`), a dark "no accounts, no analytics" privacy card for the four with a
+"The two with a server" section for Ledger and Splitbook plus a "Buy them outright" pricing card, the pine web-services band, and
 a two-column studio/signup section. The design system's tokens
 (`tokens/*.css`) are inlined verbatim in the page's `<style>`; dark mode follows
 `prefers-color-scheme` rather than the canvas's `data-theme` attribute.
 
 Deliberate differences from the design source, and things to know:
-- **New app-icon family.** `assets/app-icons/<app>-{light,dark}.svg` (five apps)
+- **New app-icon family.** `assets/app-icons/<app>-{light,dark}.svg` (six apps)
   are used on the homepage via `<picture>`. The old `icons/<app>-icon.*` files are
   still what the app pages and the App Store use, so the homepage icons currently
   differ from them. Switching back is a path change in the hero/tab markup.

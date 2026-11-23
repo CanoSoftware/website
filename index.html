@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>CanoSoftware — Software that remembers, so you don't have to.</title>
-<meta name="description" content="Apps that keep track of your goals, your house, your car, and your family's week. Built by one person in Maryland. A couple offer a subscription, but every app also has a one-time price that never expires." />
+<meta name="description" content="Apps that keep track of your goals, your house, your car, your family's week, your budget and your running. Built by one person in Maryland. No ads, no analytics, and the App Store apps each have a one-time price that never expires." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="assets/icon-square.svg" />
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
@@ -20,7 +20,7 @@
   "name": "CanoSoftware",
   "url": "https://canosoftware.net",
   "logo": "https://canosoftware.net/assets/favicon-512.png",
-  "description": "Apps that keep track of your goals, your house, your car, and your family's week. Built by one person in Maryland."
+  "description": "Apps that keep track of your goals, your house, your car, your family's week, your budget and your running. Built by one person in Maryland."
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -140,20 +140,33 @@ header#top{padding:clamp(56px,10vw,120px) 0 72px;display:flex;flex-direction:col
 .hero-icon img{display:block;width:clamp(64px,8vw,96px);height:clamp(64px,8vw,96px);border-radius:21px;background:var(--surface-sunken);transition:transform .22s cubic-bezier(.2,0,.2,1);}
 .hero-icon:hover img{transform:translateY(-6px);}
 .hero-icon span{font-size:13px;font-weight:600;color:var(--text-secondary);}
+.hero-rule{width:1px;align-self:stretch;margin:6px 0 30px;background:var(--border-strong);opacity:0;transition:opacity .5s cubic-bezier(.2,0,.2,1) 360ms;}
+.hero-icons.loaded .hero-rule{opacity:1;}
+@media (max-width:620px){.hero-rule{display:none;}}
 
 /* Apps */
 #apps{padding:24px 0 0;}
 .apps-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
 .tab-hint{font-size:13px;color:var(--text-secondary);}
-.tabs{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:8px;padding:6px;border:1px solid var(--border);border-radius:14px;background:var(--surface-sunken);overflow-x:auto;}
+.tabs{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:8px;padding:6px;border:1px solid var(--border);border-radius:14px;background:var(--surface-sunken);}
+.tab-group{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.tab-group-sync{border-left:1px solid var(--border-strong);padding-left:8px;}
+.group-label{font-size:12.5px;font-weight:600;color:var(--text-primary);padding:6px 8px 0;line-height:1.35;}
+.group-sub{font-weight:400;color:var(--text-secondary);}
+.group-tabs{display:grid;gap:8px;grid-template-columns:repeat(var(--n),minmax(0,1fr));}
+@media (max-width:980px){
+  .tabs{grid-template-columns:minmax(0,1fr);}
+  .tab-group-sync{border-left:none;padding-left:0;border-top:1px solid var(--border-strong);padding-top:6px;}
+}
+@media (max-width:620px){.group-tabs{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .tab{min-width:0;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;text-align:left;color:var(--text-primary);transition:background .22s cubic-bezier(.2,0,.2,1),border-color .22s cubic-bezier(.2,0,.2,1),transform .09s cubic-bezier(.2,0,.2,1);}
 .tab:active{transform:scale(.985);}
 .tab.on{background:var(--surface-raised);border-color:var(--border-interactive);}
 .tab img{display:block;width:36px;height:36px;border-radius:8px;transition:transform .22s cubic-bezier(.2,0,.2,1);}
 .tab.on img{transform:translateY(-2px);}
-.tab-text{display:flex;flex-direction:column;gap:2px;}
+.tab-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
 .tab-name{font-size:15px;font-weight:600;}
-.tab-short{font-size:12.5px;color:var(--text-secondary);}
+.tab-short{font-size:12.5px;color:var(--text-secondary);line-height:1.3;}
 .tab-bar{position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--border);opacity:0;}
 .tab-bar i{display:block;height:2px;background:var(--terracotta);width:0%;}
 .stage{margin-top:20px;border:1px solid var(--border);border-radius:18px;background:var(--surface-raised);display:flex;flex-wrap:wrap;overflow:hidden;}
@@ -163,6 +176,10 @@ header#top{padding:clamp(56px,10vw,120px) 0 72px;display:flex;flex-direction:col
 .stage-story{margin:0;font-size:15.5px;line-height:1.6;color:var(--text-secondary);max-width:440px;text-wrap:pretty;}
 .stage-meta{font-size:13px;color:var(--text-secondary);}
 .stage-cta{font-size:15px;font-weight:600;}
+.stage-data{margin:0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;max-width:440px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface-sunken);font-size:14px;line-height:1.5;}
+.stage-data-k{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-tertiary);}
+.card-dark .exc-app{font-weight:600;color:#EDE6DA;}
+.card-dark .exc-links{display:flex;flex-wrap:wrap;gap:6px 20px;}
 .stage-shot{flex:1 1 420px;min-width:0;min-height:560px;background:var(--surface-sunken);border-left:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
 .shot-inner{display:flex;align-items:flex-end;justify-content:center;width:100%;height:100%;transition:opacity .3s cubic-bezier(.2,0,.2,1),transform .45s cubic-bezier(.2,0,.2,1);}
 .shot-phone{display:block;width:290px;height:520px;object-fit:cover;object-position:top;border:1px solid var(--border-strong);border-bottom:none;border-radius:38px 38px 0 0;transition:transform .3s cubic-bezier(.2,0,.2,1);}
@@ -241,10 +258,10 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
   <div class="wrap">
     <header id="top">
       <div class="hero-head" id="hero">
-        <span class="eyebrow">Five apps · One person</span>
+        <span class="eyebrow">Six apps · One person</span>
         <h1>Software that remembers, so you don't have to.</h1>
       </div>
-      <p class="hero-lede" id="lede">Small apps for your goals, your house, your car, your family's week and your budget. No ads, no analytics, and the App Store apps each have a one-time price that doesn't expire.</p>
+      <p class="hero-lede" id="lede">Small apps for your goals, your house, your car, your family's week, your budget and your running. None of them has ads or analytics, and the App Store apps each have a one-time price that doesn't expire.</p>
       <div class="hero-cta">
         <button type="button" class="btn btn-accent" data-goto="apps">See the apps</button>
         <button type="button" class="btn btn-primary" data-goto="studio">About the studio</button>
@@ -254,7 +271,9 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
         <button type="button" class="hero-icon" data-pick="1" aria-label="Steward" style="--d:190ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/steward-dark.svg"><img src="assets/app-icons/steward-light.svg" alt=""></picture><span>Steward</span></button>
         <button type="button" class="hero-icon" data-pick="2" aria-label="Roadworthy" style="--d:260ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/roadworthy-dark.svg"><img src="assets/app-icons/roadworthy-light.svg" alt=""></picture><span>Roadworthy</span></button>
         <button type="button" class="hero-icon" data-pick="3" aria-label="Homestead" style="--d:330ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/homestead-dark.svg"><img src="assets/app-icons/homestead-light.svg" alt=""></picture><span>Homestead</span></button>
-        <button type="button" class="hero-icon" data-pick="4" aria-label="Ledger" style="--d:400ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span>Ledger</span></button>
+        <span class="hero-rule" aria-hidden="true"></span>
+        <button type="button" class="hero-icon" data-pick="4" aria-label="Ledger" style="--d:430ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span>Ledger</span></button>
+        <button type="button" class="hero-icon" data-pick="5" aria-label="Splitbook" style="--d:500ms"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/splitbook-dark.svg"><img src="assets/app-icons/splitbook-light.svg" alt=""></picture><span>Splitbook</span></button>
       </div>
     </header>
 
@@ -265,21 +284,33 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
       </div>
       <div id="apps-rotator">
         <div class="tabs">
-          <button type="button" class="tab on" data-tab="0"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/onward-dark.svg"><img src="assets/app-icons/onward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Onward</span><span class="tab-short">Habits and goals</span></span><span class="tab-bar"><i></i></span></button>
-          <button type="button" class="tab" data-tab="1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/steward-dark.svg"><img src="assets/app-icons/steward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Steward</span><span class="tab-short">The house</span></span><span class="tab-bar"><i></i></span></button>
-          <button type="button" class="tab" data-tab="2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/roadworthy-dark.svg"><img src="assets/app-icons/roadworthy-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Roadworthy</span><span class="tab-short">The cars</span></span><span class="tab-bar"><i></i></span></button>
-          <button type="button" class="tab" data-tab="3"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/homestead-dark.svg"><img src="assets/app-icons/homestead-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Homestead</span><span class="tab-short">The family's week</span></span><span class="tab-bar"><i></i></span></button>
-          <button type="button" class="tab" data-tab="4"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Ledger</span><span class="tab-short">The budget</span></span><span class="tab-bar"><i></i></span></button>
+          <div class="tab-group" role="group" aria-labelledby="g-device">
+            <span class="group-label" id="g-device">On your devices <span class="group-sub">· iCloud only, no account</span></span>
+            <div class="group-tabs" style="--n:4">
+              <button type="button" class="tab on" data-tab="0"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/onward-dark.svg"><img src="assets/app-icons/onward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Onward</span><span class="tab-short">Habits and goals</span></span><span class="tab-bar"><i></i></span></button>
+              <button type="button" class="tab" data-tab="1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/steward-dark.svg"><img src="assets/app-icons/steward-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Steward</span><span class="tab-short">The house</span></span><span class="tab-bar"><i></i></span></button>
+              <button type="button" class="tab" data-tab="2"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/roadworthy-dark.svg"><img src="assets/app-icons/roadworthy-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Roadworthy</span><span class="tab-short">The cars</span></span><span class="tab-bar"><i></i></span></button>
+              <button type="button" class="tab" data-tab="3"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/homestead-dark.svg"><img src="assets/app-icons/homestead-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Homestead</span><span class="tab-short">The family's week</span></span><span class="tab-bar"><i></i></span></button>
+            </div>
+          </div>
+          <div class="tab-group tab-group-sync" role="group" aria-labelledby="g-server">
+            <span class="group-label" id="g-server">With a sign-in <span class="group-sub">· synced through my server</span></span>
+            <div class="group-tabs" style="--n:2">
+              <button type="button" class="tab" data-tab="4"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Ledger</span><span class="tab-short">The budget</span></span><span class="tab-bar"><i></i></span></button>
+              <button type="button" class="tab" data-tab="5"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/splitbook-dark.svg"><img src="assets/app-icons/splitbook-light.svg" alt=""></picture><span class="tab-text"><span class="tab-name">Splitbook</span><span class="tab-short">Running</span></span><span class="tab-bar"><i></i></span></button>
+            </div>
+          </div>
         </div>
 
         <div class="stage">
           <div class="stage-copy" id="stage-copy">
             <h2 id="st-name">Onward</h2>
             <span class="pill pill-shipped" id="st-shipped">On the App Store</span>
-            <span class="pill pill-soon" id="st-soon" hidden>Coming soon</span>
+            <span class="pill pill-soon" id="st-soon" hidden>In TestFlight</span>
             <p class="stage-desc" id="st-desc">Habits, running totals, and goals with a deadline.</p>
             <p class="stage-story" id="st-story">Streaks, weekly counts, and a pace line that tells you whether a goal is still on track.</p>
-            <span class="stage-meta" id="st-meta">iPhone and Apple Watch</span>
+            <p class="stage-data"><span class="stage-data-k">Your data</span><span id="st-data">On your devices and in your own iCloud. No account.</span></p>
+            <span class="stage-meta" id="st-meta">iPhone, iPad, Mac and Apple Watch</span>
             <a class="stage-cta" id="st-cta" href="/onward/">Visit the Onward page</a>
           </div>
           <div class="stage-shot">
@@ -287,9 +318,9 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
               <img class="shot-phone" id="st-phone" src="onward/assets/today.jpg" alt="">
               <img class="shot-ipad" id="st-ipad" src="" alt="" hidden>
               <div class="shot-none" id="st-none" hidden>
-                <picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img src="assets/app-icons/ledger-light.svg" alt=""></picture>
-                <span class="quote">Every dollar has a job. You just confirm it.</span>
-                <span class="plat">iPhone · iPad · Mac</span>
+                <picture><source id="st-none-dark" media="(prefers-color-scheme: dark)" srcset="assets/app-icons/ledger-dark.svg"><img id="st-none-img" src="assets/app-icons/ledger-light.svg" alt=""></picture>
+                <span class="quote" id="st-quote">Every dollar has a job. You just confirm it.</span>
+                <span class="plat" id="st-plat">iPhone · iPad · Mac</span>
               </div>
             </div>
           </div>
@@ -301,18 +332,21 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
       <div class="card-dark" data-reveal="1">
         <img src="assets/mark-dark.svg" alt="" width="46" height="30">
         <p class="big">Onward, Steward, Roadworthy and Homestead have no account system, no analytics package, and no advertising SDK.</p>
-        <span style="font-size:16px;color:#EDE6DA;">Your data lives on your device.</span>
+        <span style="font-size:16px;color:#EDE6DA;">Your data lives on your devices and in your own iCloud.</span>
         <div class="exc">
-          <span class="exc-label">The exception</span>
-          <p>Ledger keeps one household budget in step across iPhone, iPad and Mac, so it uses Sign in with Apple and a server that can read your transactions. Still no ads and no analytics, and you can export or delete everything from inside the app.</p>
-          <a href="https://ledger.canosoftware.net/privacy">Read Ledger's privacy policy</a>
+          <span class="exc-label">The two with a server</span>
+          <p>Ledger and Splitbook sync through a database I run, so they use Sign in with Apple. Neither has ads or analytics, and neither sells or shares what you put in it.</p>
+          <p><span class="exc-app">Ledger</span> keeps one household budget in step across iPhone, iPad and Mac, so the server can read your transactions. You can export or delete everything from inside the app.</p>
+          <p><span class="exc-app">Splitbook</span> encrypts routes, GPS tracks and original files on your phone before they're uploaded, so I can't see where you ran. Summary numbers like distance and pace are stored unencrypted so the app can total them.</p>
+          <div class="exc-links"><a href="https://ledger.canosoftware.net/privacy">Ledger's privacy policy</a><a href="/splitbook/#privacy">How Splitbook handles your data</a></div>
         </div>
       </div>
       <div class="card-sunken" data-reveal="1">
         <span class="eyebrow">Pricing</span>
         <p class="big">Buy them outright.</p>
         <p class="body">Every app on the App Store has a one-time price, and it doesn't expire. Two also offer a subscription, if you'd rather.</p>
-        <p class="body">Ledger has no subscription and no purchase in its first version. If you connect a bank, you pay the aggregator directly and hold that account yourself.</p>
+        <p class="body">Ledger and Splitbook are free while they're in TestFlight. Ledger has no subscription and no purchase in its first version. If you connect a bank, you pay the aggregator directly and hold that account yourself.</p>
+        <a href="/splitbook/#testflight" style="font-size:15px;font-weight:600;">Request TestFlight access</a>
       </div>
     </section>
   </div>
@@ -359,6 +393,7 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
         <a href="/roadworthy/">Roadworthy</a>
         <a href="/homestead/">Homestead</a>
         <a href="https://ledger.canosoftware.net">Ledger</a>
+        <a href="/splitbook/">Splitbook</a>
       </div>
       <div class="foot-col">
         <span class="foot-title">Studio</span>
@@ -373,6 +408,7 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
         <a href="/roadworthy/privacy.html">Roadworthy</a>
         <a href="/homestead/privacy.html">Homestead</a>
         <a href="https://ledger.canosoftware.net/privacy">Ledger</a>
+        <a href="/splitbook/#privacy">Splitbook</a>
       </div>
     </footer>
   </div>
@@ -433,21 +469,27 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
   /* App rotator */
   var APPS = [
     { name: 'Onward', shipped: true, kind: 'phone', shot: 'onward/assets/today.jpg', href: '/onward/',
-      desc: 'Habits, running totals, and goals with a deadline.', meta: 'iPhone and Apple Watch',
+      desc: 'Habits, running totals, and goals with a deadline.', meta: 'iPhone, iPad, Mac and Apple Watch', data: 'On your devices and in your own iCloud. No account.',
       story: 'Streaks, weekly counts, and a pace line that tells you whether a goal is still on track.' },
     { name: 'Steward', shipped: true, kind: 'phone', shot: 'steward/assets/final-01-home.png', href: '/steward/',
-      desc: 'Appliances, warranties, and what your house is due for.', meta: 'iPhone · Family Sharing',
+      desc: 'Appliances, warranties, and what your house is due for.', meta: 'iPhone · Family Sharing', data: 'On your devices and in your own iCloud. No account.',
       story: 'I kept forgetting when I last changed the furnace filter, so I built Steward.' },
     { name: 'Roadworthy', shipped: true, kind: 'phone', shot: 'roadworthy/assets/screenshot-due.png', href: '/roadworthy/',
-      desc: "Every car's maintenance, tracked by date or by mileage.", meta: 'iPhone · Family Sharing',
+      desc: "Every car's maintenance, tracked by date or by mileage.", meta: 'iPhone · Family Sharing', data: 'On your devices and in your own iCloud. No account.',
       story: 'I wanted oil changes and tire rotations tracked in one place, so I built Roadworthy.' },
     { name: 'Homestead', shipped: true, kind: 'ipad', shot: 'homestead/assets/screenshot-board.jpg', href: '/homestead/',
-      desc: 'Chores, calendar, and meals on a wall-mounted iPad.', meta: 'iPad · Family Sharing',
+      desc: 'Chores, calendar, and meals on a wall-mounted iPad.', meta: 'iPad · Family Sharing', data: 'On your devices and in your own iCloud. No account.',
       story: "The family's week ahead, without Sunday night turning into a meal-planning scramble." },
     { name: 'Ledger', shipped: false, kind: 'none', href: 'https://ledger.canosoftware.net', cta: 'Visit ledger.canosoftware.net',
       desc: 'Zero-based budgeting that opens to your new transactions. Not to a blank form.',
-      meta: 'iPhone, iPad and Mac · Family Sharing',
-      story: 'The one app with a sign-in. It keeps one household budget in step across your devices, so it uses Sign in with Apple and a server.' }
+      meta: 'iPhone, iPad and Mac · Family Sharing', icon: 'ledger', quote: 'Every dollar has a job. You just confirm it.', plat: 'iPhone · iPad · Mac',
+      data: 'Synced through a server I run, behind Sign in with Apple. No ads, no analytics.',
+      story: 'One household budget, in step on every device. That takes a server that can read your transactions, and you can export or delete everything from inside the app.' },
+    { name: 'Splitbook', shipped: false, kind: 'none', href: '/splitbook/',
+      desc: 'A running diary that puts the week you planned next to the week you ran.',
+      meta: 'iPhone · iOS 26 or later', icon: 'splitbook', quote: 'Plan the block. Run it. See how close you got.', plat: 'iPhone',
+      data: 'Synced through a server I run. Routes and GPS tracks are encrypted on your phone first.',
+      story: "Apple doesn't allow health data in iCloud, so runs sync through my server instead. I can't see where you ran." }
   ];
   var DURATION = 6000;
   var tabs = $$('.tab');
@@ -488,6 +530,13 @@ footer.foot{padding:48px 0 56px;border-top:1px solid var(--border);display:grid;
     $('#st-desc').textContent = a.desc;
     $('#st-story').textContent = a.story;
     $('#st-meta').textContent = a.meta;
+    $('#st-data').textContent = a.data;
+    if (a.kind === 'none') {
+      $('#st-none-img').src = 'assets/app-icons/' + a.icon + '-light.svg';
+      $('#st-none-dark').srcset = 'assets/app-icons/' + a.icon + '-dark.svg';
+      $('#st-quote').textContent = a.quote;
+      $('#st-plat').textContent = a.plat;
+    }
     var cta = $('#st-cta'); cta.href = a.href; cta.textContent = a.cta || ('Visit the ' + a.name + ' page');
     var phone = $('#st-phone'), ipad = $('#st-ipad'), none = $('#st-none');
     phone.hidden = a.kind !== 'phone'; ipad.hidden = a.kind !== 'ipad'; none.hidden = a.kind !== 'none';
